@@ -4,6 +4,7 @@ import { ProductReviews } from "@/components/product-reviews";
 import { ProductTesting } from "@/components/product-testing";
 import Link from "next/link";
 import { products, getProduct } from "@/lib/products";
+import { catalogSlug } from "@/lib/catalog-naming";
 import type { Metadata } from "next";
 import { AddToCartButton } from "./add-to-cart";
 
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return products.map((p) => ({ slug: catalogSlug(p.slug) }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

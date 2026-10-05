@@ -1,18 +1,26 @@
 import snapshot from "./research-catalog-data.json";
 import { researchEntries, researchSlugs } from "./research";
 import { publicationSearch, type IndexedPublication } from "./research-catalog-format";
+import { catalogSlug, catalogWording } from "./catalog-naming";
 
 export const catalogChecked = snapshot.checked;
 const displayDate = (day: string) => new Date(`${day}T00:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", month: "long", day: "numeric", year: "numeric" });
 export const catalogCheckedLabel = displayDate(snapshot.checked);
 export const catalogThroughLabel = displayDate(snapshot.through);
-export const researchCatalogs = snapshot.catalogs as Record<string, {
+type ResearchCatalog = {
   query: string;
   count: number;
   searchCount: number;
   excludedCount: number;
   papers: IndexedPublication[];
-}>;
+};
+export const researchCatalogs: Record<string, ResearchCatalog> = Object.fromEntries(
+  Object.entries(snapshot.catalogs as Record<string, ResearchCatalog>).map(([slug, catalog]) => [catalogSlug(slug), {
+    ...catalogWording(catalog),
+    // PubMed must receive the original indexed terms, not our catalog label.
+    query: catalog.query,
+  }]),
+);
 export const indexedPublicationCount = Object.values(researchCatalogs).reduce((sum, catalog) => sum + catalog.count, 0);
 export const catalogSearchMatchCount = Object.values(researchCatalogs).reduce((sum, catalog) => sum + catalog.searchCount, 0);
 

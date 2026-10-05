@@ -1,3 +1,5 @@
+import { catalogSlug, catalogWording } from "./catalog-naming";
+
 export interface Product {
   slug: string;
   name: string;
@@ -29,7 +31,7 @@ export interface Product {
   notSteroids: string;
 }
 
-export const products: Product[] = [
+const productRecords: Product[] = [
   {
     slug: "bpc-157",
     name: "BPC-157",
@@ -105,7 +107,7 @@ export const products: Product[] = [
     shortName: "Retatrutide",
     tagline: "Triple Receptor Agonist",
     description:
-      "Retatrutide is a novel triple-agonist peptide developed by Eli Lilly that simultaneously targets GLP-1, GIP, and glucagon receptors. It represents the most advanced multi-receptor approach to metabolic research, with Phase 2 clinical trial data published in the New England Journal of Medicine showing unprecedented results in weight management studies.",
+      "GLP-3 is our catalog label for LY-3437943, a peptide studied for GLP-1, GIP, and glucagon receptor signaling. Our research library links published studies and explains their findings and limitations.",
     category: "Metabolic Research",
     price: 89.99,
     dosage: "5mg",
@@ -531,8 +533,11 @@ export const products: Product[] = [
   },
 ];
 
+// Keep existing cart and checkout identities stable while changing public names.
+export const products: Product[] = productRecords.map((product) => ({ ...catalogWording(product), slug: product.slug }));
+
 export function getProduct(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug);
+  return products.find((p) => p.slug === slug || catalogSlug(p.slug) === slug);
 }
 
 export function formatPrice(price: number): string {

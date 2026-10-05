@@ -98,7 +98,11 @@ for (const slug of researchSlugs) {
       for (const field of ['design', 'measures', 'context']) assert.ok(readerPage.includes(escape(reader.reading[field])), `${slug}/${publication.id}: reader ${field}`);
     } else if (reader.excerpt) {
       assert.ok(readerPage.includes(escape(reader.excerpt.text)), `${slug}/${publication.id}: attributed reader excerpt`);
-      if (reader.excerpt.truncated) assert.ok(readerPage.includes('shortened quotation'), `${slug}/${publication.id}: shortened quotation clearly labeled`);
+      if (reader.excerpt.truncated) assert.ok(readerPage.includes(reader.excerpt.adapted ? 'shortened excerpt' : 'shortened quotation'), `${slug}/${publication.id}: shortened excerpt clearly labeled`);
+      if (reader.excerpt.adapted) {
+        assert.ok(readerPage.includes('Compound naming is adapted to GLP-3'), `${slug}/${publication.id}: adapted wording disclosed`);
+        assert.ok(!readerPage.includes('<blockquote'), `${slug}/${publication.id}: adapted wording is not presented as an exact quotation`);
+      }
       assert.ok(readerPage.includes('brief excerpt cannot capture'), `${slug}/${publication.id}: excerpt scope`);
     } else {
       assert.ok(readerPage.includes('does not provide enough information to summarize'), `${slug}/${publication.id}: missing source is not invented`);
@@ -118,7 +122,7 @@ for (const id of ['21564053', '28905366']) {
 }
 for (const [slug, ids] of Object.entries({
   'bpc-157': ['42328738', '32334036', '30116973'],
-  'retatrutide': ['42559975', '40735804', '39019866'],
+  'glp-3': ['42559975', '40735804', '39019866'],
   'tb-500': ['11311052', '24098025', '33620224'],
   'mt-2': ['23121206', '24355990', '24771717', '33460908', '35196505', '9050812'],
   'epitalon': ['25535022'],

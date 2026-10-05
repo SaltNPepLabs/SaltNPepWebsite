@@ -1,10 +1,11 @@
 import Image from "next/image";
 import type { Product } from "@/lib/products";
+import { catalogSlug } from "@/lib/catalog-naming";
 import styles from "./product-vial.module.css";
 
 const productImages: Record<string, string> = {
   "bpc-157": "/images/BPC-157-5mg.png",
-  retatrutide: "/images/Retatrutide-10mg.png",
+  retatrutide: "/images/GLP-3-10mg.png",
   "tb-500": "/images/TB-500-10mg.png",
   "mt-2": "/images/MT-2-10mg.png",
   "mots-c": "/images/MOTS-c-10mg.png",
@@ -15,6 +16,6 @@ const productImages: Record<string, string> = {
 
 export function ProductVial({ product, featured = false, isolated = false, sizes }: { product: Product; featured?: boolean; isolated?: boolean; sizes?: string }) {
   return <div className={`${styles.photo}${isolated ? ` ${styles.isolated}` : ""}`}>
-    <Image src={isolated ? `/images/vials/${product.slug}.png` : productImages[product.slug]} alt={`SALT N’ PEP ${product.shortName} vial`} fill loading={featured ? "eager" : "lazy"} sizes={sizes ?? (featured ? "(max-width: 1024px) 100vw, 600px" : "(max-width: 760px) 50vw, 25vw")} className={styles.image} />
+    <Image src={isolated ? `/images/vials/${catalogSlug(product.slug)}.png` : productImages[product.slug]} alt={`SALT N’ PEP ${product.shortName} vial`} fill loading={featured ? "eager" : "lazy"} sizes={sizes ?? (featured ? "(max-width: 1024px) 100vw, 600px" : "(max-width: 760px) 50vw, 25vw")} className={styles.image} />
   </div>;
 }

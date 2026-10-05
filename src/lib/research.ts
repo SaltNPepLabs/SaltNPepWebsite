@@ -1,5 +1,6 @@
 import { additionalResearchEntries } from "./research-additions";
 import { topicResearchEntries } from "./research-topic-additions";
+import { catalogWording } from "./catalog-naming";
 
 export type EvidenceType = "human" | "preclinical";
 
@@ -391,7 +392,7 @@ const originalResearchEntries: ResearchEntry[] = [
   },
 ];
 
-export const researchEntries: ResearchEntry[] = [...originalResearchEntries, ...additionalResearchEntries, ...topicResearchEntries];
+export const researchEntries: ResearchEntry[] = catalogWording([...originalResearchEntries, ...additionalResearchEntries, ...topicResearchEntries]);
 
 export function evidenceLabel(entry: Pick<ResearchEntry, "evidence" | "humanObservation" | "studyType">) {
   if (entry.studyType === "observational") return "Human observational report";

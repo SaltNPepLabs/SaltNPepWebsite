@@ -8,6 +8,7 @@ import { publicationNotice, publicationSearch, studyAnchor } from "@/lib/researc
 import ResearchBrowser from "../research-browser";
 import { StudyReaderLink } from "../study-navigation";
 import { ArrowIcon } from "@/components/arrow-icon";
+import { catalogNamingNote, catalogText } from "@/lib/catalog-naming";
 import styles from "../research.module.css";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -47,6 +48,7 @@ export default async function CompoundResearchPage({ params }: Props) {
         <h1>{compound} studies</h1>
         <p>{catalog.count.toLocaleString()} compound-focused publications · {papers.length} studies with detailed explanations.</p>
       </header>
+      {slug === "glp-3" && <p className={styles.readingHint}>{catalogNamingNote}</p>}
       {slug === "tb-500" && <p className={styles.readingHint}>This collection includes related thymosin beta4 research. A paper on the parent peptide does not establish that a TB-500 fragment or a product sold under that name has the same effects.</p>}
       <ResearchBrowser slug={slug} compound={compound} area={papers[0].area} papers={catalog.papers} notes={notes}>
         {papers.map((entry) => {
@@ -77,7 +79,7 @@ export default async function CompoundResearchPage({ params }: Props) {
                   <section className={styles.detailLimit}><h3>What this does not establish</h3><p>{entry.limitation}</p></section>
                 </div>
                 <div className={styles.publication}>
-                  <h3>Original publication</h3>
+                  <h3>{slug === "glp-3" ? "Publication (catalog naming)" : "Original publication"}</h3>
                   <p className={styles.paperTitle}>{entry.title ?? reading?.title ?? publication.title}</p>
                   <p className={styles.publicationMeta}>{entry.authors} · <cite>{entry.journal}</cite> · {entry.year}</p>
                   <p className={styles.indexingNote}><strong>Why included:</strong> {publication.relevance.reason}</p>
@@ -92,7 +94,7 @@ export default async function CompoundResearchPage({ params }: Props) {
       <aside className={styles.boundary} aria-label="Research scope">
         <p>This collection includes {catalog.count.toLocaleString()} of {catalog.searchCount.toLocaleString()} raw PubMed search matches, collected {catalogCheckedLabel}, with publication dates through {catalogThroughLabel}. Papers qualify through a compound-focused title or a source review confirming direct compound involvement. General peptide policy/commentary and unrelated alias matches are excluded; broader titles need review before inclusion. Positive, negative, safety, and analytical findings use the same relevance criteria. This is a selected collection, not all research on {compound} or a study-quality assessment.</p>
         <p>Years follow journal issues; online-first papers may have a later issue year. Reviews, case reports, and modified preparations answer different questions from treatment trials. Trial analyses may reuse participants, so publication counts are not independent trial counts. Read the source and any correction or retraction notice for full methods, adverse events, and limitations.</p>
-        <details className={styles.searchScope}><summary>Broader PubMed search and selection scope</summary><p>{catalog.query}</p><p>The broader search also contains incidental mentions and papers awaiting relevance review. A search match alone does not qualify a paper for this collection.</p><a href={`https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(catalog.query)}`}>See broader results on PubMed</a></details>
+        <details className={styles.searchScope}><summary>Broader PubMed search and selection scope</summary><p>{catalogText(catalog.query)}</p>{slug === "glp-3" && <p>The compound name above uses our catalog label. The PubMed link opens the exact original search with its indexed compound name and LY3437943 alias.</p>}<p>The broader search also contains incidental mentions and papers awaiting relevance review. A search match alone does not qualify a paper for this collection.</p><a href={`https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(catalog.query)}`}>See broader results on PubMed</a></details>
         <p>Educational information only; no dosing or treatment guidance. Products are for laboratory research and not for human consumption. Published findings do not verify the identity, quality, or safety of products sold here.</p>
       </aside>
       <Link className={styles.backLink} href="/science">Back to research library</Link>

@@ -19,7 +19,7 @@ test("built preview serves exported routes and rejects unsafe requests", async (
     req.end();
   });
   try {
-    for (const slug of ["bpc-157", "retatrutide", "tb-500", "mt-2", "mots-c", "pinealon", "epitalon", "ghk-cu"]) {
+    for (const slug of ["bpc-157", "glp-3", "tb-500", "mt-2", "mots-c", "pinealon", "epitalon", "ghk-cu"]) {
       const page = await get(`/science/${slug}?review=1`);
       assert.equal(page.status, 200);
       assert.match(page.headers["content-type"], /text\/html/);

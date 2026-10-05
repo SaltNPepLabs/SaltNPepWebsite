@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowIcon } from "@/components/arrow-icon";
 import { formatPrice, products } from "@/lib/products";
+import { catalogSlug } from "@/lib/catalog-naming";
 import { formatDosage, getDefaultProductVariant } from "@/lib/product-variants";
 import { ProductCarousel } from "@/components/product-carousel";
 import { ProductVial } from "@/components/product-vial";
@@ -18,13 +19,13 @@ export default function Home() {
         const variant = getDefaultProductVariant(product);
         return {
           name: product.shortName,
-          href: `/products/${product.slug}`,
+          href: `/products/${catalogSlug(product.slug)}`,
           image: <div className={styles.photo}><ProductVial product={product} featured={index === 0} sizes="(max-width: 600px) 93vw, (max-width: 760px) 83vw, (max-width: 1314px) 43vw, 562px" /></div>,
           details: <>
             <h2 className={styles.productName}>{product.shortName}</h2>
             <p className={styles.productMeta}><span>{formatDosage(variant.dosage)} vial</span><span>{product.category}</span><strong>{variant.price === null ? "Pricing pending" : formatPrice(variant.price)}</strong></p>
             <div className={styles.actions}>
-              <Link className={styles.action} href={`/products/${product.slug}`} aria-label={`Explore ${product.shortName}`}>Explore {product.shortName} <ArrowIcon direction="right" /></Link>
+              <Link className={styles.action} href={`/products/${catalogSlug(product.slug)}`} aria-label={`Explore ${product.shortName}`}>Explore {product.shortName} <ArrowIcon direction="right" /></Link>
               <Link className={styles.collectionLink} href="/products">View the collection</Link>
             </div>
           </>,

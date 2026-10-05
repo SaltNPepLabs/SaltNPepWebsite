@@ -7,6 +7,7 @@ import { publicationCategories, publicationNotice } from "@/lib/research-catalog
 import { evidenceLabel } from "@/lib/research";
 import { evidenceContext } from "@/lib/research-reading";
 import { studyRecord, publicationContext } from "@/lib/research-study";
+import { catalogNamingNote } from "@/lib/catalog-naming";
 import styles from "../../research.module.css";
 import { StudyCollectionLink } from "../../study-navigation";
 
@@ -41,14 +42,15 @@ export default async function StudyPage({ params }: Props) {
       <h1>{paper.title}</h1>
       <p>{paper.authors} · <cite>{paper.journal}</cite> · PMID {pmid}</p>
     </header>
+    {(slug === "glp-3" || paper.title.includes("GLP-3") || excerpt?.adapted) && <p className={styles.readingHint}>{catalogNamingNote}</p>}
     {notice && <p className={styles.notice}>{notice}</p>}
     <section className={styles.readerFinding} aria-labelledby="study-finding">
-      <p className={styles.eyebrow}>{entry ? "Study summary" : excerpt ? "From the original abstract" : "Available source information"}</p>
-      <h2 id="study-finding">{entry ? retracted ? "Reported finding before retraction" : "Main finding" : excerpt ? retracted ? "Retracted publication — source excerpt" : excerpt.kind === "conclusion" ? "Authors’ conclusion — excerpt" : "Abstract excerpt" : paper.hasAbstract ? "Source abstract requires review" : "No abstract indexed"}</h2>
+      <p className={styles.eyebrow}>{entry ? "Study summary" : excerpt?.adapted ? "Adapted from the source abstract" : excerpt ? "From the original abstract" : "Available source information"}</p>
+      <h2 id="study-finding">{entry ? retracted ? "Reported finding before retraction" : "Main finding" : excerpt ? retracted ? "Retracted publication — source excerpt" : excerpt.kind === "conclusion" ? excerpt.adapted ? "Authors’ conclusion — adapted excerpt" : "Authors’ conclusion — excerpt" : excerpt.adapted ? "Adapted abstract excerpt" : "Abstract excerpt" : paper.hasAbstract ? "Source abstract requires review" : "No abstract indexed"}</h2>
       {retracted && <p className={styles.readerCaption}>This record is flagged as retracted or withdrawn. Read the linked notice before interpreting the excerpt or reported finding.</p>}
       {entry ? <p className={styles.readerTakeaway}>{entry.finding}</p> : excerpt ? <>
-        <blockquote className={styles.readerTakeaway}><p>“{excerpt.text}{excerpt.truncated ? "…" : ""}”</p></blockquote>
-        <p className={styles.readerCaption}>{excerpt.section ? `From the abstract’s ${excerpt.section.toLowerCase()} section.` : excerpt.position === "selected" ? "From a selected sentence in the indexed abstract." : `From the ${excerpt.position} sentence of the indexed abstract.`} {excerpt.truncated ? "This is a shortened quotation; the full sentence continues in the original abstract." : "This is a short quotation from the authors, not a full study appraisal."}</p>
+        {excerpt.adapted ? <p className={styles.readerTakeaway}>{excerpt.text}{excerpt.truncated ? "…" : ""}</p> : <blockquote className={styles.readerTakeaway}><p>“{excerpt.text}{excerpt.truncated ? "…" : ""}”</p></blockquote>}
+        <p className={styles.readerCaption}>{excerpt.section ? `From the abstract’s ${excerpt.section.toLowerCase()} section.` : excerpt.position === "selected" ? "From a selected sentence in the indexed abstract." : `From the ${excerpt.position} sentence of the indexed abstract.`} {excerpt.adapted ? `${excerpt.truncated ? "This is a shortened excerpt; the full sentence continues in the original abstract. " : ""}Compound naming is adapted to GLP-3; open the source for the original wording. This is not a full study appraisal.` : excerpt.truncated ? "This is a shortened quotation; the full sentence continues in the original abstract." : "This is a short quotation from the authors, not a full study appraisal."}</p>
       </> : <p className={styles.readerTakeaway}>{paper.hasAbstract ? "An abstract is indexed, but a reliable excerpt has not been selected. The citation alone does not provide enough information to summarize the findings." : "PubMed provides a citation without an abstract for this paper. The citation identifies the topic, but does not provide enough information to summarize the findings."} Read the original publication for its results and conclusion.</p>}
       <a className={styles.sourceLink} href={`${source}${paper.hasAbstract ? "#abstract" : ""}`}>{paper.hasAbstract ? "Read the full abstract & conclusion" : "Find the original publication"} <ArrowIcon /></a>
     </section>

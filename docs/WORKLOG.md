@@ -1,5 +1,12 @@
 # Worklog
 
+## 2026-10-04 - GLP-3 catalog naming
+
+- Replaced the former compound name with GLP-3 in public product/research copy, routes, metadata, customer-review text, FAQ, and saved-order presentation. Kept internal order/variant identities and canonical scientific records stable. Research pages disclose the catalog label and show changed source passages as adapted excerpts rather than exact quotations; original publication links and exact PubMed search queries are preserved.
+- Edited both existing vial photos with the built-in imagegen tool so their printed labels read GLP-3, preserving the illustrative 10 MG labels and respective studio/transparent backgrounds. Removed superseded public assets. Asset paths, prompts, and naming policy are in `CATALOG_NAMING.md`; current stock remains 30 mg with Pricing pending.
+- Validation: full lint, seven checkout regressions, production build (1,474 static routes), research audit of all 1,448 readers/124 explanations, and static-preview test passed. Six browser check groups verified all exported HTML public text/links (1,472 HTML files), catalog/library search, all 56 customer reviews, curated and adapted readers, primary sources, return-state preservation, imagery, FAQ/homepage links, and desktop/320px layouts without page errors or overflow. Product and mobile reader screenshots were visually inspected. Evidence is in ignored `data/glp3-*` and `data/check-glp3-naming.mjs`.
+- Local review: http://127.0.0.1:3016/products/glp-3 and http://127.0.0.1:3016/science/glp-3. The first build hit disk exhaustion; a later read-only check showed available space and the successful rebuild required no cleanup. Friction was logged. Committed locally; no push or deployment for this package.
+
 ## 2026-10-04 - Removed reviews mentioning demo
 
 - Removed all 59 complete review records containing "demo" in any text field, case-insensitively, and recomputed product counts. The 200 retained records remain unchanged: BPC-157 51, retatrutide 56, TB-500 46, and MOTS-c 47. Original dates remain hidden pending owner corrections.

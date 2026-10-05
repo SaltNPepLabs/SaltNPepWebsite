@@ -1,4 +1,5 @@
 import reviewData from "./customer-reviews-data.json";
+import { catalogText } from "./catalog-naming";
 
 export type CustomerReview = {
   id: string;
@@ -16,6 +17,6 @@ export function getCustomerReviews(slug: string): CustomerReview[] {
   return reviewData.reviews
     .filter((review) => review.slug === slug)
     .map(({ id, author, location, rating, title, body, verified }) => ({
-      id, author, location, rating, title, body, verified,
+      id, author, location, rating, title: catalogText(title), body: catalogText(body), verified,
     }));
 }

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { checkoutApi, isCheckoutPreview, orderStorageKey, historyStorageKey } from "@/lib/checkout-client";
 import type { CheckoutConfig, OrderView } from "@/lib/checkout-contract";
 import { formatPrice } from "@/lib/products";
+import { catalogText } from "@/lib/catalog-naming";
 import styles from "../checkout.module.css";
 
 export function OrderStatus() {
@@ -64,7 +65,7 @@ export function OrderStatus() {
         {order.status === "paid" && <p className={styles.intro}>Your payment has been verified. Keep your order reference for shipping and support inquiries.</p>}
         {order.status === "approved" && <><h2>Approved for payment</h2><p className={styles.intro}>Your research request is approved. Payment is still pending.</p></>}
       </div>
-      <div className={styles.summary}><h2>Order summary</h2><ul>{order.items.map(item => <li key={item.slug}><span>{item.name} × {item.quantity}</span><span>{formatPrice(item.unitCents * item.quantity / 100)}</span></li>)}</ul><div className={styles.row}><span>Shipping</span><span>{formatPrice(order.shippingCents / 100)}</span></div><div className={styles.row}><strong>Total</strong><strong>{formatPrice(order.totalCents / 100)}</strong></div></div>
+      <div className={styles.summary}><h2>Order summary</h2><ul>{order.items.map(item => <li key={item.slug}><span>{catalogText(item.name)} × {item.quantity}</span><span>{formatPrice(item.unitCents * item.quantity / 100)}</span></li>)}</ul><div className={styles.row}><span>Shipping</span><span>{formatPrice(order.shippingCents / 100)}</span></div><div className={styles.row}><strong>Total</strong><strong>{formatPrice(order.totalCents / 100)}</strong></div></div>
       {order.status === "approved" && order.method === "card" && (preview ? <p className={styles.note}>In live checkout, this step opens Stripe’s hosted card page for {formatPrice(order.totalCents / 100)}. Use the demo confirmation above to preview the result.</p> : <button className={styles.action} onClick={pay} disabled={busy}>Pay {formatPrice(order.totalCents / 100)} securely by card</button>)}
       {order.status === "approved" && order.method === "venmo" && preview && <><h2>Pay with Venmo</h2><p className={styles.intro}>The live screen will show your business profile and exact amount ({formatPrice(order.totalCents / 100)}), with this order reference for the payment note. Use the demo confirmation above to preview verification.</p></>}
       {order.status === "approved" && order.method === "venmo" && order.venmoHandle && <><h2>Pay with Venmo</h2><p className={styles.intro}>Send exactly <strong>{formatPrice(order.totalCents / 100)}</strong> to <strong>@{order.venmoHandle}</strong>. Include your full order reference in the payment note.</p><p className={styles.reference}>{order.id}</p><a className={styles.action} href={`https://account.venmo.com/u/${encodeURIComponent(order.venmoHandle)}`} target="_blank" rel="noopener noreferrer">Open Venmo business profile</a><p className={styles.note}>Opening Venmo does not confirm payment. Your order stays pending until our team verifies the transaction.</p></>}

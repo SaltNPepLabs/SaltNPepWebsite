@@ -1,5 +1,6 @@
 import type { ResearchEntry } from "./research";
 import { additionalReadingDetails } from "./research-reading-additions";
+import { catalogWording } from "./catalog-naming";
 
 type EvidenceContext = Pick<ResearchEntry, "evidence" | "humanObservation" | "studyType">;
 
@@ -33,7 +34,7 @@ export interface StudyReadingDetails {
 
 // Paraphrased from the linked primary-source abstracts, or PMC full text.
 // Verified October 4, 2026. Do not infer missing sample sizes or follow-up.
-export const studyReadingDetails: Record<string, StudyReadingDetails> = {
+export const studyReadingDetails: Record<string, StudyReadingDetails> = catalogWording({
   ...additionalReadingDetails,
   "PMID 21030672": {
     title: "The promoting effect of pentadecapeptide BPC 157 on tendon healing involves tendon outgrowth, cell survival, and cell migration.",
@@ -123,4 +124,4 @@ export const studyReadingDetails: Record<string, StudyReadingDetails> = {
     measures: "Cell counts, population-doubling time, and production of three growth factors: basic fibroblast growth factor, TGF-beta1, and VEGF. These are signaling proteins involved in tissue biology.",
     context: "Treated cultures replicated faster, and irradiated treated cells showed early increases in basic fibroblast growth factor and VEGF. Patient-derived cells still represent a laboratory model; the study did not measure wound recovery in those patients.",
   },
-};
+});

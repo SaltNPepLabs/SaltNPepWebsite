@@ -3,6 +3,7 @@ import { pubmedId, researchCatalogs } from "./research-catalog";
 import { researchEntries } from "./research";
 import { studyReadingDetails } from "./research-reading";
 import type { IndexedPublication } from "./research-catalog-format";
+import { catalogText } from "./catalog-naming";
 
 export type SourceExcerpt = {
   text: string;
@@ -21,7 +22,13 @@ export function studyRecord(slug: string, pmid: string) {
   if (!publication) return null;
   const entry = researchEntries.find((paper) => paper.slug === slug && pubmedId(paper.sourceId) === pmid);
   const compound = researchEntries.find((paper) => paper.slug === slug)!.compound;
-  return { publication, compound, entry, reading: entry ? studyReadingDetails[entry.sourceId] : undefined, excerpt: sourceExcerpts[pmid] };
+  const originalExcerpt = sourceExcerpts[pmid];
+  const excerpt = originalExcerpt ? {
+    ...originalExcerpt,
+    text: catalogText(originalExcerpt.text),
+    adapted: catalogText(originalExcerpt.text) !== originalExcerpt.text,
+  } : undefined;
+  return { publication, compound, entry, reading: entry ? studyReadingDetails[entry.sourceId] : undefined, excerpt };
 }
 
 export function publicationContext(paper: IndexedPublication) {

@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-10-04: GLP-3 public catalog naming
+
+The owner requested removing the former compound name from public website copy and using GLP-3. Use GLP-3 as a disclosed catalog label for LY-3437943 across product/research pages, public routes, reviews, saved-order display, and vial photos. Preserve canonical publication records, exact scientific search queries, source fingerprints, and stable checkout identities. Label adapted study wording clearly and present changed source passages as adapted excerpts rather than exact quotations. External source publications retain their publishers' wording. Implementation and photo-edit prompts are in `CATALOG_NAMING.md`.
+
 ## 2026-10-04: Remove reviews mentioning demo
 
 The owner requested removal of any review containing "demo." Remove the entire matching record, checking every text field case-insensitively, and recompute product totals. This removes 59 of the 259 imported records, leaving 200 unchanged reviews. This supersedes retaining the complete original import; original dates on retained reviews remain hidden pending owner corrections.

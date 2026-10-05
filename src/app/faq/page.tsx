@@ -82,8 +82,8 @@ const faqs = [
         a: "BPC-157 (Body Protection Compound-157) is a synthetic pentadecapeptide \u2014 15 amino acids long \u2014 derived from a protein naturally found in human gastric juice. It is one of the most studied peptides in preclinical research, with hundreds of animal studies examining its role in tissue repair, gastrointestinal protection, and nitric oxide modulation.",
       },
       {
-        q: "What is Retatrutide?",
-        a: "Retatrutide (LY-3437943) is a triple-agonist peptide developed by Eli Lilly that simultaneously targets GLP-1, GIP, and glucagon receptors. Its Phase 2 clinical trial, published in the New England Journal of Medicine in 2023, reported 24.2% mean body weight reduction at the highest dose \u2014 the largest reduction reported in any obesity pharmacotherapy trial at the time.",
+        q: "What is GLP-3?",
+        a: "GLP-3 is our catalog label for LY-3437943, a peptide studied for GLP-1, GIP, and glucagon receptor signaling. The research library provides study summaries, findings, limitations, and links to the original publications.",
       },
       {
         q: "What is TB-500?",

@@ -1,12 +1,14 @@
 import { researchEntries } from "@/lib/research";
 import { getCustomerReviews } from "@/lib/customer-reviews";
+import { catalogSlug } from "@/lib/catalog-naming";
 import Link from "next/link";
 import styles from "./product-reviews.module.css";
 import { ArrowIcon } from "./arrow-icon";
 import { CustomerReviewList } from "./customer-review-list";
 
 export function ProductReviews({ slug, name }: { slug: string; name: string }) {
-  const research = researchEntries.find((entry) => entry.slug === slug);
+  const researchSlug = catalogSlug(slug);
+  const research = researchEntries.find((entry) => entry.slug === researchSlug);
   const reviews = getCustomerReviews(slug);
   const average = reviews.length ? (reviews.reduce((total, review) => total + review.rating, 0) / reviews.length).toFixed(1) : null;
   return <div className={styles.reviews}>
@@ -35,7 +37,7 @@ export function ProductReviews({ slug, name }: { slug: string; name: string }) {
         <div className={styles.findings}><div><h4>What the researchers observed</h4><p>{research.finding}</p></div><div><h4>What this does not establish</h4><p>{research.limitation}</p></div></div>
         <div className={styles.source}><p>{research.authors} · <cite>{research.journal}</cite> · {research.year}</p><a href={research.source}>Read the primary paper <ArrowIcon /><small>{research.sourceId}</small></a></div>
       </article>
-      <Link href={`/science/${slug}`} className={styles.libraryLink}>Explore all {researchEntries.filter((entry) => entry.slug === slug).length} {name} studies <ArrowIcon /></Link>
+      <Link href={`/science/${researchSlug}`} className={styles.libraryLink}>Explore all {researchEntries.filter((entry) => entry.slug === researchSlug).length} {name} studies <ArrowIcon /></Link>
     </section>}
   </div>;
 }
