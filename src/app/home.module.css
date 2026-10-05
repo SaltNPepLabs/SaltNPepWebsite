@@ -101,6 +101,107 @@
 
 .notice span { display: block; }
 
+.researchFeature {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 480px;
+  overflow: hidden;
+  padding: 64px 6%;
+  background: #151511;
+  color: #f5f2ec;
+}
+
+.researchArtwork {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: -1;
+  width: 58%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.researchArtwork img {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 235%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+}
+
+.researchArtwork::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #151511, #15151100 55%);
+}
+
+.researchCopy { width: min(100%, 600px); }
+
+.researchEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 20px;
+  color: #c7c1b6;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.researchEyebrow::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+}
+
+.researchHeading {
+  margin: 0;
+  font-size: clamp(38px, 4.2vw, 64px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.researchHeading em { font-family: Georgia, serif; font-weight: 400; }
+
+.researchDescription {
+  max-width: 370px;
+  margin: 20px 0 0;
+  color: #d0cbc1;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.researchAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  min-height: 48px;
+  margin-top: 26px;
+  padding: 14px 20px;
+  background: #f5f2ec;
+  color: #24231f;
+  font-size: 13px;
+}
+
+.researchAction svg { width: 16px; height: 16px; }
+.researchAction:hover { background: #ded8cd; }
+.researchAction:focus-visible { outline-color: #f5f2ec; }
+
+.researchNotice {
+  margin: 20px 0 0;
+  color: #bdb7ac;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
 @media (max-width: 760px) {
   .hero { padding: 24px 0 28px; }
   .intro { padding-bottom: 22px; }
@@ -110,4 +211,9 @@
   .productMeta { font-size: 11px; gap: 6px 12px; }
   .actions { gap: 14px 20px; margin-top: 18px; }
   .notice { font-size: 9px; }
+  .researchFeature { min-height: 460px; padding: 52px 7%; }
+  .researchArtwork { width: 100%; opacity: 0.45; }
+  .researchArtwork::after { background: linear-gradient(90deg, #151511, #15151155); }
+  .researchHeading { font-size: clamp(36px, 9vw, 48px); }
+  .researchDescription { max-width: 330px; }
 }
