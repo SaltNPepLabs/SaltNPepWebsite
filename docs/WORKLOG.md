@@ -491,3 +491,9 @@
 - Replaced session-only entry acceptance with versioned local storage, migrated existing session confirmations, and synchronized acceptance across open tabs. Retained session/memory fallbacks and the required first-visit checkboxes.
 - Validation: component lint, production build (1,494 static routes), and browser checks passed for checkbox requirements, cross-tab dismissal, reload persistence, and a new direct-product visit after closing both test tabs. Return-visit proof is in ignored `data/entry-persistence/return-visit.jpg`.
 - Local built preview updated; committed locally with no push or deployment. Concurrent carousel work is preserved.
+
+## 2026-10-11 - Carousel release snap-back correction
+
+- Kept the nearest image once a drag crosses its midpoint, so a reversed final pointer sample cannot send it back and a fast release cannot skip an extra image. Short flicks still advance. Limited initial spring speed to point toward the destination and taper near its center, retaining the existing spring and direct dragging.
+- Validation: five release/spring regression tests, source and test lint, production build (1,494 static routes), and diff whitespace checks passed. Browser checks passed for 20 repeated drags at desktop, 390px, and 320px widths, both directions and the loop boundary, five rapid arrow presses, and keyboard reversal; no console errors. Default lint still reports unrelated errors in ignored research exports and audit scripts. Logs are in ignored `data/carousel-catch-*.log`.
+- Local built preview updated; committed locally with no push or deployment. Owner carousel UX review remains pending.

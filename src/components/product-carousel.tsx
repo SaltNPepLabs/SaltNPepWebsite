@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { animate, motion, useMotionTemplate, useMotionValue, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import Link from "next/link";
+import { dragReleasePage, settlingVelocity } from "@/lib/carousel-motion";
 import { ArrowIcon } from "./arrow-icon";
 import styles from "./product-carousel.module.css";
 
@@ -100,11 +101,12 @@ export function ProductCarousel({ slides }: { slides: Slide[] }) {
   }, [position, reducedMotion]);
 
   function settle(page: number, velocity = position.getVelocity()) {
+    const releaseVelocity = settlingVelocity(position.get(), page, velocity);
     position.stop();
     targetPage.current = page;
     setActive(modulo(page, count));
     if (reducedMotion) position.jump(page);
-    else animate(position, page, { ...spring, velocity });
+    else animate(position, page, { ...spring, velocity: releaseVelocity });
   }
 
   function move(direction: -1 | 1) {
@@ -174,8 +176,7 @@ export function ProductCarousel({ slides }: { slides: Slide[] }) {
       return;
     }
     const velocity = event.timeStamp - start.lastTime < 80 ? -start.velocity / start.step : 0;
-    const projection = Math.max(-0.65, Math.min(0.65, velocity * 0.14));
-    settle(Math.round(position.get() + projection), velocity);
+    settle(dragReleasePage(start.position, position.get(), velocity), velocity);
   }
 
   return (
