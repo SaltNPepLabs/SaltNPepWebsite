@@ -33,14 +33,14 @@ export function Catalog() {
             {["All categories", ...categories].map(item => <option key={item}>{item}</option>)}
           </select>
         </label>
-        <label className={styles.filter}>
+        {upcomingProducts.length > 0 && <label className={styles.filter}>
           <span className="sr-only">Availability</span>
           <select value={availability} onChange={event => setAvailability(event.target.value)}>
             <option value="all">All products</option>
             <option value="current">Current collection</option>
             <option value="upcoming">Coming soon</option>
           </select>
-        </label>
+        </label>}
         <span className="result-count" aria-live="polite">{count} {count === 1 ? "product" : "products"}</span>
       </div>
       <div className="collection-grid">

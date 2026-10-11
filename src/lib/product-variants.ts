@@ -1,4 +1,5 @@
 import type { Product } from "./products";
+import { aurumQuantityPricing, getAurumProduct } from "./aurum-catalog";
 
 export interface ProductVariant {
   id: string;
@@ -8,50 +9,27 @@ export interface ProductVariant {
   bulkPricing: Product["bulkPricing"];
 }
 
-// Peptaura catalog size filters, checked October 4, 2026, plus a sold-out
-// MT-2 5 mg option added for the owner's limited extra-size display.
-// These are size options, not a claim about supplier inventory or batch coverage.
-// Source links and pricing instructions are recorded in docs/PRODUCT_SIZES.md.
-const sizesBySlug: Record<string, readonly number[]> = {
-  "bpc-157": [2, 5, 10, 20],
-  retatrutide: [5, 10, 15, 20, 30, 40, 50, 60, 100, 120],
-  "tb-500": [2, 5, 10, 20],
-  "mt-2": [5, 10],
-  "mots-c": [10, 15, 20, 30, 40],
-  pinealon: [5, 10, 20],
-  epitalon: [10, 50],
-  "ghk-cu": [50, 100],
+// Preserve existing stock only for compounds outside Aurum's catalog.
+const retainedSizes: Record<string, readonly string[]> = {
+  pinealon: ["5mg", "10mg", "20mg"], epitalon: ["10mg", "50mg"],
 };
 
-// Test-run stock: owner-selected sizes for these compounds, otherwise the
-// original catalog size. Supplier size listings do not establish owner stock.
-const availableSizeBySlug: Record<string, string> = {
-  "bpc-157": "10mg",
-  retatrutide: "30mg",
-  "tb-500": "10mg",
-  "mots-c": "20mg",
-};
-
-// Show one or two sold-out alternatives alongside each current size.
-// Other reference sizes stay hidden and unavailable.
-const displayedSoldOutSizesBySlug: Record<string, readonly string[]> = {
-  "bpc-157": ["5mg", "20mg"],
-  retatrutide: ["10mg", "20mg"],
-  "tb-500": ["5mg", "20mg"],
-  "mt-2": ["5mg"],
-  "mots-c": ["10mg", "40mg"],
-  pinealon: ["5mg", "20mg"],
-  epitalon: ["50mg"],
-  "ghk-cu": ["100mg"],
+// Requests saved before size IDs existed must keep their original vial size.
+const legacyDosages: Record<string, string> = {
+  "bpc-157": "5mg", retatrutide: "5mg", "tb-500": "5mg", "mt-2": "10mg",
+  "mots-c": "10mg", pinealon: "10mg", epitalon: "10mg", "ghk-cu": "50mg",
 };
 
 export function getProductVariants(product: Product): ProductVariant[] {
-  const dosages = sizesBySlug[product.slug]?.map(size => `${size}mg`) ?? [product.dosage];
-  return dosages.map(dosage => ({
+  const source = getAurumProduct(product.slug);
+  if (source) return source.variants.map(variant => ({
+    id: variant.dosage, dosage: variant.dosage, inStock: true,
+    price: variant.price, bulkPricing: aurumQuantityPricing(variant.price),
+  }));
+  return (retainedSizes[product.slug] ?? [product.dosage]).map(dosage => ({
     id: dosage,
     dosage,
-    inStock: dosage === (availableSizeBySlug[product.slug] ?? product.dosage),
-    // Only the owner's existing size has approved storefront pricing.
+    inStock: dosage === product.dosage,
     price: dosage === product.dosage ? product.price : null,
     bulkPricing: dosage === product.dosage ? product.bulkPricing : [],
   }));
@@ -62,8 +40,7 @@ export function getAvailableProductVariants(product: Product): ProductVariant[] 
 }
 
 export function getStorefrontProductVariants(product: Product): ProductVariant[] {
-  const soldOutSizes = displayedSoldOutSizesBySlug[product.slug] ?? [];
-  return getProductVariants(product).filter(variant => variant.inStock || soldOutSizes.includes(variant.id));
+  return getProductVariants(product);
 }
 
 export function getDefaultProductVariant(product: Product): ProductVariant {
@@ -74,9 +51,8 @@ export function getDefaultProductVariant(product: Product): ProductVariant {
 }
 
 export function getProductVariant(product: Product, variantId?: string): ProductVariant | undefined {
-  // Omitted IDs retain the original size, even if it is now sold out. Never
-  // silently replace a saved cart/request with a different vial size.
-  return getProductVariants(product).find(variant => variant.id === (variantId === undefined ? product.dosage : variantId));
+  const dosage = variantId === undefined ? legacyDosages[product.slug] ?? product.dosage : variantId;
+  return getProductVariants(product).find(variant => variant.id === dosage);
 }
 
 export function getVariantUnitPrice(variant: ProductVariant, quantity: number): number | null {
@@ -86,5 +62,5 @@ export function getVariantUnitPrice(variant: ProductVariant, quantity: number): 
 }
 
 export function formatDosage(dosage: string): string {
-  return dosage.replace(/mg$/, " mg");
+  return dosage.replace(/(mg|mL)$/, " $1");
 }

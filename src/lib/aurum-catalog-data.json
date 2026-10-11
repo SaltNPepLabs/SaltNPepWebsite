@@ -1,0 +1,508 @@
+[
+  {
+    "slug": "bpc-157",
+    "sourceSlug": "bpc-157",
+    "name": "BPC-157",
+    "category": "Short-Chain Peptides",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 49.99
+      },
+      {
+        "dosage": "30mg",
+        "price": 139.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "10mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_BPC157_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "tb-500",
+    "sourceSlug": "tb-500",
+    "name": "TB-500",
+    "category": "Short-Chain Peptides",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 64.99
+      },
+      {
+        "dosage": "30mg",
+        "price": 184.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "10mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_TB500_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "ghk-cu",
+    "sourceSlug": "ghk-cu",
+    "name": "GHK-Cu",
+    "category": "Copper Peptides",
+    "variants": [
+      {
+        "dosage": "50mg",
+        "price": 39.99
+      },
+      {
+        "dosage": "100mg",
+        "price": 49.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "50mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_GHK-CU_Premium_COA.pdf"
+      },
+      {
+        "label": "100mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_GHK-CU_100MG_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "mt-2",
+    "sourceSlug": "melanotan-ii",
+    "name": "Melanotan II",
+    "category": "Melanocortin Peptides",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 39.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "10mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_MT2_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "melanotan-i",
+    "sourceSlug": "melanotan-i",
+    "name": "Melanotan I",
+    "category": "Melanocortin Research",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 39.99
+      }
+    ],
+    "certificates": []
+  },
+  {
+    "slug": "selank",
+    "sourceSlug": "selank",
+    "name": "Selank",
+    "category": "Cognitive Research",
+    "variants": [
+      {
+        "dosage": "5mg",
+        "price": 44.99
+      },
+      {
+        "dosage": "10mg",
+        "price": 64.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "5mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_Selank.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "semax",
+    "sourceSlug": "semax",
+    "name": "Semax",
+    "category": "Cognitive Research",
+    "variants": [
+      {
+        "dosage": "5mg",
+        "price": 44.99
+      },
+      {
+        "dosage": "10mg",
+        "price": 64.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "5mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_Semax.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "cjc-1295-dac",
+    "sourceSlug": "cjc-1295",
+    "name": "CJC-1295 (with DAC)",
+    "category": "Research Peptides",
+    "variants": [
+      {
+        "dosage": "5mg",
+        "price": 59.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "5mg — DAC",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_CJC-1295.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "cjc-1295-no-dac",
+    "sourceSlug": "cjc-1295-no-dac",
+    "name": "CJC-1295 No DAC",
+    "category": "Research Peptides",
+    "variants": [
+      {
+        "dosage": "5mg",
+        "price": 54.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "5mg — No-DAC",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_CJC-1295_no_DAC.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "ipamorelin",
+    "sourceSlug": "ipamorelin",
+    "name": "Ipamorelin",
+    "category": "Research Peptides",
+    "variants": [
+      {
+        "dosage": "5mg",
+        "price": 49.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "5mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_Ipamorelin.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "igf-1-lr3",
+    "sourceSlug": "igf-1-lr3",
+    "name": "IGF-1 LR3",
+    "category": "Research Peptides",
+    "variants": [
+      {
+        "dosage": "1mg",
+        "price": 89.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "1mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_IGF-1.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "tesamorelin",
+    "sourceSlug": "tesamorelin",
+    "name": "Tesamorelin",
+    "category": "Research Peptides",
+    "variants": [
+      {
+        "dosage": "5mg",
+        "price": 64.99
+      },
+      {
+        "dosage": "10mg",
+        "price": 119.99
+      },
+      {
+        "dosage": "20mg",
+        "price": 166.66
+      }
+    ],
+    "certificates": [
+      {
+        "label": "5mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_Tesamorelin.pdf"
+      },
+      {
+        "label": "10mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_Tesamorelin_10MG_Premium_COA.pdf"
+      },
+      {
+        "label": "20mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_Tesamorelin_20MG_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "glp-2-tz",
+    "sourceSlug": "tirzepatide",
+    "name": "GLP-2 (TZ)",
+    "category": "Metabolic Research",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 49.99
+      },
+      {
+        "dosage": "30mg",
+        "price": 127.77
+      }
+    ],
+    "certificates": [
+      {
+        "label": "10mg — Clear Cap",
+        "url": "https://aurumpeptidelabs.com/AURUM_GLP-2_TZ_10MG_Premium_COA.pdf"
+      },
+      {
+        "label": "30mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_GLP-2_TZ_30MG_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "glp-1-sm",
+    "sourceSlug": "semaglutide",
+    "name": "GLP-1 (SM)",
+    "category": "Metabolic Research",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 59.99
+      },
+      {
+        "dosage": "30mg",
+        "price": 169.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "10mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_GLP-1_SM_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "retatrutide",
+    "sourceSlug": "glp-3",
+    "name": "GLP-3 (RT)",
+    "category": "GLP Analogs",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 69.99
+      },
+      {
+        "dosage": "30mg",
+        "price": 166.66
+      }
+    ],
+    "certificates": [
+      {
+        "label": "10mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_GLP-3_RT_10MG_Premium_COA.pdf"
+      },
+      {
+        "label": "30mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_GLP-3_RT_30MG_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "kpv",
+    "sourceSlug": "kpv",
+    "name": "KPV",
+    "category": "Research Peptides",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 54.99
+      },
+      {
+        "dosage": "30mg",
+        "price": 129.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "10mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_KPV.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "mots-c",
+    "sourceSlug": "mots-c",
+    "name": "MOTS-c",
+    "category": "Mitochondrial Peptides",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 69.99
+      },
+      {
+        "dosage": "40mg",
+        "price": 149.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "40mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_MOTS-C.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "bacteriostatic-water",
+    "sourceSlug": "bac",
+    "name": "Bacteriostatic Water",
+    "category": "Research Accessories",
+    "variants": [
+      {
+        "dosage": "10mL",
+        "price": 9.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "10 ML White Cap",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_BAC_Water.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "nad-plus",
+    "sourceSlug": "nad-plus",
+    "name": "NAD+",
+    "category": "Research Compounds",
+    "variants": [
+      {
+        "dosage": "500mg",
+        "price": 59.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "500mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_COA_NAD_plus.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "glutathione",
+    "sourceSlug": "glutathione",
+    "name": "Glutathione",
+    "category": "Research Compounds",
+    "variants": [
+      {
+        "dosage": "1500mg",
+        "price": 74.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "1500mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_Glutathione_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "klow",
+    "sourceSlug": "klow",
+    "name": "KLOW",
+    "category": "Research Blends",
+    "variants": [
+      {
+        "dosage": "80mg",
+        "price": 119.99
+      }
+    ],
+    "certificates": [
+      {
+        "label": "80mg",
+        "url": "https://aurumpeptidelabs.com/AURUM_KLOW_Premium_COA.pdf"
+      }
+    ]
+  },
+  {
+    "slug": "ss-31",
+    "sourceSlug": "ss-31",
+    "name": "SS-31",
+    "category": "Mitochondrial Research",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 65.99
+      }
+    ],
+    "certificates": []
+  },
+  {
+    "slug": "ara-290",
+    "sourceSlug": "ara-290",
+    "name": "ARA-290",
+    "category": "Research Peptides",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 74.99
+      }
+    ],
+    "certificates": []
+  },
+  {
+    "slug": "wolverine",
+    "sourceSlug": "wolverine",
+    "name": "Wolverine",
+    "category": "Research Blends",
+    "variants": [
+      {
+        "dosage": "20mg",
+        "price": 89.99
+      }
+    ],
+    "certificates": []
+  },
+  {
+    "slug": "cagrilintide",
+    "sourceSlug": "cagrilintide",
+    "name": "Cagrilintide",
+    "category": "Metabolic Research",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 89.99
+      }
+    ],
+    "certificates": []
+  },
+  {
+    "slug": "kisspeptin",
+    "sourceSlug": "kisspeptin-10",
+    "name": "Kisspeptin",
+    "category": "Research Peptides",
+    "variants": [
+      {
+        "dosage": "10mg",
+        "price": 49.99
+      }
+    ],
+    "certificates": []
+  }
+]

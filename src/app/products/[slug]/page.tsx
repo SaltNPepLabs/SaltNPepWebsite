@@ -5,6 +5,7 @@ import { ProductTesting } from "@/components/product-testing";
 import Link from "next/link";
 import { products, getProduct } from "@/lib/products";
 import { catalogSlug } from "@/lib/catalog-naming";
+import { getAurumProduct } from "@/lib/aurum-catalog";
 import type { Metadata } from "next";
 import { AddToCartButton } from "./add-to-cart";
 
@@ -54,21 +55,21 @@ export default async function ProductPage({ params }: Props) {
             <AddToCartButton key={product.slug} product={product} />
 
             <div className="flex items-center gap-2 sm:gap-3 mt-3 sm:mt-4">
-              <a href="#batch-report" className="text-xs sm:text-sm font-bold underline underline-offset-4">Lumira / View example lab report</a>
+              <a href="#batch-report" className="text-xs sm:text-sm font-bold underline underline-offset-4">{getAurumProduct(product.slug) ? "View certificates of analysis" : "Lumira / View example lab report"}</a>
             </div>
-            <p className="text-muted mt-3 text-xs leading-relaxed">Brand vial shown. Refer to the product details for compound and quantity.</p>
+            <p className="text-muted mt-3 text-xs leading-relaxed">Product image is illustrative. Refer to the selected size for vial quantity.</p>
             <p className="mt-4 sm:mt-6 text-sm sm:text-base text-muted leading-relaxed">{product.description}</p>
 
             {/* Quick specs */}
             <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-sm">
-              <div className="p-2.5 sm:p-3 dark-panel rounded-sm">
+              {product.molecularFormula && <div className="p-2.5 sm:p-3 dark-panel rounded-sm">
                 <p className="text-muted text-[10px] sm:text-xs">Molecular Formula</p>
                 <p className="font-mono font-medium text-[10px] sm:text-xs mt-0.5 break-all">{product.molecularFormula}</p>
-              </div>
-              <div className="p-2.5 sm:p-3 dark-panel rounded-sm">
+              </div>}
+              {product.molecularWeight && <div className="p-2.5 sm:p-3 dark-panel rounded-sm">
                 <p className="text-muted text-[10px] sm:text-xs">Molecular Weight</p>
                 <p className="font-mono font-medium text-[10px] sm:text-xs mt-0.5">{product.molecularWeight}</p>
-              </div>
+              </div>}
             </div>
             {product.sequence && (
               <div className="mt-2 sm:mt-3 p-2.5 sm:p-3 dark-panel rounded-sm">
@@ -84,7 +85,7 @@ export default async function ProductPage({ params }: Props) {
         {/* Info cards */}
         <div className="mt-10 sm:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {/* Research areas */}
-          <div className="dark-panel rounded-sm p-4 sm:p-6">
+          {product.researchAreas.length > 0 && <div className="dark-panel rounded-sm p-4 sm:p-6">
             <h2 className="text-base sm:text-lg font-black uppercase tracking-[0.08em] mb-3 sm:mb-4">Research Areas</h2>
             <ul className="space-y-2">
               {product.researchAreas.map((area) => (
@@ -94,16 +95,16 @@ export default async function ProductPage({ params }: Props) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div>}
 
           {/* Mechanism */}
-          <div className="dark-panel rounded-sm p-4 sm:p-6">
+          {product.mechanism && <div className="dark-panel rounded-sm p-4 sm:p-6">
             <h2 className="text-base sm:text-lg font-black uppercase tracking-[0.08em] mb-3 sm:mb-4">Mechanism of Action</h2>
             <p className="text-xs sm:text-sm text-muted leading-relaxed">{product.mechanism}</p>
-          </div>
+          </div>}
 
           {/* Storage */}
-          <div className="dark-panel rounded-sm p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
+          {(product.storage || product.reconstitution) && <div className="dark-panel rounded-sm p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
             <h2 className="text-base sm:text-lg font-black uppercase tracking-[0.08em] mb-3 sm:mb-4">Storage & Handling</h2>
             <div className="space-y-3 sm:space-y-4">
               <div>
@@ -115,7 +116,7 @@ export default async function ProductPage({ params }: Props) {
                 <p className="text-xs sm:text-sm text-muted mt-1">{product.reconstitution}</p>
               </div>
             </div>
-          </div>
+          </div>}
         </div>
 
         <ProductReviews slug={product.slug} name={product.shortName} />

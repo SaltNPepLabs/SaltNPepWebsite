@@ -8,78 +8,101 @@ import { createCheckoutServer } from "./api";
 import { products } from "../src/lib/products";
 import { getAvailableProductVariants, getDefaultProductVariant, getProductVariants, getStorefrontProductVariants } from "../src/lib/product-variants";
 import { createCartItem, restoreCartItems } from "../src/lib/cart-items";
+import { aurumCatalog } from "../src/lib/aurum-catalog";
 
 const request = { items: [{ slug: "mt-2", quantity: 3 }], method: "card", customer: { name: "Research Buyer", email: "buyer@example.com", organization: "Example Laboratory", researchPurpose: "In vitro laboratory assay development", address: "123 Example St", address2: "", city: "Salt Lake City", state: "UT", zip: "84101" }, researchOnly: true };
 const config = () => loadConfig({ CHECKOUT_ENABLED: "true", STOREFRONT_ORIGIN: "http://localhost:3015", SHIPPING_CENTS: "500", SHIPPING_STATES: "UT", SUPPORT_EMAIL: "orders@example.com", TAX_POLICY_APPROVED: "true", STRIPE_SECRET_KEY: "sk_test_example", STRIPE_WEBHOOK_SECRET: "whsec_example" });
 
 test("server prices canonical catalog tiers and rejects invalid carts and states", () => {
-  assert.equal(priceOrder({ ...request, totalCents: 1 }, 500, ["UT"]).totalCents, 7397);
+  assert.equal(priceOrder({ ...request, totalCents: 1 }, 500, ["UT"]).totalCents, 12497);
   assert.throws(() => priceOrder({ ...request, items: [{ slug: "unknown", quantity: 1 }] }, 500, ["UT"]));
   assert.throws(() => priceOrder({ ...request, items: [...request.items, ...request.items] }, 500, ["UT"]));
   assert.throws(() => priceOrder(request, 500, ["CO"]));
   assert.throws(() => priceOrder({ ...request, items: [{ slug: "bpc-157", quantity: -1 }] }, 500, ["UT"]));
 });
 
-test("each compound displays a current size and limited sold-out alternatives; unavailable sizes cannot be ordered", () => {
-  const expected: Record<string, string[]> = {
-    "bpc-157": ["2mg", "5mg", "10mg", "20mg"],
-    retatrutide: ["5mg", "10mg", "15mg", "20mg", "30mg", "40mg", "50mg", "60mg", "100mg", "120mg"],
-    "tb-500": ["2mg", "5mg", "10mg", "20mg"],
-    "mt-2": ["5mg", "10mg"], "mots-c": ["10mg", "15mg", "20mg", "30mg", "40mg"],
-    pinealon: ["5mg", "10mg", "20mg"], epitalon: ["10mg", "50mg"], "ghk-cu": ["50mg", "100mg"],
+test("all Aurum sizes use the published vial prices in cards, saved carts and server checkout", () => {
+  const expected: Record<string, Record<string, number>> = {
+    "bpc-157": { "10mg": 49.99, "30mg": 139.99 },
+    "tb-500": { "10mg": 64.99, "30mg": 184.99 },
+    "ghk-cu": { "50mg": 39.99, "100mg": 49.99 },
+    "mt-2": { "10mg": 39.99 }, "melanotan-i": { "10mg": 39.99 },
+    selank: { "5mg": 44.99, "10mg": 64.99 }, semax: { "5mg": 44.99, "10mg": 64.99 },
+    "cjc-1295-dac": { "5mg": 59.99 }, "cjc-1295-no-dac": { "5mg": 54.99 },
+    ipamorelin: { "5mg": 49.99 }, "igf-1-lr3": { "1mg": 89.99 },
+    tesamorelin: { "5mg": 64.99, "10mg": 119.99, "20mg": 166.66 },
+    "glp-2-tz": { "10mg": 49.99, "30mg": 127.77 },
+    "glp-1-sm": { "10mg": 59.99, "30mg": 169.99 },
+    retatrutide: { "10mg": 69.99, "30mg": 166.66 },
+    kpv: { "10mg": 54.99, "30mg": 129.99 }, "mots-c": { "10mg": 69.99, "40mg": 149.99 },
+    "bacteriostatic-water": { "10mL": 9.99 }, "nad-plus": { "500mg": 59.99 },
+    glutathione: { "1500mg": 74.99 }, klow: { "80mg": 119.99 }, "ss-31": { "10mg": 65.99 },
+    "ara-290": { "10mg": 74.99 }, wolverine: { "20mg": 89.99 },
+    cagrilintide: { "10mg": 89.99 }, kisspeptin: { "10mg": 49.99 },
   };
-  const stocked: Record<string, string> = { "bpc-157": "10mg", retatrutide: "30mg", "tb-500": "10mg", "mots-c": "20mg", "mt-2": "10mg", pinealon: "10mg", epitalon: "10mg", "ghk-cu": "50mg" };
-  const soldOutDisplay: Record<string, string[]> = {
-    "bpc-157": ["5mg", "20mg"], retatrutide: ["10mg", "20mg"], "tb-500": ["5mg", "20mg"],
-    "mt-2": ["5mg"], "mots-c": ["10mg", "40mg"], pinealon: ["5mg", "20mg"],
-    epitalon: ["50mg"], "ghk-cu": ["100mg"],
-  };
-  let pendingCount = 0, soldOutCount = 0;
+  assert.equal(products.length, 28);
+  assert.deepEqual(aurumCatalog.map(product => product.slug).sort(), Object.keys(expected).sort());
+  let availableCount = 0, soldOutCount = 0;
   for (const product of products) {
     const variants = getProductVariants(product);
-    assert.deepEqual(variants.map(variant => variant.id), expected[product.slug]);
-    assert.equal(getDefaultProductVariant(product).id, stocked[product.slug]);
-    assert.deepEqual(getAvailableProductVariants(product).map(variant => variant.id), [stocked[product.slug]]);
-    const displayed = getStorefrontProductVariants(product);
-    assert.deepEqual(displayed.filter(variant => variant.inStock).map(variant => variant.id), [stocked[product.slug]]);
-    assert.deepEqual(displayed.filter(variant => !variant.inStock).map(variant => variant.id), soldOutDisplay[product.slug]);
+    const sourcePrices = expected[product.slug];
+    assert.deepEqual(getStorefrontProductVariants(product), variants);
+    if (sourcePrices) {
+      assert.deepEqual(variants.map(variant => variant.id), Object.keys(sourcePrices));
+      assert.equal(getDefaultProductVariant(product).id, Object.keys(sourcePrices)[0]);
+      assert.equal(product.price, Object.values(sourcePrices)[0]);
+      assert.deepEqual(getAvailableProductVariants(product), variants);
+    }
     for (const variant of variants) {
-      assert.equal(variant.inStock, stocked[product.slug] === variant.id);
       if (!variant.inStock) {
         soldOutCount++;
+        assert.ok(["pinealon", "epitalon"].includes(product.slug));
         assert.equal(createCartItem(product.slug, 1, variant.id), undefined);
         assert.deepEqual(restoreCartItems([{ slug: product.slug, variantId: variant.id, quantity: 1, price: 0.01 }]), []);
         assert.throws(() => priceOrder({ ...request, items: [{ slug: product.slug, variantId: variant.id, quantity: 1, price: product.price }] }, 500, ["UT"]), /sold out/);
-      } else if (variant.price !== null) {
-        assert.equal(variant.price, product.price);
-        for (const tier of product.bulkPricing) {
-          const priced = priceOrder({ ...request, items: [{ slug: product.slug, variantId: variant.id, quantity: tier.qty, unitCents: 1 }] }, 500, ["UT"]);
-          assert.equal(priced.items[0].variantId, variant.id);
-          assert.equal(priced.items[0].unitCents, Math.round(tier.price * 100));
-          assert.equal(createCartItem(product.slug, tier.qty, variant.id)?.pricePerUnit, tier.price);
-        }
       } else {
-        pendingCount++;
-        assert.equal(variant.price, null);
-        assert.deepEqual(variant.bulkPricing, []);
-        assert.equal(createCartItem(product.slug, 1, variant.id), undefined);
-        assert.throws(() => priceOrder({ ...request, items: [{ slug: product.slug, variantId: variant.id, quantity: 1, price: product.price }] }, 500, ["UT"]), /Pricing is pending/);
+        availableCount++;
+        assert.notEqual(variant.price, null);
+        if (sourcePrices) assert.equal(variant.price, sourcePrices[variant.id]);
+        for (const quantity of [1, 3, 5, 10]) {
+          const expectedPrice = sourcePrices ? sourcePrices[variant.id] : product.bulkPricing.find(tier => tier.qty === quantity)?.price;
+          assert.ok(expectedPrice);
+          const priced = priceOrder({ ...request, items: [{ slug: product.slug, variantId: variant.id, quantity, unitCents: 1 }] }, 500, ["UT"]);
+          assert.equal(priced.items[0].variantId, variant.id);
+          assert.equal(priced.items[0].unitCents, Math.round(expectedPrice * 100));
+          assert.equal(createCartItem(product.slug, quantity, variant.id)?.pricePerUnit, expectedPrice);
+          assert.equal(restoreCartItems([{ slug: product.slug, variantId: variant.id, quantity, pricePerUnit: 0.01 }])[0]?.pricePerUnit, expectedPrice);
+        }
       }
     }
     assert.equal(createCartItem(product.slug, 1, "unknown"), undefined);
     assert.throws(() => priceOrder({ ...request, items: [{ slug: product.slug, variantId: "unknown", quantity: 1 }] }, 500, ["UT"]), /Invalid compound or size/);
     for (const invalidId of [null, "", 5]) assert.throws(() => priceOrder({ ...request, items: [{ slug: product.slug, variantId: invalidId, quantity: 1 }] }, 500, ["UT"]));
   }
-  assert.equal(soldOutCount, 24);
-  assert.equal(pendingCount, 4);
+  assert.equal(soldOutCount, 3);
+  assert.equal(availableCount, 40);
 });
 
-test("legacy sold-out lines are removed without size substitution; available order snapshots retain size", () => {
-  const restored = restoreCartItems(products.map(product => ({ slug: product.slug, quantity: 3, pricePerUnit: 0.01 })));
-  assert.deepEqual(restored.map(item => item.product.slug), ["mt-2", "pinealon", "epitalon", "ghk-cu"]);
-  for (const slug of ["bpc-157", "retatrutide", "tb-500", "mots-c"]) {
+test("certificate links cover published current reports and explicitly leave missing reports unclaimed", () => {
+  assert.equal(aurumCatalog.flatMap(product => product.certificates).length, 25);
+  assert.deepEqual(aurumCatalog.filter(product => !product.certificates.length).map(product => product.slug),
+    ["melanotan-i", "ss-31", "ara-290", "wolverine", "cagrilintide", "kisspeptin"]);
+  for (const product of aurumCatalog) for (const certificate of product.certificates) {
+    const url = new URL(certificate.url);
+    assert.equal(url.origin, "https://aurumpeptidelabs.com");
+    assert.match(url.pathname, /\.pdf$/);
+    assert.doesNotMatch(url.pathname, /archive/i);
+  }
+  assert.deepEqual(aurumCatalog.find(product => product.slug === "bpc-157")?.certificates.map(certificate => certificate.label), ["10mg"]);
+  assert.deepEqual(aurumCatalog.find(product => product.slug === "mots-c")?.certificates.map(certificate => certificate.label), ["40mg"]);
+});
+
+test("legacy cart lines keep their original vial size and available order snapshots retain size", () => {
+  const restored = restoreCartItems(products.slice(0, 8).map(product => ({ slug: product.slug, quantity: 3, pricePerUnit: 0.01 })));
+  assert.deepEqual(restored.map(item => item.product.slug), ["mt-2", "mots-c", "pinealon", "epitalon", "ghk-cu"]);
+  for (const slug of ["bpc-157", "retatrutide", "tb-500"]) {
     assert.equal(createCartItem(slug, 3), undefined);
-    assert.throws(() => priceOrder({ ...request, items: [{ slug, quantity: 3 }] }, 500, ["UT"]), /sold out/);
+    assert.throws(() => priceOrder({ ...request, items: [{ slug, quantity: 3 }] }, 500, ["UT"]), /Invalid compound or size/);
   }
   for (const item of restored) {
     assert.equal(item.variant.id, item.product.dosage);
@@ -93,7 +116,7 @@ test("legacy sold-out lines are removed without size substitution; available ord
     { slug: "bpc-157", variantId: "20mg", quantity: 1, price: 39.99 },
     { slug: "bpc-157", variantId: null, quantity: 1 }, { slug: "bpc-157", variantId: "unknown", quantity: 1 },
     { slug: "bpc-157", quantity: 101 }, { slug: "bpc-157", quantity: 1.5 }, null,
-  ]).map(item => ({ id: item.id, quantity: item.quantity })), [{ id: "mt-2:10mg", quantity: 3 }]);
+  ]).map(item => ({ id: item.id, quantity: item.quantity })), [{ id: "mt-2:10mg", quantity: 3 }, { id: "bpc-157:10mg", quantity: 1 }]);
   const explicit = { ...request, items: [{ slug: "mt-2", variantId: "10mg", quantity: 3 }] };
   assert.deepEqual(priceOrder(explicit, 500, ["UT"]).items, priceOrder(request, 500, ["UT"]).items);
   assert.throws(() => priceOrder({ ...request, items: [...request.items, ...explicit.items] }, 500, ["UT"]), /Duplicate compound and size/);
@@ -152,7 +175,7 @@ test("HTTP checkout requires review; signed exact-amount webhook alone confirms 
   const session = { id: "cs_test_example", status: "open", url: "https://checkout.stripe.com/c/pay/example", lastResponse: { headers: {}, requestId: "req_test", statusCode: 200 } } as Stripe.Response<Stripe.Checkout.Session>;
   stripe.checkout.sessions.create = (async (params: Stripe.Checkout.SessionCreateParams) => {
     creations++;
-    assert.equal(params.line_items?.[0].price_data?.unit_amount, 2299);
+    assert.equal(params.line_items?.[0].price_data?.unit_amount, 3999);
     assert.equal(params.line_items?.[0].quantity, 3);
     assert.equal(params.line_items?.[0].price_data?.product_data?.name, "MT-2 · 10 mg");
     assert.equal(params.allowed_payment_method_types?.[0], "card");
@@ -169,11 +192,11 @@ test("HTTP checkout requires review; signed exact-amount webhook alone confirms 
   try {
     assert.equal((await fetch(`${base}/orders`, { method: "POST", headers: { ...headers, Origin: "https://wrong.example" }, body: JSON.stringify(request) })).status, 403);
     for (const invalid of [
-      { items: [{ slug: "bpc-157", variantId: "5mg", quantity: 1 }], error: "This size is sold out. Choose an available size to order." },
-      { items: [{ slug: "bpc-157", quantity: 1 }], error: "This size is sold out. Choose an available size to order." },
-      { items: [{ slug: "bpc-157", variantId: "10mg", quantity: 1 }], error: "Pricing is pending for this size. Choose a priced size to order." },
+      { items: [{ slug: "bpc-157", variantId: "5mg", quantity: 1 }], error: "Invalid compound or size." },
+      { items: [{ slug: "bpc-157", quantity: 1 }], error: "Invalid compound or size." },
+      { items: [{ slug: "bpc-157", variantId: "20mg", quantity: 1 }], error: "Invalid compound or size." },
       { items: [{ slug: "pinealon", variantId: "5mg", quantity: 1 }], error: "This size is sold out. Choose an available size to order." },
-      { items: [{ slug: "mt-2", variantId: "5mg", quantity: 1 }], error: "This size is sold out. Choose an available size to order." },
+      { items: [{ slug: "mt-2", variantId: "5mg", quantity: 1 }], error: "Invalid compound or size." },
       { items: [{ slug: "bpc-157", variantId: "unknown", quantity: 1 }], error: "Invalid compound or size." },
       { items: [...request.items, { slug: "mt-2", variantId: "10mg", quantity: 1 }], error: "Duplicate compound and size." },
     ]) {

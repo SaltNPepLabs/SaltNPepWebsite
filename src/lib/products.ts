@@ -1,4 +1,5 @@
 import { catalogSlug, catalogWording } from "./catalog-naming";
+import { aurumCatalog, aurumQuantityPricing, getAurumProduct } from "./aurum-catalog";
 
 export interface Product {
   slug: string;
@@ -534,7 +535,40 @@ const productRecords: Product[] = [
 ];
 
 // Keep existing cart and checkout identities stable while changing public names.
-export const products: Product[] = productRecords.map((product) => ({ ...catalogWording(product), slug: product.slug }));
+const currentProducts = productRecords.map(product => {
+  const source = getAurumProduct(product.slug);
+  const variant = source?.variants[0];
+  return {
+    ...catalogWording(product),
+    slug: product.slug,
+    ...(variant && { dosage: variant.dosage, price: variant.price, bulkPricing: aurumQuantityPricing(variant.price) }),
+  };
+});
+
+const additions: Product[] = aurumCatalog.filter(source => !productRecords.some(product => product.slug === source.slug)).map(source => ({
+  slug: source.slug,
+  name: source.name,
+  shortName: source.name,
+  tagline: `${source.category} · Research use only`,
+  description: `${source.name} is supplied as a laboratory research ${source.slug === "bacteriostatic-water" ? "solvent" : "compound"} in the vial sizes listed above. For research use only.`,
+  category: source.category,
+  price: source.variants[0].price,
+  dosage: source.variants[0].dosage,
+  format: source.slug === "bacteriostatic-water" ? "Liquid solvent" : "Lyophilized powder",
+  purity: "",
+  casNumber: "",
+  molecularFormula: "",
+  molecularWeight: "",
+  bulkPricing: aurumQuantityPricing(source.variants[0].price),
+  researchAreas: [],
+  keyStudies: [],
+  mechanism: "",
+  storage: "",
+  reconstitution: "",
+  notSteroids: "",
+}));
+
+export const products: Product[] = [...currentProducts, ...additions];
 
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug || catalogSlug(p.slug) === slug);

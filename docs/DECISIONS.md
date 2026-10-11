@@ -1,5 +1,14 @@
 # Decisions
 
+## 2026-10-11: Aurum catalog, prices, availability, and certificates
+
+The owner requests copying Aurum Peptide Labs' full catalog/prices, removing sold-out banners on its products, and linking its certificates. This supersedes earlier pending-price, stock-selection, and preview-only instructions for Aurum products. Import all 26 listings and 38 available sizes; activate the 20 previews. Preserve Pinealon/Epitalon, the original eight homepage features, stable checkout identities, and public GLP-3 naming.
+
+Store explicit source selector prices in USD. Use those per-vial prices at all existing quantity choices without inventing bulk discounts or copying promotions. Preserve legacy size identities and immutable orders; reject removed sizes instead of substituting another. Retain original research-only copy and use original labeled vial illustrations for new entries; do not invent scientific specifications or copy competitor imagery.
+
+Link 25 current Aurum PDF reports with publisher attribution and tested-sample labels, excluding six archives. Explicitly show missing reports for six products and link the source directory. Do not imply these reports verify local inventory or every offered size. Pinealon/Epitalon retain labeled Lumira examples. Sources checked October 11, 2026; details are in PRODUCT_SIZES.md and UPCOMING_COLLECTION.md.
+
+
 ## 2026-10-11: Springier homepage and library permission
 
 The owner says the homepage needs to feel bouncier, springier, and more responsive, and explicitly states that the carousel UX is not approved yet. Continue iterating on the interaction and responsive layout; technical checks do not constitute UX acceptance. The owner authorizes adding component libraries when they make the work easier. This iteration uses the free Motion package for spring physics, direct dragging, and control feedback while preserving the current SALT N’ PEP design.

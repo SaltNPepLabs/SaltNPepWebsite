@@ -18,7 +18,7 @@ export default function Home() {
         <h1 id="home-heading" className={styles.heroHeading}>Small compounds. <em>Big curiosity.</em></h1>
       </div>
       <div className={styles.carouselWrap}>
-        <ProductCarousel slides={products.map((product, index) => {
+        <ProductCarousel slides={products.slice(0, 8).map((product, index) => {
           const variant = getDefaultProductVariant(product);
           return {
             name: product.shortName,
