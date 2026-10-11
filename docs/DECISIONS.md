@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-10-11: Springier homepage and library permission
+
+The owner says the homepage needs to feel bouncier, springier, and more responsive, and explicitly states that the carousel UX is not approved yet. Continue iterating on the interaction and responsive layout; technical checks do not constitute UX acceptance. The owner authorizes adding component libraries when they make the work easier. This iteration uses the free Motion package for spring physics, direct dragging, and control feedback while preserving the current SALT N’ PEP design.
+
 ## 2026-10-04: GLP-3 public catalog naming
 
 The owner requested removing the former compound name from public website copy and using GLP-3. Use GLP-3 as a disclosed catalog label for LY-3437943 across product/research pages, public routes, reviews, saved-order display, and vial photos. Preserve canonical publication records, exact scientific search queries, source fingerprints, and stable checkout identities. Label adapted study wording clearly and present changed source passages as adapted excerpts rather than exact quotations. External source publications retain their publishers' wording. Implementation and photo-edit prompts are in `CATALOG_NAMING.md`.

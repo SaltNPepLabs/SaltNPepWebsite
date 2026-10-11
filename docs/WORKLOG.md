@@ -464,3 +464,10 @@
 - Merged origin/master through 054cd56, bringing in the desktop/mobile salt-flat hero, five-vial carousel layout, and arrow updates. Resolved homepage and worklog conflicts while preserving the two local commits for GLP-3 naming and the responsive research feature; retained both branches' worklog entries.
 - Validation: lint, production build, diff whitespace checks, and Chromium checks at 1440px, 390px, and 320px passed. Verified all eight product routes, GLP-3 links and vial asset, carousel selection/arrows/neighbor clicks, the research link, and no horizontal overflow or page errors. Desktop/mobile screenshots visually inspected; evidence is in ignored data/pull-latest-* and data/check-pull-latest.mjs.
 - Built preview: http://127.0.0.1:3016/. Merged locally; no push or deployment.
+
+## 2026-10-11 - Springier homepage carousel iteration
+
+- Added Motion springs, direct finger/mouse tracking, flick settling, and immediate retargeting for rapid arrow and selector input. Preserved product links, keyboard navigation, native vertical scrolling, and reduced-motion behavior; corrected touch capture transfer so swipes continue tracking. Added 44px mobile arrow targets and fitted the desktop carousel and selectors into the hero viewport, including shorter screens.
+- Recorded the owner's permission to add component libraries and that carousel UX remains unapproved. Motion is included for this iteration; technical validation does not constitute owner acceptance.
+- Validation: full lint, production build (1,474 static routes), diff whitespace checks, and 11 Chromium check groups passed. Verified spring response/overshoot, rapid input, drag/cancellation, native touch and scrolling, keyboard/product links, reduced motion, and seven layouts from 320px to 1920px without horizontal overflow or page errors. All seven layout screenshots visually inspected. Evidence is in ignored `data/check-spring-carousel.mjs`, `data/spring-carousel-checks.json`, and `data/spring-carousel-*.png`/`*.log`.
+- Local review: http://127.0.0.1:3016/. Committed locally; owner carousel UX review remains pending. No push or deployment.

@@ -1,7 +1,10 @@
 .hero {
   position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   width: 100%;
-  min-height: 100svh;
+  height: 100svh;
+  min-height: 680px;
   overflow: hidden;
   isolation: isolate;
   background: #b8afa2;
@@ -32,7 +35,7 @@
 .carouselWrap {
   position: relative;
   min-width: 0;
-  margin-top: clamp(2px, 0.6vh, 8px);
+  margin-top: 0;
 }
 
 .heroIntro {
@@ -315,6 +318,7 @@
   .hero {
     display: grid;
     grid-template-rows: auto minmax(0, 1fr);
+    height: auto;
     min-height: max(100svh, 760px);
     overflow: visible;
   }
