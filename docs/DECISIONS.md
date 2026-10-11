@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-10-11: Remember entry confirmation across visits
+
+The owner requested saving the entry agreement so visitors do not repeatedly confirm it. This supersedes the session-only policy below. Save acceptance in versioned local storage without automatic expiry, scoped to the browser profile and site origin. Carry existing session confirmations forward and synchronize acceptance across open tabs. Fall back to session storage, then memory, when storage is unavailable. Preserve the required first-visit checkboxes, static export, and accessible modal behavior. See `SITE_ENTRY.md` for persistence limits and verification.
+
 ## 2026-10-11: Aurum catalog, prices, availability, and certificates
 
 The owner requests copying Aurum Peptide Labs' full catalog/prices, removing sold-out banners on its products, and linking its certificates. This supersedes earlier pending-price, stock-selection, and preview-only instructions for Aurum products. Import all 26 listings and 38 available sizes; activate the 20 previews. Preserve Pinealon/Epitalon, the original eight homepage features, stable checkout identities, and public GLP-3 naming.

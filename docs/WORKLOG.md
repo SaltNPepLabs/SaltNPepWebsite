@@ -485,3 +485,9 @@
 - Checked all 1,491 public exported pages from top to footer across phone, tablet, desktop, ultrawide, and short landscape matrices. Product verification covers 377 full-page checks, 7,084 fluid layouts, 12,000 dense quantity layouts, all 43 sizes, and every published review. Research verification covers 18,108 full-page checks and every reader's content. Integration adds 19,503 layout measurements; final audits found no layout failures. Exact coverage, interactions, manual visual review, and browser limits are recorded in `docs/RESPONSIVE_QA.md`.
 - Validation: final production build, source lint excluding ignored `data/`, eight tests, and diff whitespace checks passed. Default lint's unrelated ignored-data failures and static-preview prefetch/cancellation behavior are documented in the QA record; settled WebKit follow-up passed without runtime errors or failed requests.
 - Local review: http://127.0.0.1:3016/. Committed locally; no push or deployment. Owner carousel UX review remains pending.
+
+## 2026-10-11 - Remember entry agreement across visits
+
+- Replaced session-only entry acceptance with versioned local storage, migrated existing session confirmations, and synchronized acceptance across open tabs. Retained session/memory fallbacks and the required first-visit checkboxes.
+- Validation: component lint, production build (1,494 static routes), and browser checks passed for checkbox requirements, cross-tab dismissal, reload persistence, and a new direct-product visit after closing both test tabs. Return-visit proof is in ignored `data/entry-persistence/return-visit.jpg`.
+- Local built preview updated; committed locally with no push or deployment. Concurrent carousel work is preserved.

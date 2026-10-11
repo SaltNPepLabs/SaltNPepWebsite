@@ -8,16 +8,40 @@ const confirmationEvent = "snp-entry-confirmed";
 let confirmedInMemory = false;
 
 function subscribe(onChange: () => void) {
+  function onStorage(event: StorageEvent) {
+    if (event.key === confirmationKey || event.key === null) onChange();
+  }
   window.addEventListener(confirmationEvent, onChange);
-  return () => window.removeEventListener(confirmationEvent, onChange);
+  window.addEventListener("storage", onStorage);
+  return () => {
+    window.removeEventListener(confirmationEvent, onChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function readStoredConfirmation(storage: "localStorage" | "sessionStorage") {
+  try {
+    return window[storage].getItem(confirmationKey) === "confirmed";
+  } catch {
+    return false;
+  }
 }
 
 function readConfirmation() {
+  return confirmedInMemory
+    || readStoredConfirmation("localStorage")
+    || readStoredConfirmation("sessionStorage");
+}
+
+function rememberConfirmation() {
+  confirmedInMemory = true;
   try {
-    return confirmedInMemory || sessionStorage.getItem(confirmationKey) === "confirmed";
-  } catch {
-    return confirmedInMemory;
-  }
+    localStorage.setItem(confirmationKey, "confirmed");
+    return;
+  } catch { /* Fall back to the current tab when persistent storage is unavailable. */ }
+  try {
+    sessionStorage.setItem(confirmationKey, "confirmed");
+  } catch { /* Keep this visit usable when all browser storage is unavailable. */ }
 }
 
 function unconfirmedOnServer() {
@@ -32,7 +56,11 @@ export function SiteEntryGate({ children }: { children: ReactNode }) {
   const ageRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (confirmed) return;
+    if (confirmed) {
+      // Carry existing tab-session confirmations into persistent storage.
+      rememberConfirmation();
+      return;
+    }
     const dialog = dialogRef.current;
     if (!dialog) return;
     const previousOverflow = document.body.style.overflow;
@@ -50,10 +78,7 @@ export function SiteEntryGate({ children }: { children: ReactNode }) {
   function enterSite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!over21 || !understandsResearch) return;
-    confirmedInMemory = true;
-    try {
-      sessionStorage.setItem(confirmationKey, "confirmed");
-    } catch { /* Keep this visit usable when browser storage is unavailable. */ }
+    rememberConfirmation();
     window.dispatchEvent(new Event(confirmationEvent));
     requestAnimationFrame(() => document.getElementById("main-content")?.focus());
   }
