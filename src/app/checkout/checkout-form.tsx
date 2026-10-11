@@ -16,6 +16,7 @@ export function CheckoutForm() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [preview, setPreview] = useState(false);
+  const errorRef = useRef<HTMLParagraphElement>(null);
   const attempt = useRef<{ key: string; token: string; body: string } | null>(null);
   useEffect(() => { let active = true; checkoutApi<CheckoutConfig>("/config").then(c => { if (active) { setConfig(c); setPreview(isCheckoutPreview()); } }).catch(e => { if (active) setError(e.message); }); return () => { active = false; }; }, []);
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -44,14 +45,17 @@ export function CheckoutForm() {
       updatedHistory[order.id] = { id: order.id, token: attempt.current.token };
       localStorage.setItem(historyStorageKey, JSON.stringify(updatedHistory));
       router.push(`/checkout/result?order=${order.id}`);
-    } catch (e) { setError(e instanceof Error ? e.message : "Unable to submit checkout. Please retry."); }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Unable to submit checkout. Please retry.");
+      requestAnimationFrame(() => errorRef.current?.focus());
+    }
     finally { setBusy(false); }
   }
   return <div className={styles.shell}>
     <p className="eyebrow">SALT N’ PEP / CHECKOUT</p><h1>For your research.</h1>
     <p className={styles.intro}>Submit your shipping details and research information. We review research eligibility before opening payment. Products are for laboratory research only.</p>
     {preview && <div className={styles.summary}><strong>Local UX demo — no charges or real orders</strong><p className={styles.note}>Shipping is a $5 sample; destinations are examples. Use fictional details. Approval and payment can be simulated on the next screen. Hosted Stripe checkout will be tested after credentials are supplied.</p></div>}
-    {error && <p role="alert" className={styles.error}>{error}</p>}
+    {error && <p ref={errorRef} role="alert" tabIndex={-1} className={styles.error}>{error}</p>}
     {config && !config.enabled && <p className={styles.error}>Checkout is not open yet. Please check back soon.</p>}
     {items.length === 0 ? <p>Your bag is empty. <Link className="text-link" href="/products">Explore compounds</Link></p> : <div className={styles.grid}>
       <form className={styles.form} onSubmit={submit}>

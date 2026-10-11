@@ -6,6 +6,7 @@
 - [Decisions](DECISIONS.md) - durable technical and design decisions.
 - [Next Steps](NEXT_STEPS.md) - active follow-up items and risks.
 - [Worklog](WORKLOG.md) - dated record of meaningful changes.
+- [Responsive QA](RESPONSIVE_QA.md) - complete route inventory, viewport coverage, interactions, and verification limits.
 
 ## Current Boundary
 

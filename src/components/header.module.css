@@ -1,8 +1,52 @@
 .bag {
+  min-height: 44px;
   padding: 7px 9px;
   border: 1px solid transparent;
   border-radius: 999px;
   font-weight: 600;
+}
+
+.menuButton {
+  flex: 0 0 auto;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.mobileNavigation {
+  color: var(--foreground);
+  max-height: calc(100dvh - 138px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 380px) {
+  .wordmark,
+  :global(body:has(.home-hero)) :global(.site-header) .wordmark {
+    font-size: 17px;
+    letter-spacing: .1em;
+    gap: 5px;
+  }
+
+  :global(.site-header) .actions { gap: 8px; }
+}
+
+@media (max-width: 340px) {
+  .wordmark,
+  :global(body:has(.home-hero)) :global(.site-header) .wordmark { font-size: 15px; }
+}
+
+@media (max-width: 280px) {
+  .wordmark,
+  :global(body:has(.home-hero)) :global(.site-header) .wordmark { font-size: 12px; gap: 3px; }
+
+  .bag { padding-inline: 4px; gap: 6px; }
+  :global(.site-header) .actions { gap: 4px; }
+}
+
+@media (min-width: 769px) {
+  .mobileNavigation {
+    display: none;
+  }
 }
 
 .bagFilled {

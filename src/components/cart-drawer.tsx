@@ -5,6 +5,7 @@ import { formatPrice } from "@/lib/products";
 import { formatDosage } from "@/lib/product-variants";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import styles from "./cart-drawer.module.css";
 
 interface CartDrawerProps {
   open: boolean;
@@ -44,78 +45,72 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100]">
+    <div className={styles.overlay}>
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={onClose} />
+      <div className={styles.backdrop} onClick={onClose} />
 
       {/* Drawer - full width on mobile, max-w-md on larger */}
       <div
-        className="absolute right-0 top-0 h-full w-full sm:max-w-md bg-card shadow-2xl flex flex-col border-l border-border"
+        className={styles.drawer}
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="cart-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
-          <h2 id="cart-title" className="text-base sm:text-lg font-black uppercase tracking-tight">Your Cart</h2>
-          <button ref={closeButtonRef} onClick={onClose} className="p-2 text-muted hover:text-primary" aria-label="Close cart">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <div className={styles.header}>
+          <h2 id="cart-title">Your Cart</h2>
+          <button ref={closeButtonRef} onClick={onClose} className={styles.close} aria-label="Close cart">
+            <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
         {/* Items */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className={styles.items}>
           {items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-muted">
-              <svg className="w-12 h-12 sm:w-16 sm:h-16 mb-4 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+            <div className={styles.empty}>
+              <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
               </svg>
-              <p className="text-sm">Your cart is empty</p>
+              <p>Your cart is empty</p>
             </div>
           ) : (
-            <ul className="space-y-3 sm:space-y-4">
+            <ul>
               {items.map((item) => (
-                <li key={item.id} className="flex gap-3 sm:gap-4 p-3 metal-panel rounded-sm">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-card border border-primary/20 rounded-sm flex items-center justify-center flex-shrink-0">
-                    <span className="text-[10px] sm:text-xs font-bold text-primary">{formatDosage(item.variant.dosage)}</span>
+                <li key={item.id} className={styles.item}>
+                  <div className={styles.dosage}>
+                    <span>{formatDosage(item.variant.dosage)}</span>
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-xs sm:text-sm font-semibold truncate">{item.product.shortName}</h3>
-                    <p className="text-[10px] sm:text-xs text-muted">{formatPrice(item.pricePerUnit)} / vial</p>
-
-                    <div className="flex items-center gap-2 mt-2">
+                  <div className={styles.name}>
+                    <h3>{item.product.shortName}</h3>
+                    <p>{formatPrice(item.pricePerUnit)} / vial</p>
+                  </div>
+                  <div className={styles.price}>{formatPrice(item.pricePerUnit * item.quantity)}</div>
+                    <div className={styles.quantity}>
                       <button
                         aria-label={`Decrease ${item.product.shortName} ${formatDosage(item.variant.dosage)} quantity`}
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 rounded-md border border-border text-xs sm:text-sm flex items-center justify-center hover:bg-primary/10"
                       >
                         -
                       </button>
-                      <span className="text-xs sm:text-sm font-medium w-5 sm:w-6 text-center">{item.quantity}</span>
+                      <span>{item.quantity}</span>
                       <button
                         aria-label={`Increase ${item.product.shortName} ${formatDosage(item.variant.dosage)} quantity`}
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="w-6 h-6 sm:w-7 sm:h-7 rounded-md border border-border text-xs sm:text-sm flex items-center justify-center hover:bg-primary/10"
                       >
                         +
                       </button>
                       <button
                         aria-label={`Remove ${item.product.shortName} ${formatDosage(item.variant.dosage)}`}
                         onClick={() => removeItem(item.id)}
-                        className="ml-auto text-[10px] sm:text-xs text-muted hover:text-muted"
+                        className={styles.remove}
                       >
                         Remove
                       </button>
                     </div>
-                  </div>
-
-                  <div className="text-xs sm:text-sm font-semibold">
-                    {formatPrice(item.pricePerUnit * item.quantity)}
-                  </div>
                 </li>
               ))}
             </ul>
@@ -124,25 +119,25 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="p-4 border-t border-border space-y-3 bg-card">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted">Subtotal</span>
-              <span className="font-semibold">{formatPrice(totalPrice)}</span>
+          <div className={styles.footer}>
+            <div className={styles.subtotal}>
+              <span>Subtotal</span>
+              <strong>{formatPrice(totalPrice)}</strong>
             </div>
             <Link
               href="/checkout"
               onClick={onClose}
-              className="w-full py-3 btn-primary font-black rounded-sm text-sm block text-center"
+              className={styles.checkout}
             >
               Continue to Checkout
             </Link>
             <button
               onClick={clearCart}
-              className="w-full py-2 text-sm text-muted hover:text-primary transition-colors"
+              className={styles.clear}
             >
               Clear Cart
             </button>
-            <p className="text-[10px] text-muted text-center leading-relaxed">
+            <p>
               By placing an order, you confirm these products are for research use only.
             </p>
           </div>

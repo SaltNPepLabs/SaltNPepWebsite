@@ -14,6 +14,7 @@
   margin: 0;
   padding: 36px;
   overflow-y: auto;
+  overscroll-behavior: contain;
   border: 1px solid var(--border);
   background: var(--background);
   color: var(--foreground);
@@ -58,6 +59,7 @@
   gap: 13px;
   padding: 18px 0;
   cursor: pointer;
+  min-height: 44px;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -102,4 +104,11 @@
   .dialog { padding: 28px 24px; }
   .brand { margin-bottom: 24px; }
   .title { font-size: 28px; }
+}
+
+@media (max-height: 500px) {
+  .dialog { padding: 20px 24px; }
+  .brand { margin-bottom: 16px; }
+  .confirmations { margin: 16px 0; }
+  .statement { padding-block: 12px; }
 }

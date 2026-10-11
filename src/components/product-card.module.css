@@ -2,7 +2,7 @@
 .visual { position:relative; width:100%; aspect-ratio:1; overflow:hidden; }
 .visual img { transition:transform .3s ease; }
 .details { padding:16px 0 8px; }
-.identity { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+.identity { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 12px; }
 .identity h3 { font-size:22px; font-weight:600; line-height:1.2; letter-spacing:-.035em; overflow-wrap:anywhere; }
 .identity strong { font-size:14px; font-weight:500; white-space:nowrap; }
 .category { margin-top:8px; font-size:11px; color:var(--muted); line-height:1.6; }

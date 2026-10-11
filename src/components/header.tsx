@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CartDrawer } from "./cart-drawer";
 import { DeliveryBanner } from "./delivery-banner";
 import { ArrowIcon } from "./arrow-icon";
@@ -11,16 +11,27 @@ const navigation = [["/products", "The collection"], ["/science", "The research"
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const { totalItems, additionId } = useCart();
   const pathname = usePathname();
   const closeCart = useCallback(() => setCartOpen(false), []);
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setMobileMenuOpen(false);
+      menuButtonRef.current?.focus();
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [mobileMenuOpen]);
   return <>
     <a href="#main-content" className="skip-link">Skip to content</a>
     <DeliveryBanner />
     <header className="site-header">
-      <Link href="/" className="wordmark" aria-label="SALT N’ PEP home">SALT <span>N’</span> PEP</Link>
+      <Link href="/" className={`wordmark ${styles.wordmark}`} aria-label="SALT N’ PEP home">SALT <span>N’</span> PEP</Link>
       <nav className="desktop-nav" aria-label="Main navigation">{navigation.map(([href, label]) => <Link key={href} href={href} aria-current={pathname.startsWith(href) ? "page" : undefined}>{label}</Link>)}</nav>
-      <div className="header-actions">
+      <div className={`header-actions ${styles.actions}`}>
         <button className={`bag-button ${styles.bag} ${totalItems > 0 ? styles.bagFilled : ""}`} onClick={() => { setMobileMenuOpen(false); setCartOpen(true); }} aria-label={`Open cart, ${totalItems} items`}>
           Bag
           <span key={additionId} className={`bag-count ${styles.count} ${additionId > 0 ? styles.countAdded : ""}`}>
@@ -32,9 +43,9 @@ export function Header() {
             </svg>}
           </span>
         </button>
-        <button className="menu-button" aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation" aria-label={mobileMenuOpen ? "Close menu" : "Open menu"} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>{mobileMenuOpen ? "✕" : "☰"}</button>
+        <button ref={menuButtonRef} className={`menu-button ${styles.menuButton}`} aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation" aria-label={mobileMenuOpen ? "Close menu" : "Open menu"} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>{mobileMenuOpen ? "✕" : "☰"}</button>
       </div>
-      {mobileMenuOpen && <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation">{navigation.map(([href, label]) => <Link href={href} key={href} onClick={() => setMobileMenuOpen(false)}>{label}<ArrowIcon /></Link>)}</nav>}
+      {mobileMenuOpen && <nav id="mobile-navigation" className={`mobile-nav ${styles.mobileNavigation}`} aria-label="Mobile navigation">{navigation.map(([href, label]) => <Link href={href} key={href} aria-current={pathname.startsWith(href) ? "page" : undefined} onClick={() => setMobileMenuOpen(false)}>{label}<ArrowIcon /></Link>)}</nav>}
     </header>
     <CartDrawer open={cartOpen} onClose={closeCart} />
   </>;

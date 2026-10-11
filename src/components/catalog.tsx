@@ -22,8 +22,8 @@ export function Catalog() {
 
   return (
     <>
-      <div className="catalog-toolbar">
-        <label className="search-field">
+      <div className={`catalog-toolbar ${styles.toolbar}`}>
+        <label className={`search-field ${styles.search}`}>
           <span aria-hidden="true">⌕</span>
           <input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Find a product" aria-label="Find a product" />
         </label>

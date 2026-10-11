@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { checkoutApi, isCheckoutPreview, orderStorageKey, historyStorageKey } from "@/lib/checkout-client";
@@ -15,6 +15,7 @@ export function OrderStatus() {
   const [support, setSupport] = useState("");
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [preview, setPreview] = useState(false);
+  const errorRef = useRef<HTMLParagraphElement>(null);
   const credentials = () => {
     const history: Record<string, { id: string; token: string }> = JSON.parse(localStorage.getItem(historyStorageKey) || "{}");
     const requested = new URLSearchParams(window.location.search).get("order");
@@ -50,14 +51,18 @@ export function OrderStatus() {
       const history = JSON.parse(localStorage.getItem(historyStorageKey) || "{}"); history[id] = { id, token };
       localStorage.setItem(historyStorageKey, JSON.stringify(history)); sessionStorage.setItem(orderStorageKey, JSON.stringify({ id, token }));
       setOrder(restored); setSavedIds(Object.keys(history)); setBusy(false); router.push(`/checkout/result?order=${id}`);
-    } catch (e) { setError(e instanceof Error ? e.message : "Unable to recover access."); setBusy(false); }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Unable to recover access.");
+      setBusy(false);
+      requestAnimationFrame(() => errorRef.current?.focus());
+    }
   }
   return <div className={`${styles.shell} ${styles.result}`}><p className="eyebrow">SALT N’ PEP / YOUR REQUEST</p><h1>{order?.status === "paid" ? "Payment confirmed." : "Research comes first."}</h1>
     {preview && <div className={styles.summary}><strong>Local UX demo — no charges or real orders</strong><p className={styles.note}>These controls simulate staff review and payment verification. No card details are collected and no payment service is contacted.</p>
       {order?.status === "awaiting_review" && <><button className={styles.action} disabled={busy} onClick={() => simulate("approve")}>Demo: approve research request</button><button className={styles.secondary} disabled={busy} onClick={() => simulate("reject")}>Demo: reject research request</button></>}
       {order?.status === "approved" && <><button className={styles.action} disabled={busy} onClick={() => simulate("paid")}>Demo: confirm {order.method === "card" ? "card" : "Venmo"} payment</button><button className={styles.secondary} disabled={busy} onClick={() => simulate("fail")}>Demo: simulate failed payment</button></>}
     </div>}
-    {error && <p className={styles.error} role="alert">{error}</p>}
+    {error && <p ref={errorRef} className={styles.error} role="alert" tabIndex={-1}>{error}</p>}
     {order && <><p className={styles.reference}>Order reference: {order.id}</p>
       <div aria-live="polite">
         {order.status === "awaiting_review" && <><h2>Awaiting research review</h2><p className={styles.intro}>Your request is saved. We’ll verify your research eligibility before payment is available. Return using this browser and check the status after speaking with our team.</p></>}

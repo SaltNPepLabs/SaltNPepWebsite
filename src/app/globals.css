@@ -171,5 +171,10 @@ h2 em { font-family:Georgia,serif; font-weight:400; }
 .product-detail-visual { aspect-ratio:1; min-height:0; }
 .text-link { font-weight:700; font-size:13px; }
 .desktop-nav { font-weight:700; font-size:13px; }
+.footer-top { flex-wrap:wrap; }
+.footer-top > * { min-width:0; }
+.footer-top nav { flex-wrap:wrap; align-items:flex-start; gap:12px clamp(20px,3vw,40px); }
+.footer-top nav a { min-height:44px; }
+.footer-bottom { flex-wrap:wrap; }
 @media(max-width:1100px) { .collection-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:600px) { .catalog-page { padding-top:24px; }.collection-grid { grid-template-columns:1fr; gap:28px; }.catalog-page .collection-grid { row-gap:28px; } }

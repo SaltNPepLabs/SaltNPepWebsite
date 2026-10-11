@@ -52,7 +52,7 @@ export function AddToCartButton({ product }: { product: Product }) {
         {pending && <><strong>Pricing pending</strong><p>Price for this size is coming soon. Ordering will open once pricing is confirmed.</p></>}
       </div>
       {!soldOut && !pending && <><h2 className={styles.quantityHeading}>Quantity</h2>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+      <div className={styles.quantityGrid}>
         {tiers.map((tier) => {
           const isSelected = tier.qty === selectedQty;
           return (

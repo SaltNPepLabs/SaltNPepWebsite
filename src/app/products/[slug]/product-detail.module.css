@@ -1,0 +1,10 @@
+.info { min-width:0; container-type:inline-size; }
+.title { font-size:clamp(26px,10.6cqi,30px); }
+
+@media (min-width:640px) {
+  .title { font-size:36px; }
+}
+
+@media (min-width:1024px) {
+  .title { font-size:clamp(38px,10cqi,60px); }
+}

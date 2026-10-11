@@ -14,7 +14,7 @@ export function ProductReviews({ slug, name }: { slug: string; name: string }) {
   return <div className={styles.reviews}>
     <nav className={styles.jumpLinks} aria-label={`${name} reviews`}>
       <a href="#customer-reviews">Customer reviews <span>{reviews.length}</span></a>
-      <a href="#scientific-review">Scientific review <ArrowIcon direction="down" /></a>
+      {research && <a href="#scientific-review">Scientific review <ArrowIcon direction="down" /></a>}
     </nav>
     <section id="customer-reviews" className={styles.customers} aria-labelledby="customer-reviews-heading">
       <div className={styles.customerHeading}>
@@ -35,7 +35,7 @@ export function ProductReviews({ slug, name }: { slug: string; name: string }) {
         <div className={styles.tags}><span>{research.evidence === "human" ? "Human study" : "Preclinical study"}</span>{research.related && <span>Related-compound evidence</span>}<span>{research.year}</span></div>
         <h3>{research.focus}</h3><p className={styles.model}>{research.model}</p>
         <div className={styles.findings}><div><h4>What the researchers observed</h4><p>{research.finding}</p></div><div><h4>What this does not establish</h4><p>{research.limitation}</p></div></div>
-        <div className={styles.source}><p>{research.authors} · <cite>{research.journal}</cite> · {research.year}</p><a href={research.source}>Read the primary paper <ArrowIcon /><small>{research.sourceId}</small></a></div>
+        <div className={styles.source}><p>{research.authors} · <cite>{research.journal}</cite> · {research.year}</p><a href={research.source}><span>Read the primary paper</span><ArrowIcon /><small>{research.sourceId}</small></a></div>
       </article>
       <Link href={`/science/${researchSlug}`} className={styles.libraryLink}>Explore all {researchEntries.filter((entry) => entry.slug === researchSlug).length} {name} studies <ArrowIcon /></Link>
     </section>}

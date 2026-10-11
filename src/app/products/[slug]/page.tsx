@@ -8,6 +8,7 @@ import { catalogSlug } from "@/lib/catalog-naming";
 import { getAurumProduct } from "@/lib/aurum-catalog";
 import type { Metadata } from "next";
 import { AddToCartButton } from "./add-to-cart";
+import styles from "./product-detail.module.css";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -47,9 +48,9 @@ export default async function ProductPage({ params }: Props) {
           <div className="product-detail-visual"><ProductVial product={product} featured /></div>
 
           {/* Product info */}
-          <div>
+          <div className={styles.info}>
             <span className="text-xs font-black text-primary uppercase tracking-[0.18em]">{product.category}</span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black uppercase tracking-tight mt-2 leading-none">{product.name}</h1>
+            <h1 className={`${styles.title} text-3xl sm:text-4xl font-black uppercase tracking-tight mt-2 leading-none`}>{product.name}</h1>
             <p className="text-muted mt-1 text-sm sm:text-base">{product.tagline}</p>
 
             <AddToCartButton key={product.slug} product={product} />
