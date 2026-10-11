@@ -7,6 +7,46 @@
 - Validation: full lint, seven checkout regressions, production build (1,474 static routes), research audit of all 1,448 readers/124 explanations, and static-preview test passed. Six browser check groups verified all exported HTML public text/links (1,472 HTML files), catalog/library search, all 56 customer reviews, curated and adapted readers, primary sources, return-state preservation, imagery, FAQ/homepage links, and desktop/320px layouts without page errors or overflow. Product and mobile reader screenshots were visually inspected. Evidence is in ignored `data/glp3-*` and `data/check-glp3-naming.mjs`.
 - Local review: http://127.0.0.1:3016/products/glp-3 and http://127.0.0.1:3016/science/glp-3. The first build hit disk exhaustion; a later read-only check showed available space and the successful rebuild required no cleanup. Friction was logged. Committed locally; no push or deployment for this package.
 
+## 2026-10-10 - Five-vial mobile carousel
+
+- Restored the larger mobile center vial and the previous adjacent-vial size and positions. Added the two small, blurred, faded outer vials at the edges and moved mobile arrows below the vial artwork without changing the stage height or product-details layout.
+- Kept the desktop carousel rules, all eight products, image assets, swipe handling, navigation controls, and animated centering behavior unchanged.
+- Validation: browser checks at 320, 375, 390, and 430 px confirmed all five positions are visible with no horizontal page overflow; 1280 px desktop computed styles remain on the original desktop rules.
+
+## 2026-10-07 - Removed carousel shadow and spotlight experiment
+
+- Removed the measured center-vial floor shadow, stage-level shadow layer, resize observer, and center-only spotlight treatment.
+- Preserved the existing full-screen carousel geometry, vial artwork, navigation, transitions, and responsive behavior unchanged.
+- Validation: ESLint and production build passed; all 1,474 static pages generated successfully, and the final source diff passed whitespace checks.
+
+## 2026-10-07 - Realistic floor-projected carousel shadows
+
+- Reworked the active, adjacent, and outer vial shadows into layered ground-plane ellipses with visible separation from the bottle, warm brown-gray lighting, subtle reflections, and natural fade edges.
+- Preserved the existing carousel geometry, vial artwork, sizing, navigation, transitions, and responsive behavior while synchronizing each shadow stack with its corresponding vial.
+- Validation: ESLint and production build passed; all 1,474 static pages generated successfully. The final source diff passed whitespace checks, and the floor layer is positioned behind the stage with exact shared horizontal offsets for all five visible shadow states.
+- Final browser screenshot verification remains blocked by the site-entry gate in the local automation environment; the application-level consent flow and temporary automation probes did not expose the carousel.
+
+## 2026-10-07 - Refined compact floor shadows
+
+- Replaced the broad blurred shadow stack with compact, layered radial-gradient ellipses using a darker center and warm charcoal-brown ambient falloff.
+- Anchored every shadow to the actual bottom floor plane, retained the existing shared horizontal offsets and carousel transforms, and kept the shadow layer behind the vial images and all foreground content.
+- Preserved the center, immediate adjacent, and outer visual hierarchy while keeping the existing responsive layout and carousel behavior unchanged.
+- Validation: lint, production build, and diff whitespace checks passed. The static preview rendered the desktop carousel and shadow layer, but automated mobile inspection remained blocked by the site-entry gate's inconsistent hydration behavior after reload; the gate is unrelated to this CSS change.
+
+## 2026-10-05 - Full-screen peptide hero carousel
+
+- Replaced the homepage hero's compact carousel shell with a full-viewport, edge-to-edge desktop/mobile background while preserving the existing header, navigation, Bag, product data, routes, Collection, Research, and footer.
+- Reused all eight shared product records and existing vial assets. The active vial is largest and sharpest, neighboring vials fade and blur progressively, and non-active vials select into the center before their existing product route is opened.
+- Added responsive desktop/mobile background sources, floating vial framing, soft contact shadows, smooth cover-flow motion, arrows, dots, keyboard navigation, horizontal drag/swipe, reduced-motion support, and existing product metadata beneath the carousel.
+- Preserved the existing thin header divider and left the remainder of the site unchanged.
+- Validation: lint and production build passed. All eight product routes and static pages generated successfully.
+
+## 2026-10-06 - Isolated homepage vial artwork
+
+- Updated the homepage carousel to use the standalone vial assets from `public/images/vials` for all eight products. The root-level product photography remains unchanged for Collection cards and product detail pages.
+- Kept the standalone asset selection limited to the homepage carousel; no Collection image references or shared ProductVial behavior were changed.
+- Validation: lint and production build pass; the live homepage returns HTTP 200 with all eight standalone vial image routes available.
+
 ## 2026-10-04 - Removed reviews mentioning demo
 
 - Removed all 59 complete review records containing "demo" in any text field, case-insensitively, and recomputed product counts. The 200 retained records remain unchanged: BPC-157 51, retatrutide 56, TB-500 46, and MOTS-c 47. Original dates remain hidden pending owner corrections.
@@ -418,3 +458,9 @@
 - Rebuilt the rejected Resources section with live HTML typography, supporting copy, a clear ivory research button, and a readable research-only notice in normal document flow. Preserved the existing dark texture as a cropped decorative layer; its baked-in text is excluded. Retained the site's sans-serif/serif styling and research-library destination.
 - Validation: full lint, production build (1,474 static routes), and eight Chromium check groups passed. Checked seven widths from 320px to 2048px, text/action spacing, image loading and crop, readable notice and touch target, keyboard focus and research navigation, with no horizontal overflow or page errors. Desktop, wide desktop, and 320px screenshots visually inspected. Evidence is in ignored `data/check-research-feature.mjs`, `data/research-feature-checks.json`, and `data/research-feature-*.png`/`*.log`.
 - Local preview: http://127.0.0.1:3016/#research-heading. Committed locally; no push or deployment for this package. Concurrent catalog and customer-review work preserved.
+
+## 2026-10-11 - Latest homepage changes merged
+
+- Merged origin/master through 054cd56, bringing in the desktop/mobile salt-flat hero, five-vial carousel layout, and arrow updates. Resolved homepage and worklog conflicts while preserving the two local commits for GLP-3 naming and the responsive research feature; retained both branches' worklog entries.
+- Validation: lint, production build, diff whitespace checks, and Chromium checks at 1440px, 390px, and 320px passed. Verified all eight product routes, GLP-3 links and vial asset, carousel selection/arrows/neighbor clicks, the research link, and no horizontal overflow or page errors. Desktop/mobile screenshots visually inspected; evidence is in ignored data/pull-latest-* and data/check-pull-latest.mjs.
+- Built preview: http://127.0.0.1:3016/. Merged locally; no push or deployment.
