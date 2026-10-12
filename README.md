@@ -2,6 +2,18 @@
 
 Next.js storefront-style site for a research peptide catalog. The site presents product cards, product detail pages, science/FAQ content, and a client-side cart drawer.
 
+## Repository
+
+The company homebase is [SaltNPepLabs/SaltNPepWebsite](https://github.com/SaltNPepLabs/SaltNPepWebsite), with `main` as the working branch.
+
+```bash
+git clone https://github.com/SaltNPepLabs/SaltNPepWebsite.git
+cd SaltNPepWebsite
+npm ci
+```
+
+The existing Windows workspace remains `C:\Users\kalec\peptide-store`. Its `origin` points to the company repository; `legacy` retains the previous personal repository as a migration fallback. The full Git history and completed local analytics work are preserved. Local environment files, databases, research caches, generated exports, and agent logs stay outside Git; use the committed environment examples for a fresh setup.
+
 ## Stack
 
 - Next.js 16 App Router
@@ -37,7 +49,7 @@ The active visual system follows the owner-provided SALT N’ PEP vial reference
 
 ## Deployment
 
-The project is configured for static export. `npm run build` emits `out/`; use that directory as the Render Static Site publish directory.
+Connect hosting to `SaltNPepLabs/SaltNPepWebsite` on `main`. The project is configured for static export. `npm run build` emits `out/`; use that directory as the Render Static Site publish directory.
 
 Checkout uses a separate Node 24 API and persistent SQLite database. See [Checkout setup and operations](docs/CHECKOUT.md) for environments, Stripe webhooks, staff review, Venmo reconciliation, and production deployment. Live payments are disabled until configured; do not deploy secrets with the static site.
 

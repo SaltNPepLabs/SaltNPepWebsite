@@ -6,6 +6,7 @@ import { formatDosage } from "@/lib/product-variants";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import styles from "./cart-drawer.module.css";
+import { track } from "@/lib/analytics";
 
 interface CartDrawerProps {
   open: boolean;
@@ -15,6 +16,11 @@ interface CartDrawerProps {
 export function CartDrawer({ open, onClose }: CartDrawerProps) {
   const { items, totalPrice, updateQuantity, removeItem, clearCart } = useCart();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const wasOpen = useRef(false);
+  useEffect(() => {
+    if (open && !wasOpen.current) track("cart_opened", { item_count: items.reduce((sum, item) => sum + item.quantity, 0), cart_value_cents: Math.round(totalPrice * 100) });
+    wasOpen.current = open;
+  }, [open, items, totalPrice]);
 
   const dialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

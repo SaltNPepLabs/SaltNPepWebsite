@@ -11,7 +11,7 @@
     "lint": "eslint",
     "checkout:api": "node --env-file-if-exists=.env.checkout --import tsx server/start.ts",
     "orders": "node --env-file-if-exists=.env.checkout --import tsx server/admin.ts",
-    "test": "node --import tsx --test server/checkout.test.ts"
+    "test": "node --import tsx --test server/checkout.test.ts server/analytics.test.ts server/client-analytics.test.ts"
   },
   "engines": {
     "node": ">=24.13.0"
@@ -19,6 +19,7 @@
   "dependencies": {
     "motion": "^14.1.0",
     "next": "^16.3.8",
+    "posthog-js": "^1.438.7",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "stripe": "^23.0.0",

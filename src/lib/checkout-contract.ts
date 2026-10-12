@@ -13,6 +13,11 @@ export const checkoutRequest = z.object({
     zip: z.string().regex(/^\d{5}(-\d{4})?$/),
   }),
   researchOnly: z.literal(true),
+  // Optional anonymous metadata; malformed analytics must never reject an order.
+  analytics: z.object({
+    distinctId: z.string().regex(/^snp_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),
+    viewportBucket: z.enum(["mobile", "tablet", "desktop"]),
+  }).optional().catch(undefined),
 });
 export type CheckoutRequest = z.infer<typeof checkoutRequest>;
 export interface CheckoutConfig {

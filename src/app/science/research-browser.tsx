@@ -5,6 +5,8 @@ import { ArrowIcon } from "@/components/arrow-icon";
 import { publicationCategories, publicationNotice, publicationSearch, studyAnchor, type IndexedPublication, type PublicationCategory } from "@/lib/research-catalog-format";
 import styles from "./research.module.css";
 import { StudyReaderLink, subscribeLocation, getLocation, serverLocation } from "./study-navigation";
+import { track } from "@/lib/analytics";
+import { catalogSlug } from "@/lib/catalog-naming";
 
 type ReadingIndex = { sourceId: string; id: string; search: string; year: number; category: PublicationCategory };
 const pageSize = 30;
@@ -47,6 +49,11 @@ export default function ResearchBrowser({ slug, compound, area, papers, notes, c
   const readingById = new Map(notes.map((note) => [note.id, note.sourceId]));
   const cards = Children.toArray(children);
   const cardById = new Map(notes.map((note, index) => [note.sourceId, cards[index]]));
+  const resultCount = view === "catalog" ? matchingPapers.length : matchingNotes.length;
+  useEffect(() => {
+    const timer = setTimeout(() => track("research_search", { query_length: query.length, result_count: resultCount, filters: { compound: catalogSlug(slug), type: category, year, sort, view } }), 400);
+    return () => clearTimeout(timer);
+  }, [query, resultCount, slug, category, year, sort, view]);
 
   useEffect(() => {
     if (!linkedNote) return;

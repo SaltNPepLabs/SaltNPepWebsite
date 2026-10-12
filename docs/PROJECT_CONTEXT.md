@@ -2,6 +2,13 @@
 
 SALT N’ PEP is a Next.js 16 App Router storefront-style site for research peptides. Its 28-product catalog includes all 26 Aurum Peptide Labs listings and 38 available source sizes, plus the existing Pinealon and Epitalon products. It includes product detail pages, science/FAQ content, and a client-side cart drawer.
 
+## Repository
+
+- Company homebase: https://github.com/SaltNPepLabs/SaltNPepWebsite
+- Working branch: `main`; default remote: `origin`
+- Existing local workspace: `C:\Users\kalec\peptide-store`
+- Previous personal repository is retained locally as remote `legacy`; company Git history includes the existing work.
+
 ## Stack
 
 - Next.js 16.3.8 with React 19; Node 24 for the separate checkout API
@@ -30,6 +37,8 @@ The active visual system follows the owner-provided SALT N’ PEP vial reference
 Use `--webpack` for local development because the default Turbopack dev server has previously panicked on this Windows machine while serving the site.
 
 ## Current functionality
+
+- Optional PostHog analytics is disabled by default and loads only after saved/current site entry acceptance. `src/lib/analytics.ts` owns pageviews and the complete product/cart/checkout/research funnel with allowlisted props, DNT, no free text/PII, and scrubbed URLs. The separate API captures verified Stripe/Venmo paid orders using anonymous checkout metadata and persistent delivery deduplication; analytics failures never fail payments. Server recovery: `npm run orders -- retry-analytics`. Event dictionary, privacy limits, activation, and dashboard guidance: `docs/ANALYTICS.md`. Static export and payment guards are unchanged; owner project keys and privacy disclosure remain pending.
 
 - GLP-3 is the owner's public catalog label for LY-3437943. Product/research routes use `glp-3`; names, summaries, customer reviews, and saved-order presentation use the same label. Research pages disclose adapted publication wording; changed source passages are labeled adapted excerpts rather than exact quotations. Canonical sources, exact PubMed queries, and stable checkout IDs remain unchanged. Both product photos now print GLP-3. Naming policy and image-edit prompts: `docs/CATALOG_NAMING.md`.
 - Every selected publication opens a static `/science/[slug]/[pmid]` reader from its title or Read summary link. The 124 curated papers lead with their detailed finding, methods, results context, and limitations. Other readers show an attributed excerpt of at most 25 exact words, with the original section and shortened-sentence disclosure, or an honest missing/review-required abstract state. Only explicitly labeled source conclusions are called conclusions; retracted records retain prominent notices. Full-abstract and original-publication links stay visible. Search, type, year, sort, page, reading view, and expanded PMID/PMCID note survive reader return and browser Back. `scripts/research_source_excerpts.py` generates `src/lib/research-source-excerpts.json` during both refresh modes, preserving source fingerprints and cached-check dates; full abstracts remain private in ignored data. Reader selection uses the same compound relevance gate as the library.

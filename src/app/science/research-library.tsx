@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { track } from "@/lib/analytics";
+import { catalogSlug } from "@/lib/catalog-naming";
 import Link from "next/link";
 import type { researchIndex } from "@/lib/research";
 import type { researchCatalogGroups } from "@/lib/research-catalog";
@@ -32,6 +34,10 @@ export default function ResearchLibrary({ entries, groups }: { entries: typeof r
   }).filter((group) => group.matching.length);
   const count = matching.reduce((sum, group) => sum + group.matching.length, 0);
   const total = view === "catalog" ? groups.reduce((sum, group) => sum + group.papers.length, 0) : entries.length;
+  useEffect(() => {
+    const timer = setTimeout(() => track("research_search", { query_length: query.length, result_count: count, filters: { compound: catalogSlug(compound), type: category, evidence, view } }), 400);
+    return () => clearTimeout(timer);
+  }, [query, count, compound, category, evidence, view]);
 
   function reset() {
     setQuery("");

@@ -6,7 +6,7 @@ import { getProduct } from "../src/lib/products";
 import { formatDosage, getProductVariant, getVariantUnitPrice } from "../src/lib/product-variants";
 import { checkoutRequest, type CheckoutRequest, type OrderView } from "../src/lib/checkout-contract";
 
-export type StoredOrder = OrderView & { customer: CheckoutRequest["customer"]; sessionId?: string; createdAt: string };
+export type StoredOrder = OrderView & { customer: CheckoutRequest["customer"]; analytics?: CheckoutRequest["analytics"]; sessionId?: string; createdAt: string };
 export const hash = (value: string) => createHash("sha256").update(value).digest("hex");
 
 export function priceOrder(input: unknown, shippingCents: number, states: string[]) {
@@ -35,7 +35,8 @@ export function openStore(path: string) {
   db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
     CREATE TABLE IF NOT EXISTS orders (id TEXT PRIMARY KEY, token_hash TEXT NOT NULL, request_key TEXT UNIQUE NOT NULL, request_hash TEXT NOT NULL, data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS audit (id INTEGER PRIMARY KEY, order_id TEXT NOT NULL, action TEXT NOT NULL, evidence TEXT NOT NULL, created_at TEXT NOT NULL);
-    CREATE TABLE IF NOT EXISTS venmo_payments (transaction_id TEXT PRIMARY KEY, order_id TEXT UNIQUE NOT NULL);`);
+    CREATE TABLE IF NOT EXISTS venmo_payments (transaction_id TEXT PRIMARY KEY, order_id TEXT UNIQUE NOT NULL);
+    CREATE TABLE IF NOT EXISTS order_analytics (order_id TEXT PRIMARY KEY, event_uuid TEXT NOT NULL, claimed_until INTEGER NOT NULL DEFAULT 0, sent_at TEXT);`);
   function get(id: string) {
     const row = db.prepare("SELECT data FROM orders WHERE id=?").get(id) as { data: string } | undefined;
     return row ? JSON.parse(row.data) as StoredOrder : undefined;
@@ -51,6 +52,24 @@ export function openStore(path: string) {
   }
   return {
     db, get,
+    claimAnalytics(id: string, now = Date.now()) {
+      return transaction(() => {
+        const order = get(id);
+        if (!order || order.status !== "paid" || !order.analytics) return undefined;
+        db.prepare("INSERT OR IGNORE INTO order_analytics(order_id,event_uuid) VALUES(?,?)").run(id, id.slice(4));
+        const delivery = db.prepare("SELECT event_uuid,claimed_until,sent_at FROM order_analytics WHERE order_id=?").get(id) as { event_uuid: string; claimed_until: number; sent_at?: string };
+        if (delivery.sent_at || delivery.claimed_until > now) return undefined;
+        db.prepare("UPDATE order_analytics SET claimed_until=? WHERE order_id=?").run(now + 30000, id);
+        return { order, uuid: delivery.event_uuid };
+      });
+    },
+    finishAnalytics(id: string, sent: boolean) {
+      db.prepare("UPDATE order_analytics SET claimed_until=0,sent_at=? WHERE order_id=? AND sent_at IS NULL").run(sent ? new Date().toISOString() : null, id);
+    },
+    listUnsentAnalytics() {
+      return db.prepare("SELECT o.data FROM orders o LEFT JOIN order_analytics a ON a.order_id=o.id WHERE a.sent_at IS NULL").all()
+        .map(row => JSON.parse(String(row.data)) as StoredOrder).filter(order => order.status === "paid" && order.analytics).map(order => order.id);
+    },
     recoverAccess(id: string, evidence: string) {
       return transaction(() => {
         if (!get(id) || evidence.trim().length < 10) throw new Error("Order and verified ownership evidence are required.");
@@ -70,13 +89,13 @@ export function openStore(path: string) {
     create(input: unknown, shipping: number, states: string[], requestKey: string, token: string) {
       return transaction(() => {
       const priced = priceOrder(input, shipping, states);
-      const requestHash = hash(JSON.stringify(priced.request));
+      const requestHash = hash(JSON.stringify({ ...priced.request, analytics: undefined }));
       const existing = db.prepare("SELECT id,request_hash,token_hash FROM orders WHERE request_key=?").get(requestKey) as { id: string; request_hash: string; token_hash: string } | undefined;
       if (existing) {
         if (existing.request_hash !== requestHash || existing.token_hash !== hash(token)) throw new Error("Checkout request was already used. Start a new request.");
         return get(existing.id)!;
       }
-      const order: StoredOrder = { id: `SNP-${randomUUID()}`, status: "awaiting_review", method: priced.request.method, customer: priced.request.customer, items: priced.items, subtotalCents: priced.subtotalCents, shippingCents: priced.shippingCents, totalCents: priced.totalCents, createdAt: new Date().toISOString() };
+      const order: StoredOrder = { id: `SNP-${randomUUID()}`, status: "awaiting_review", method: priced.request.method, customer: priced.request.customer, analytics: priced.request.analytics, items: priced.items, subtotalCents: priced.subtotalCents, shippingCents: priced.shippingCents, totalCents: priced.totalCents, createdAt: new Date().toISOString() };
       db.prepare("INSERT INTO orders VALUES(?,?,?,?,?)").run(order.id, hash(token), requestKey, requestHash, JSON.stringify(order));
       audit(order.id, "created", "research eligibility review required");
       return order;

@@ -6,6 +6,8 @@ import Link from "next/link";
 import { dragReleasePage, settlingVelocity } from "@/lib/carousel-motion";
 import { ArrowIcon } from "./arrow-icon";
 import styles from "./product-carousel.module.css";
+import { track } from "@/lib/analytics";
+import { catalogSlug } from "@/lib/catalog-naming";
 
 type Slide = { name: string; href: string; image: ReactNode; details: ReactNode };
 type Gesture = {
@@ -68,7 +70,7 @@ function CarouselSlide({ slide, index, count, active, position, reducedMotion, o
           if (index !== active) {
             event.preventDefault();
             onSelect(index);
-          }
+          } else if (!event.defaultPrevented) track("carousel_product_opened", { product_slug: catalogSlug(slide.href.split("/").pop() || "") });
         }}
       >
         <motion.span
@@ -94,27 +96,32 @@ export function ProductCarousel({ slides }: { slides: Slide[] }) {
   const gesture = useRef<Gesture | null>(null);
   const suppressClick = useRef(false);
   const count = slides.length;
+  const settleVersion = useRef(0);
 
   useEffect(() => () => position.stop(), [position]);
   useEffect(() => {
     if (reducedMotion) position.jump(targetPage.current);
   }, [position, reducedMotion]);
 
-  function settle(page: number, velocity = position.getVelocity()) {
+  function settle(page: number, velocity = position.getVelocity(), method?: "drag" | "arrow" | "selector") {
+    const version = ++settleVersion.current;
+    const completed = () => {
+      if (method && version === settleVersion.current) track("carousel_interaction", { method, product_slug: catalogSlug(slides[modulo(page, count)].href.split("/").pop() || "") });
+    };
     const releaseVelocity = settlingVelocity(position.get(), page, velocity);
     position.stop();
     targetPage.current = page;
     setActive(modulo(page, count));
-    if (reducedMotion) position.jump(page);
-    else animate(position, page, { ...spring, velocity: releaseVelocity });
+    if (reducedMotion) { position.jump(page); completed(); }
+    else animate(position, page, { ...spring, velocity: releaseVelocity, onComplete: completed });
   }
 
   function move(direction: -1 | 1) {
-    settle(targetPage.current + direction);
+    settle(targetPage.current + direction, undefined, "arrow");
   }
 
   function selectSlide(index: number) {
-    settle(targetPage.current + offsetFrom(index, modulo(targetPage.current, count), count));
+    settle(targetPage.current + offsetFrom(index, modulo(targetPage.current, count), count), undefined, "selector");
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
@@ -152,6 +159,7 @@ export function ProductCarousel({ slides }: { slides: Slide[] }) {
       if (Math.abs(distance) < 6 || Math.abs(distance) <= vertical * 1.15) return;
       start.position = position.get();
       start.dragged = true;
+      settleVersion.current++;
       position.stop();
       setDragging(true);
       event.currentTarget.setPointerCapture(event.pointerId);
@@ -176,7 +184,7 @@ export function ProductCarousel({ slides }: { slides: Slide[] }) {
       return;
     }
     const velocity = event.timeStamp - start.lastTime < 80 ? -start.velocity / start.step : 0;
-    settle(dragReleasePage(start.position, position.get(), velocity), velocity);
+    settle(dragReleasePage(start.position, position.get(), velocity), velocity, "drag");
   }
 
   return (

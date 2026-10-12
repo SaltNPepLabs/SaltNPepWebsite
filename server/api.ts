@@ -5,6 +5,7 @@ import { z } from "zod";
 import { loadConfig } from "./config";
 import { openStore, type StoredOrder } from "./store";
 import { checkoutRequest } from "../src/lib/checkout-contract";
+import { sendOrderCompleted } from "./analytics";
 
 export function createCheckoutServer(config: ReturnType<typeof loadConfig>, store: ReturnType<typeof openStore>, stripe = config.key ? new Stripe(config.key) : null) {
   const limits = new Map<string, { count: number; expires: number }>();
@@ -34,6 +35,7 @@ export function createCheckoutServer(config: ReturnType<typeof loadConfig>, stor
             if (session.currency !== "usd" || session.livemode !== config.live) return send(400, { error: "Payment mode or currency mismatch." });
             try { store.markPaid(session.metadata?.order_id || "", "card", session.amount_total ?? -1, `Stripe event ${event.id}`, session.id); }
             catch { return send(503, { error: "Payment reconciliation pending. Retry delivery." }); }
+            void sendOrderCompleted(config, store, session.metadata?.order_id || "");
           }
         }
         return send(200, { received: true });

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import styles from "./site-entry-gate.module.css";
+import { acceptAnalyticsGate, track } from "@/lib/analytics";
 
 const confirmationKey = "snp-entry-confirmation-v1";
 const confirmationEvent = "snp-entry-confirmed";
@@ -54,6 +55,12 @@ export function SiteEntryGate({ children }: { children: ReactNode }) {
   const [understandsResearch, setUnderstandsResearch] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
+  const viewed = useRef(false);
+
+  useEffect(() => {
+    if (readConfirmation()) acceptAnalyticsGate();
+    else if (!viewed.current) { viewed.current = true; track("age_gate_viewed"); }
+  }, [confirmed]);
 
   useEffect(() => {
     if (confirmed) {
@@ -78,6 +85,8 @@ export function SiteEntryGate({ children }: { children: ReactNode }) {
   function enterSite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!over21 || !understandsResearch) return;
+    track("age_gate_accepted");
+    acceptAnalyticsGate();
     rememberConfirmation();
     window.dispatchEvent(new Event(confirmationEvent));
     requestAnimationFrame(() => document.getElementById("main-content")?.focus());

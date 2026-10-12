@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-10-12: Company repository homebase
+
+The owner designated `https://github.com/SaltNPepLabs/SaltNPepWebsite` as the new homebase. Preserve the existing Git history and completed local work, use `main` with the company repository as `origin`, and retain the previous personal repository locally as `legacy`. Keep the existing Windows workspace path so local setup remains usable. Hosting reconnection is separate from this source migration; preserve the static export and separate checkout API deployment contracts.
+
 ## 2026-10-11: Remember entry confirmation across visits
 
 The owner requested saving the entry agreement so visitors do not repeatedly confirm it. This supersedes the session-only policy below. Save acceptance in versioned local storage without automatic expiry, scoped to the browser profile and site origin. Carry existing session confirmations forward and synchronize acceptance across open tabs. Fall back to session storage, then memory, when storage is unavailable. Preserve the required first-visit checkboxes, static export, and accessible modal behavior. See `SITE_ENTRY.md` for persistence limits and verification.

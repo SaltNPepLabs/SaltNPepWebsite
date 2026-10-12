@@ -2,7 +2,8 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { checkoutApi, isCheckoutPreview, orderStorageKey, historyStorageKey } from "@/lib/checkout-client";
+import { checkoutApi, checkoutErrorCode, isCheckoutPreview, orderStorageKey, historyStorageKey } from "@/lib/checkout-client";
+import { pageview, track } from "@/lib/analytics";
 import type { CheckoutConfig, OrderView } from "@/lib/checkout-contract";
 import { formatPrice } from "@/lib/products";
 import { catalogText } from "@/lib/catalog-naming";
@@ -16,6 +17,14 @@ export function OrderStatus() {
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [preview, setPreview] = useState(false);
   const errorRef = useRef<HTMLParagraphElement>(null);
+  const viewedResult = useRef("");
+  useEffect(() => {
+    const key = order ? `${order.id}:${order.status}` : error ? "unavailable" : "";
+    if (!key || key === viewedResult.current) return;
+    viewedResult.current = key;
+    pageview(window.location.pathname + window.location.search);
+    track("order_result_viewed", { status: order?.status || "unavailable", order_ref: order?.id });
+  }, [order, error]);
   const credentials = () => {
     const history: Record<string, { id: string; token: string }> = JSON.parse(localStorage.getItem(historyStorageKey) || "{}");
     const requested = new URLSearchParams(window.location.search).get("order");
@@ -27,20 +36,20 @@ export function OrderStatus() {
   const refresh = useCallback(async () => {
     setBusy(true); setError("");
     try { setSavedIds(Object.keys(JSON.parse(localStorage.getItem(historyStorageKey) || "{}"))); const c = credentials(); setOrder(await checkoutApi<OrderView>(`/orders/${c.id}`, { headers: { Authorization: `Bearer ${c.token}` } })); }
-    catch (e) { setError(e instanceof Error ? e.message : "Unable to load order."); } finally { setBusy(false); }
+    catch (e) { track("checkout_error", { stage: "result", error_code: checkoutErrorCode(e) }); setError(e instanceof Error ? e.message : "Unable to load order."); } finally { setBusy(false); }
   }, []);
-  useEffect(() => { void refresh(); checkoutApi<CheckoutConfig>("/config").then(c => { setSupport(c.supportEmail); setPreview(isCheckoutPreview()); }).catch(() => {}); }, [refresh]);
+  useEffect(() => { void refresh(); checkoutApi<CheckoutConfig>("/config").then(c => { setSupport(c.supportEmail); setPreview(isCheckoutPreview()); }).catch(e => { track("checkout_error", { stage: "config", error_code: checkoutErrorCode(e) }); }); }, [refresh]);
   async function simulate(action: "approve" | "reject" | "paid" | "fail") {
     setBusy(true); setError("");
     try { const c = credentials(); setOrder(await checkoutApi<OrderView>(`/orders/${c.id}/demo/${action}`, { method: "POST", headers: { Authorization: `Bearer ${c.token}` } })); }
-    catch (e) { setError(e instanceof Error ? e.message : "Unable to simulate this state."); }
+    catch (e) { track("checkout_error", { stage: "preview", error_code: checkoutErrorCode(e) }); setError(e instanceof Error ? e.message : "Unable to simulate this state."); }
     finally { setBusy(false); }
   }
   async function pay() {
     setBusy(true); setError("");
     try { const c = credentials(); const result = await checkoutApi<{ url: string }>(`/orders/${c.id}/pay`, { method: "POST", headers: { Authorization: `Bearer ${c.token}` } });
       const url = new URL(result.url); if (url.protocol !== "https:" || url.hostname !== "checkout.stripe.com") throw new Error("Unable to open secure card checkout."); window.location.assign(url.href);
-    } catch (e) { setError(e instanceof Error ? e.message : "Unable to open payment."); setBusy(false); }
+    } catch (e) { track("checkout_error", { stage: "payment", error_code: checkoutErrorCode(e) }); setError(e instanceof Error ? e.message : "Unable to open payment."); setBusy(false); }
   }
   async function recover(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setBusy(true); setError("");
@@ -52,6 +61,7 @@ export function OrderStatus() {
       localStorage.setItem(historyStorageKey, JSON.stringify(history)); sessionStorage.setItem(orderStorageKey, JSON.stringify({ id, token }));
       setOrder(restored); setSavedIds(Object.keys(history)); setBusy(false); router.push(`/checkout/result?order=${id}`);
     } catch (e) {
+      track("checkout_error", { stage: "recovery", error_code: checkoutErrorCode(e) });
       setError(e instanceof Error ? e.message : "Unable to recover access.");
       setBusy(false);
       requestAnimationFrame(() => errorRef.current?.focus());

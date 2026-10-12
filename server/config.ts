@@ -12,7 +12,8 @@ export function loadConfig(env: Record<string, string | undefined> = process.env
   if (live && env.LIVE_PAYMENTS_APPROVED !== "true") throw new Error("Live Stripe requires LIVE_PAYMENTS_APPROVED=true after merchant approval.");
   if (venmoHandle && (!/^[A-Za-z0-9_-]{3,50}$/.test(venmoHandle) || env.VENMO_BUSINESS_APPROVED !== "true")) throw new Error("Configure an authorized Venmo business handle and VENMO_BUSINESS_APPROVED=true.");
   const parsed = new URL(origin);
+  const analytics = { enabled: env.ANALYTICS_ENABLED === "true", key: env.POSTHOG_API_KEY || "", host: env.POSTHOG_HOST || "https://us.i.posthog.com" };
   if (parsed.origin !== origin || (parsed.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(parsed.hostname))) throw new Error("STOREFRONT_ORIGIN must be an exact HTTPS origin (HTTP allowed locally).");
   if (enabled && key && !env.STRIPE_WEBHOOK_SECRET) throw new Error("Stripe webhook secret is required.");
-  return { enabled, origin, key, live, venmoHandle, states, shippingCents: Number.isSafeInteger(shippingCents) ? shippingCents : 0, supportEmail: env.SUPPORT_EMAIL || "", webhookSecret: env.STRIPE_WEBHOOK_SECRET || "", dbPath: env.ORDERS_DB_PATH || "./data/orders.sqlite", port: Number(env.PORT || 4010), trustProxy: env.TRUST_PROXY === "true" };
+  return { enabled, origin, key, live, venmoHandle, states, shippingCents: Number.isSafeInteger(shippingCents) ? shippingCents : 0, supportEmail: env.SUPPORT_EMAIL || "", webhookSecret: env.STRIPE_WEBHOOK_SECRET || "", dbPath: env.ORDERS_DB_PATH || "./data/orders.sqlite", port: Number(env.PORT || 4010), trustProxy: env.TRUST_PROXY === "true", analytics };
 }

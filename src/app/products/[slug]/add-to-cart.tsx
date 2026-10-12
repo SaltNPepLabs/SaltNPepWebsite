@@ -1,6 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { pageview, track } from "@/lib/analytics";
+import { catalogSlug, catalogText } from "@/lib/catalog-naming";
 import { useCart } from "@/lib/cart-context";
 import { formatPrice, type Product } from "@/lib/products";
 import { formatDosage, getDefaultProductVariant, getProductVariant, getStorefrontProductVariants } from "@/lib/product-variants";
@@ -19,6 +21,14 @@ export function AddToCartButton({ product }: { product: Product }) {
   const selectedTier = tiers.find((tier) => tier.qty === selectedQty) ?? defaultTier;
   const soldOut = !variant.inStock;
   const pending = variant.inStock && variant.price === null;
+  const viewedProduct = useRef("");
+  useEffect(() => {
+    if (viewedProduct.current === product.slug) return;
+    viewedProduct.current = product.slug;
+    const initial = getDefaultProductVariant(product);
+    pageview(window.location.pathname + window.location.search);
+    track("product_viewed", { product_slug: catalogSlug(product.slug), product_name: catalogText(product.name), variant: initial.id, price_cents: initial.price === null ? undefined : Math.round(initial.price * 100) });
+  }, [product]);
 
   const resetFeedback = () => {
     feedbackVersion.current++;

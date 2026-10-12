@@ -3,7 +3,9 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
-import { checkoutApi, isCheckoutPreview, orderStorageKey, attemptStorageKey, historyStorageKey } from "@/lib/checkout-client";
+import { checkoutApi, checkoutErrorCode, isCheckoutPreview, orderStorageKey, attemptStorageKey, historyStorageKey } from "@/lib/checkout-client";
+import { getAnalyticsCheckoutMetadata, pageview, track } from "@/lib/analytics";
+import { catalogSlug } from "@/lib/catalog-naming";
 import { checkoutRequest, type CheckoutConfig, type OrderView } from "@/lib/checkout-contract";
 import { formatPrice } from "@/lib/products";
 import { formatDosage } from "@/lib/product-variants";
@@ -18,17 +20,28 @@ export function CheckoutForm() {
   const [preview, setPreview] = useState(false);
   const errorRef = useRef<HTMLParagraphElement>(null);
   const attempt = useRef<{ key: string; token: string; body: string } | null>(null);
-  useEffect(() => { let active = true; checkoutApi<CheckoutConfig>("/config").then(c => { if (active) { setConfig(c); setPreview(isCheckoutPreview()); } }).catch(e => { if (active) setError(e.message); }); return () => { active = false; }; }, []);
+  const started = useRef(false);
+  useEffect(() => {
+    if (!items.length || started.current) return;
+    started.current = true;
+    pageview(window.location.pathname + window.location.search);
+    track("checkout_started", { item_count: items.reduce((sum, i) => sum + i.quantity, 0), cart_value_cents: Math.round(totalPrice * 100), items: items.map(i => ({ slug: catalogSlug(i.product.slug), variant: i.variant.id, qty: i.quantity })) });
+  }, [items, totalPrice]);
+  useEffect(() => { let active = true; checkoutApi<CheckoutConfig>("/config").then(c => { if (active) { setConfig(c); setPreview(isCheckoutPreview()); } }).catch(e => { if (active) { setError(e.message); track("checkout_error", { stage: "config", error_code: checkoutErrorCode(e) }); } }); return () => { active = false; }; }, []);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); if (busy) return;
     setError(""); setBusy(true);
+    let stage = "validation";
     try {
       const form = new FormData(event.currentTarget);
       const customer = Object.fromEntries(["name", "email", "organization", "researchPurpose", "address", "address2", "city", "state", "zip"].map(key => [key, form.get(key) || ""]));
-      const parsed = checkoutRequest.safeParse({ customer, items: items.map(i => ({ slug: i.product.slug, variantId: i.variant.id, quantity: i.quantity })), method: form.get("method"), researchOnly: form.get("researchOnly") === "on" });
+      const parsed = checkoutRequest.safeParse({ customer, items: items.map(i => ({ slug: i.product.slug, variantId: i.variant.id, quantity: i.quantity })), method: form.get("method"), researchOnly: form.get("researchOnly") === "on", analytics: getAnalyticsCheckoutMetadata() });
       if (!parsed.success) throw new Error("Check your details, research purpose (at least 20 characters), and research-use confirmation.");
       const body = JSON.stringify(parsed.data);
-      const fingerprint = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(body))), byte => byte.toString(16).padStart(2, "0")).join("");
+      // Analytics/viewport changes cannot turn a retry into a second order.
+      const fingerprintBody = JSON.stringify({ ...parsed.data, analytics: undefined });
+      const fingerprint = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(fingerprintBody))), byte => byte.toString(16).padStart(2, "0")).join("");
+      stage = "storage";
       if (!attempt.current || attempt.current.body !== body) {
         const saved = JSON.parse(sessionStorage.getItem(attemptStorageKey) || "null");
         attempt.current = saved?.fingerprint === fingerprint && /^[a-f0-9]{64}$/.test(saved.token) && typeof saved.requestKey === "string"
@@ -39,13 +52,17 @@ export function CheckoutForm() {
       sessionStorage.setItem(attemptStorageKey, JSON.stringify({ token: attempt.current.token, requestKey: attempt.current.key, fingerprint }));
       const history = JSON.parse(localStorage.getItem(historyStorageKey) || "{}");
       localStorage.setItem(historyStorageKey, JSON.stringify(history)); // Check durable storage before submission.
+      stage = "submit";
+      track("checkout_submitted", { payment_method: parsed.data.method === "card" ? "stripe" : "venmo", cart_value_cents: Math.round(totalPrice * 100) });
       const order = await checkoutApi<OrderView>("/orders", { method: "POST", headers: { Authorization: `Bearer ${attempt.current.token}`, "Idempotency-Key": attempt.current.key }, body });
+      stage = "storage";
       sessionStorage.setItem(orderStorageKey, JSON.stringify({ id: order.id, token: attempt.current.token, requestKey: attempt.current.key, fingerprint }));
       const updatedHistory = JSON.parse(localStorage.getItem(historyStorageKey) || "{}");
       updatedHistory[order.id] = { id: order.id, token: attempt.current.token };
       localStorage.setItem(historyStorageKey, JSON.stringify(updatedHistory));
       router.push(`/checkout/result?order=${order.id}`);
     } catch (e) {
+      track("checkout_error", { stage, error_code: stage === "validation" ? "invalid_request" : stage === "storage" ? "storage_unavailable" : checkoutErrorCode(e) });
       setError(e instanceof Error ? e.message : "Unable to submit checkout. Please retry.");
       requestAnimationFrame(() => errorRef.current?.focus());
     }
@@ -58,7 +75,10 @@ export function CheckoutForm() {
     {error && <p ref={errorRef} role="alert" tabIndex={-1} className={styles.error}>{error}</p>}
     {config && !config.enabled && <p className={styles.error}>Checkout is not open yet. Please check back soon.</p>}
     {items.length === 0 ? <p>Your bag is empty. <Link className="text-link" href="/products">Explore compounds</Link></p> : <div className={styles.grid}>
-      <form className={styles.form} onSubmit={submit}>
+      <form className={styles.form} onSubmit={submit} onInvalidCapture={event => {
+        const firstInvalid = event.currentTarget.querySelector("input:invalid, select:invalid, textarea:invalid");
+        if (event.target === firstInvalid) track("checkout_error", { stage: "validation", error_code: "invalid_form" });
+      }}>
         {preview && <button type="button" className={styles.secondary} onClick={event => {
           const form = event.currentTarget.form;
           const sample = { name: "Demo Researcher", email: "demo@example.com", address: "123 Example Street", city: "Salt Lake City", state: "UT", zip: "84101", organization: "Example Research Lab", researchPurpose: "In vitro laboratory assay for a fictional research project." };
