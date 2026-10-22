@@ -914,3 +914,6 @@ Removed the explanatory sentence under More from the collection at owner request
 
 ## 2026-10-22 — Link preview branding
 Set explicit Open Graph and Twitter metadata to the existing black-and-white logo and SALT N’ PEP | Research Compounds title. Visible homepage headline unchanged.
+
+## 2026-10-22 — Compact charcoal share artwork
+Added separate landscape logo image for link previews, charcoal exterior and black vial interiors. Updated social metadata dimensions; existing on-site logo unchanged. Owner requested publication.

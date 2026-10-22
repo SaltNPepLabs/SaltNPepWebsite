@@ -18,13 +18,13 @@ export const metadata: Metadata = {
     description: "Research compounds. For laboratory research only.",
     siteName: "SALT N’ PEP",
     type: "website",
-    images: [{ url: "/images/salt-n-pep-contact-logo.png", width: 1086, height: 1448, alt: "Salt N’ Pep black-and-white vial logo" }],
+    images: [{ url: "/images/share-logo-charcoal.png", width: 1536, height: 1024, alt: "Salt N’ Pep black-and-white vial logo" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "SALT N’ PEP | Research Compounds",
     description: "Research compounds. For laboratory research only.",
-    images: ["/images/salt-n-pep-contact-logo.png"],
+    images: ["/images/share-logo-charcoal.png"],
   },
   description:
     "A considered collection of research compounds. Explore compound details and laboratory documentation with SALT N’ PEP. For laboratory research only.",
