@@ -4,8 +4,8 @@
   justify-content: center;
   gap: 24px;
   padding: 11px 20px;
-  background: #282722;
-  color: #f5f2ec;
+  background: #272727;
+  color: #f2f2f2;
   text-align: center;
 }
 
@@ -29,17 +29,17 @@
   width: 16px;
   height: 16px;
   flex: 0 0 auto;
-  color: #d4c5aa;
+  color: #c6c6c6;
 }
 
 .divider {
   width: 1px;
   height: 12px;
-  background: #777168;
+  background: #727272;
 }
 
 .research {
-  color: #c9c3b9;
+  color: #c4c4c4;
 }
 
 @media (max-width: 480px) {
@@ -56,4 +56,10 @@
   .research {
     font-size: 9px;
   }
+}
+@media(max-width:760px){
+ .banner:global(.delivery-banner),:global(body:has(.home-hero)) .banner:global(.delivery-banner){height:27px;min-height:27px;padding:5px 12px;gap:0;flex-direction:row;background:#282722a6;opacity:1;}
+ .banner .delivery{justify-content:center;gap:0;}
+ .banner .delivery svg,.banner .research,.banner .divider{display:none;}
+ :global(body:has(.home-hero)) .banner .delivery,.banner .delivery{font-size:8px;line-height:17px;letter-spacing:.075em;white-space:nowrap;font-weight:500;}
 }

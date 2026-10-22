@@ -1,0 +1,97 @@
+{
+  "tool": "Built-in imagegen, edit mode",
+  "note": "Original source PNGs preserved; quantity-only edit prompts. UI selection uses catalog variant.",
+  "jobs": [
+    {
+      "id": "bpc-float-10",
+      "source": "vials/bpc-157.png",
+      "from": "5 MG",
+      "to": "10 MG",
+      "prompt": "Change ONLY 5 MG to 10 MG; preserve all glass, label artwork, exact framing and transparent background."
+    },
+    {
+      "id": "pinealon-float-10",
+      "source": "vials/pinealon.png",
+      "from": "20 MG",
+      "to": "10 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"20 MG\" to \"10 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve genuine transparent alpha background. No backdrop, floor, shadows or rocks may be added. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "bpc-rock-10",
+      "source": "BPC-157-5mg.png",
+      "from": "5 MG",
+      "to": "10 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"5 MG\" to \"10 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "bpc-rock-30",
+      "source": "BPC-157-5mg.png",
+      "from": "5 MG",
+      "to": "30 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"5 MG\" to \"30 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "glp-rock-30",
+      "source": "GLP-3-10mg.png",
+      "from": "10 MG",
+      "to": "30 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"10 MG\" to \"30 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "tb-rock-30",
+      "source": "TB-500-10mg.png",
+      "from": "10 MG",
+      "to": "30 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"10 MG\" to \"30 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "mots-rock-40",
+      "source": "MOTS-c-10mg.png",
+      "from": "10 MG",
+      "to": "40 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"10 MG\" to \"40 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "pinealon-rock-5",
+      "source": "Pinealon-20mg.png",
+      "from": "20 MG",
+      "to": "5 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"20 MG\" to \"5 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "pinealon-rock-10",
+      "source": "Pinealon-20mg.png",
+      "from": "20 MG",
+      "to": "10 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"20 MG\" to \"10 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "epitalon-rock-50",
+      "source": "Epitalon-10mg.png",
+      "from": "10 MG",
+      "to": "50 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"10 MG\" to \"50 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    },
+    {
+      "id": "ghk-rock-100",
+      "source": "GHK-Cu-50mg.png",
+      "from": "50 MG",
+      "to": "100 MG",
+      "prompt": "Edit this exact product photograph. Change ONLY the small printed quantity text \"50 MG\" to \"100 MG\", using the same black font, letter spacing, size and position on the label. Keep the compound name and all other printed text exactly unchanged. Preserve the exact vial shape, label artwork/texture, glass, cap, reflections, lighting, scale, camera and original square composition. Preserve every rock, the entire background and the floor. Do not move or resize the vial or rocks. No redesign, no extra labels, no other modifications. Return one corrected PNG."
+    }
+  ],
+  "asset_directory": "/Users/jonahsparks/Documents/GitHub/ranch-peptides/public/images/sizes",
+  "outputs": [
+    "bpc-157-10mg-isolated.png",
+    "bpc-157-10mg.png",
+    "bpc-157-30mg.png",
+    "epitalon-50mg.png",
+    "ghk-cu-100mg.png",
+    "glp-3-30mg.png",
+    "mots-c-40mg.png",
+    "pinealon-10mg-isolated.png",
+    "pinealon-10mg.png",
+    "pinealon-5mg.png",
+    "tb-500-30mg.png"
+  ]
+}

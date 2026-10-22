@@ -18,11 +18,11 @@
   border: 1px solid var(--border);
   background: var(--background);
   color: var(--foreground);
-  box-shadow: 0 24px 80px #14141130;
+  box-shadow: 0 24px 80px #14141430;
 }
 
 .dialog::backdrop {
-  background: #24231f99;
+  background: #23232399;
   backdrop-filter: blur(5px);
 }
 
@@ -83,7 +83,7 @@
   padding: 14px 20px;
   border: 1px solid var(--primary);
   background: var(--primary);
-  color: #fffdf7;
+  color: #fdfdfd;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .04em;
@@ -112,3 +112,8 @@
   .confirmations { margin: 16px 0; }
   .statement { padding-block: 12px; }
 }
+
+.remember {display:flex;align-items:flex-start;gap:12px;min-height:44px;margin:0 0 20px;cursor:pointer;font-size:13px;line-height:1.5;color:var(--foreground);}
+.remember input {flex:none;width:17px;height:17px;margin:2px 0 0;accent-color:var(--primary);cursor:pointer;}
+.remember small {display:block;margin-top:3px;color:var(--muted);font-size:11px;line-height:1.5;}
+.remember input:focus-visible {outline:2px solid var(--foreground);outline-offset:4px;}

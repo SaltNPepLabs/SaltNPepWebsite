@@ -21,4 +21,4 @@ export function catalogWording<T>(value: T): T {
   return value;
 }
 
-export const catalogNamingNote = "GLP-3 is our catalog label for LY-3437943. Study titles and summaries use this label in place of the source's compound name. Linked publications retain their original wording.";
+export const catalogNamingNote = "GLP-3 is our catalog label for LY-3437943. Displayed publication titles and study descriptions use this label in place of the source compound name and are not verbatim quotations. Linked publications retain their original wording. Publications do not verify the identity or equivalence of products sold here.";

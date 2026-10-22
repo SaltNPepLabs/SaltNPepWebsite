@@ -98,7 +98,12 @@
         "price": 39.99
       }
     ],
-    "certificates": []
+    "certificates": [
+      {
+        "label": "10mg \u00b7 AL-MTI10-11",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/melanotan-i/10mg/AL-MTI10-11.pdf"
+      }
+    ]
   },
   {
     "slug": "selank",
@@ -119,6 +124,10 @@
       {
         "label": "5mg",
         "url": "https://aurumpeptidelabs.com/AURUM_COA_Selank.pdf"
+      },
+      {
+        "label": "10mg \u00b7 AL-SK10-11",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/selank/10mg/AL-SK10-11.pdf"
       }
     ]
   },
@@ -141,6 +150,10 @@
       {
         "label": "5mg",
         "url": "https://aurumpeptidelabs.com/AURUM_COA_Semax.pdf"
+      },
+      {
+        "label": "10mg \u00b7 AL-SX10-12",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/semax/10mg/AL-SX10-12.pdf"
       }
     ]
   },
@@ -157,7 +170,7 @@
     ],
     "certificates": [
       {
-        "label": "5mg — DAC",
+        "label": "5mg \u2014 DAC",
         "url": "https://aurumpeptidelabs.com/AURUM_COA_CJC-1295.pdf"
       }
     ]
@@ -175,8 +188,8 @@
     ],
     "certificates": [
       {
-        "label": "5mg — No-DAC",
-        "url": "https://aurumpeptidelabs.com/AURUM_COA_CJC-1295_no_DAC.pdf"
+        "label": "5mg \u00b7 AL-CND5-12",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/cjc-1295-no-dac/5mg/AL-CND5-12.pdf"
       }
     ]
   },
@@ -193,8 +206,8 @@
     ],
     "certificates": [
       {
-        "label": "5mg",
-        "url": "https://aurumpeptidelabs.com/AURUM_COA_Ipamorelin.pdf"
+        "label": "5mg \u00b7 AL-IPA5-12",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/ipamorelin/5mg/AL-IPA5-12.pdf"
       }
     ]
   },
@@ -267,7 +280,7 @@
     ],
     "certificates": [
       {
-        "label": "10mg — Clear Cap",
+        "label": "10mg \u2014 Clear Cap",
         "url": "https://aurumpeptidelabs.com/AURUM_GLP-2_TZ_10MG_Premium_COA.pdf"
       },
       {
@@ -341,8 +354,12 @@
     ],
     "certificates": [
       {
-        "label": "10mg",
-        "url": "https://aurumpeptidelabs.com/AURUM_COA_KPV.pdf"
+        "label": "10mg \u00b7 AL-KV10-12",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/kpv/10mg/AL-KV10-12.pdf"
+      },
+      {
+        "label": "30mg \u00b7 AL-KV30-11",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/kpv/30mg/AL-KV30-11.pdf"
       }
     ]
   },
@@ -399,8 +416,8 @@
     ],
     "certificates": [
       {
-        "label": "500mg",
-        "url": "https://aurumpeptidelabs.com/AURUM_COA_NAD_plus.pdf"
+        "label": "500mg \u00b7 AL-N-500-12",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/nad-plus/__default__/AL-N-500-12.pdf"
       }
     ]
   },
@@ -435,8 +452,8 @@
     ],
     "certificates": [
       {
-        "label": "80mg",
-        "url": "https://aurumpeptidelabs.com/AURUM_KLOW_Premium_COA.pdf"
+        "label": "80mg \u00b7 AL-KW80-12",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/klow/__default__/AL-KW80-12.pdf"
       }
     ]
   },
@@ -451,7 +468,12 @@
         "price": 65.99
       }
     ],
-    "certificates": []
+    "certificates": [
+      {
+        "label": "10mg \u00b7 AL-SS10-12",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/ss-31/10mg/AL-SS10-12.pdf"
+      }
+    ]
   },
   {
     "slug": "ara-290",
@@ -464,7 +486,12 @@
         "price": 74.99
       }
     ],
-    "certificates": []
+    "certificates": [
+      {
+        "label": "10mg \u00b7 AL-AR10-11",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/ara-290/10mg/AL-AR10-11.pdf"
+      }
+    ]
   },
   {
     "slug": "wolverine",
@@ -477,7 +504,12 @@
         "price": 89.99
       }
     ],
-    "certificates": []
+    "certificates": [
+      {
+        "label": "20mg \u00b7 AL-WV20-11",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/wolverine/20mg/AL-WV20-11.pdf"
+      }
+    ]
   },
   {
     "slug": "cagrilintide",
@@ -490,7 +522,12 @@
         "price": 89.99
       }
     ],
-    "certificates": []
+    "certificates": [
+      {
+        "label": "10mg \u00b7 AL-CG10-11",
+        "url": "https://buhowehvijcubhdrphao.supabase.co/storage/v1/object/public/product-coas/cagrilintide/10mg/AL-CG10-11.pdf"
+      }
+    ]
   },
   {
     "slug": "kisspeptin",

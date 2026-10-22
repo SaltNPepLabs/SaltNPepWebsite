@@ -11,7 +11,7 @@
     "lint": "eslint",
     "checkout:api": "node --env-file-if-exists=.env.checkout --import tsx server/start.ts",
     "orders": "node --env-file-if-exists=.env.checkout --import tsx server/admin.ts",
-    "test": "node --import tsx --test server/checkout.test.ts server/analytics.test.ts server/client-analytics.test.ts"
+    "test": "node --import tsx --test server/checkout.test.ts server/analytics.test.ts server/client-analytics.test.ts server/storefront.test.ts"
   },
   "engines": {
     "node": ">=24.13.0"

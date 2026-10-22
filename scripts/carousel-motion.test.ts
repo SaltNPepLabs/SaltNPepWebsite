@@ -48,3 +48,31 @@ test("a forward drag cannot lose its nearest page for any release speed across l
     }
   }
 });
+
+
+test("short touch swipes commit even after pausing, without advancing accidental nudges", () => {
+  for (const origin of [-8, 0, 7, 8]) {
+    assert.equal(dragReleasePage(origin, origin + 0.2, 0, 0.18), origin + 1);
+    assert.equal(dragReleasePage(origin, origin - 0.2, 0, 0.18), origin - 1);
+    assert.equal(dragReleasePage(origin, origin + 0.04, 0, 0.18), origin);
+  }
+});
+
+
+test("successive swipes advance from the pending destination before its midpoint", () => {
+  assert.equal(dragReleasePage(0.25, 0.46, 0, 0.18, 1), 2);
+  assert.equal(dragReleasePage(-0.25, -0.46, 0, 0.18, -1), -2);
+  assert.equal(dragReleasePage(7.25, 7.46, 0, 0.18, 8), 9);
+  assert.equal(dragReleasePage(0.25, 0.04, 0, 0.18, 1), 0);
+  assert.equal(dragReleasePage(0.25, 0.28, 0, 0.18, 1), 1);
+});
+
+
+test("interrupted strong swipes settle at their travelled position without momentum", () => {
+  for (const origin of [-8, 0, 7]) {
+    for (const distance of [0.3, 0.9, 1.8]) {
+      assert.equal(dragReleasePage(origin, origin + distance, 0, 0.18, origin), origin + Math.max(1, Math.round(distance)));
+      assert.equal(dragReleasePage(origin, origin - distance, 0, 0.18, origin), origin - Math.max(1, Math.round(distance)));
+    }
+  }
+});

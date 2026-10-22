@@ -1,0 +1,11 @@
+.wrap {border-left:1px solid #9b8e7838;padding-left:clamp(24px,4vw,60px);color:#302c26;}
+.eyebrow {font-size:10px;line-height:1.5;letter-spacing:.13em;text-transform:uppercase;margin:0 0 15px;color:#6e6252;}
+.clock {display:flex;gap:29px;width:fit-content;margin-bottom:17px;}
+.unit {position:relative;display:flex;flex-direction:column;align-items:center;min-width:49px;}
+.unit+.unit::before {content:":";position:absolute;left:-18px;top:1px;font-size:30px;font-weight:300;color:#a49784;}
+.digit {font-size:38px;font-weight:300;line-height:1.1;letter-spacing:-.035em;font-variant-numeric:tabular-nums;}
+.label {font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#786e60;margin-top:7px;}
+.promise {font-size:13px;line-height:1.7;margin:0;}
+.fine {font-size:10px;line-height:1.6;color:#786e60;margin:10px 0 0;}
+.fine a {white-space:nowrap;text-decoration:underline!important;text-underline-offset:3px;}
+@media(max-width:600px){.wrap{border-left:0;border-top:1px solid #9b8e7838;padding:22px 0 0;margin-top:5px}.clock{gap:32px}.digit{font-size:36px}.eyebrow{font-size:9px}.promise{font-size:12px}.fine{font-size:10px}}

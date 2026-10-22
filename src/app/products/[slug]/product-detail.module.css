@@ -8,3 +8,5 @@
 @media (min-width:1024px) {
   .title { font-size:clamp(38px,10cqi,60px); }
 }
+
+.info .title{font-weight:400;letter-spacing:-.045em;text-transform:none;line-height:1.08}

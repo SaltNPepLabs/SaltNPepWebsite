@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "desktop",
+    "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-f2641ecd-29b0-491b-acc3-5dca3787b907.png",
+    "prompt": "Edit this desktop hero background into a clean animation background plate. Remove ALL floating / airborne salt grains, peppercorns and specks from the air above the black and ivory liquid waves. Reconstruct the smooth warm champagne-gray background behind them. Keep EXACT original framing, dimensions, camera, black left wave and white right wave geometry, horizon, reflective foreground floor and its resting salt/pepper pieces and existing lighting unchanged. No new elements. Especially remove airborne grains from upper corners and above wave edges; retain grains embedded in liquid or resting on the floor. This is the exact same scene with clean empty air, so individual floating grains can be rendered separately by the website. Do NOT blur, recompose, recolor, add lighting, add text, or change aspect ratio.",
+    "saved": "public/images/hero-air-desktop.webp"
+  },
+  {
+    "kind": "mobile",
+    "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-93ce2477-d1e0-404c-a4cb-3622d8c9017d.png",
+    "prompt": "Edit this mobile hero background into a clean animation background plate. Remove ALL floating / airborne salt grains, peppercorns and specks from the air above the black and ivory liquid waves. Reconstruct the smooth warm champagne-gray background behind them. Keep EXACT original framing, dimensions, camera, black left wave and white right wave geometry, horizon, reflective foreground floor and its resting salt/pepper pieces and existing lighting unchanged. No new elements. Especially remove airborne grains from upper corners and above wave edges; retain grains embedded in liquid or resting on the floor. This is the exact same scene with clean empty air, so individual floating grains can be rendered separately by the website. Do NOT blur, recompose, recolor, add lighting, add text, or change aspect ratio.",
+    "saved": "public/images/hero-air-mobile.webp"
+  },
+  {
+    "kind": "atlas",
+    "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-ccd6cd41-b14f-46d3-90aa-17cee89c6662.png",
+    "prompt": "Create a photorealistic sprite atlas on TRUE TRANSPARENT alpha background, square image, exactly 4 columns and 4 rows, sixteen equal cells. One separate small natural grain centered in each cell, all contained within central 60% of its cell, generous transparent padding. Alternate irregular translucent ivory salt crystals and irregular dark charcoal cracked pepper fragments (8 each). Warm champagne light from upper right, subtle cool gray fill left, realistic photographic texture and facets. Vary angular shapes, no perfect spheres. No floor, shadows, text, grid lines, other objects or background. These will be rendered as tiny individual airborne salt and pepper grains in a luxury product photo.",
+    "saved": "public/images/hero-grain-atlas.webp"
+  }
+]

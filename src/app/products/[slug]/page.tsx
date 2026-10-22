@@ -1,11 +1,14 @@
+import { ProductRecommendations } from "@/components/product-recommendations";
 import { notFound } from "next/navigation";
+import { ProductSelectionProvider } from "@/components/product-selection";
+import { getDefaultProductVariant } from "@/lib/product-variants";
 import { ProductVial } from "@/components/product-vial";
-import { ProductReviews } from "@/components/product-reviews";
 import { ProductTesting } from "@/components/product-testing";
 import Link from "next/link";
 import { products, getProduct } from "@/lib/products";
 import { catalogSlug } from "@/lib/catalog-naming";
 import { getAurumProduct } from "@/lib/aurum-catalog";
+import { usesLumiraCertificate } from "@/lib/batches";
 import type { Metadata } from "next";
 import { AddToCartButton } from "./add-to-cart";
 import styles from "./product-detail.module.css";
@@ -43,7 +46,8 @@ export default async function ProductPage({ params }: Props) {
           <span className="text-foreground font-medium">{product.shortName}</span>
         </nav>
 
-        {/* Product hero */}
+        {/* Shared selected size keeps the photograph and purchase controls in sync. */}
+        <ProductSelectionProvider key={product.slug} slug={product.slug} initialVariantId={getDefaultProductVariant(product).id}>
         <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
           <div className="product-detail-visual"><ProductVial product={product} featured /></div>
 
@@ -56,7 +60,7 @@ export default async function ProductPage({ params }: Props) {
             <AddToCartButton key={product.slug} product={product} />
 
             <div className="flex items-center gap-2 sm:gap-3 mt-3 sm:mt-4">
-              <a href="#batch-report" className="text-xs sm:text-sm font-bold underline underline-offset-4">{getAurumProduct(product.slug) ? "View certificates of analysis" : "Lumira / View example lab report"}</a>
+              <a href="#batch-report" className="text-xs sm:text-sm font-bold underline underline-offset-4">{usesLumiraCertificate(product.slug) ? "Lumira / View certificate of analysis" : getAurumProduct(product.slug) ? "View certificates of analysis" : "Lumira / View example lab report"}</a>
             </div>
             <p className="text-muted mt-3 text-xs leading-relaxed">Product image is illustrative. Refer to the selected size for vial quantity.</p>
             <p className="mt-4 sm:mt-6 text-sm sm:text-base text-muted leading-relaxed">{product.description}</p>
@@ -80,6 +84,8 @@ export default async function ProductPage({ params }: Props) {
             )}
           </div>
         </div>
+
+        </ProductSelectionProvider>
 
         <ProductTesting slug={product.slug} name={product.shortName} />
 
@@ -106,27 +112,28 @@ export default async function ProductPage({ params }: Props) {
 
           {/* Storage */}
           {(product.storage || product.reconstitution) && <div className="dark-panel rounded-sm p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
-            <h2 className="text-base sm:text-lg font-black uppercase tracking-[0.08em] mb-3 sm:mb-4">Storage & Handling</h2>
+            <h2 className="text-base sm:text-lg font-black uppercase tracking-[0.08em] mb-3 sm:mb-4">Laboratory Handling</h2>
             <div className="space-y-3 sm:space-y-4">
-              <div>
+              {product.storage && <div>
                 <h3 className="text-xs sm:text-sm font-semibold">Storage</h3>
                 <p className="text-xs sm:text-sm text-muted mt-1">{product.storage}</p>
-              </div>
+              </div>}
               <div>
-                <h3 className="text-xs sm:text-sm font-semibold">Reconstitution</h3>
+                <h3 className="text-xs sm:text-sm font-semibold">Laboratory preparation</h3>
                 <p className="text-xs sm:text-sm text-muted mt-1">{product.reconstitution}</p>
               </div>
             </div>
           </div>}
         </div>
 
-        <ProductReviews slug={product.slug} name={product.shortName} />
+
+        <ProductRecommendations slug={product.slug} />
 
         {/* Research disclaimer */}
         <div className="mt-4 sm:mt-6 p-4 sm:p-6 bg-card border border-border rounded-sm">
           <p className="text-xs sm:text-sm text-muted">
             <strong>Research Use Only:</strong> This product is sold for laboratory and research purposes only.
-            It is not intended for human consumption and is not intended to diagnose, treat, cure, or prevent any disease.
+            It is not for personal use or administration to humans or animals and is not intended to diagnose, treat, cure, or prevent any disease.
             By purchasing, you agree to use this product solely for legitimate research purposes.
           </p>
         </div>

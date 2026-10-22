@@ -1,5 +1,48 @@
 # Decisions
 
+## October 20: Research publication content retired by owner
+
+Owner explicitly removed the entire research library to avoid literature upkeep. Removed /science and every compound/paper route, product scientific-review panels, homepage research feature, and navigation/About/FAQ links. COAs, product specifications, artwork, and research-use-only notices remain. Retired route/component source is preserved in docs/archive/research-retired-2026-10-20.tar.gz; unreferenced internal research data/scripts remain historical, not published and not maintained. This supersedes all earlier instructions to retain/update the library. No deployment or Git push authorized.
+
+## October 20: Local storefront service expansion
+
+Owner requested COA library, support/about/policy pages, accounts/tracking/chat/newsletter/rewards, EN/ES, recommendations and delivery. Working directory/search/support pages and no-discount quantity controls implemented. Free shipping set to zero for supported destinations. Utah County next-day cutoff/days still pending. Accounts/tracking, chat/newsletter/rewards remain unconnected; EN/ES covers new surfaces only. No invented company credentials. See STOREFRONT_SERVICES.md for exact status and launch blockers. Nothing pushed or deployed.
+
+## Owner-approved removal: storage and shelf-life claims
+
+Removed remaining storage temperatures, light/moisture handling claims and long-term stability assertions from the eight original product records. Removed storage and shelf-life FAQ entries, including the 24+ month assertion and COA expiration instruction, plus the comparative stability sentence. Product cards no longer display an empty Storage subsection. Laboratory preparation boundary remains. This supersedes the earlier storage/shelf-life deferral; other numbered recommendations remain unchanged. Local only; no push or deployment.
+
+
+## 2026-10-20: Remaining personal-use instruction cleanup
+
+Owner authorized removing remaining personal-use instructions/promises. Reviewed product copy, FAQ, homepage, purchase screens and scientific-review component. All 28 product descriptions are neutral; no personal dosing schedules found. Removed step-by-step bacteriostatic-water mixing directions and post-reconstitution 21/30-day use windows from the original eight product records and FAQ. Added a laboratory-assay preparation boundary and FAQ stating no personal-use mixing/dosing/administration instructions. Existing dry-storage/shelf-life, quality/COA claims, research summaries, TB-500 presentation, imagery, prices and checkout logic remain unchanged; these separate deferred topics are not validated by this cleanup. Local only, rebuild static preview on port 3015; no publication authorized.
+
+
+## Owner correction: restore previous TB-500 research presentation
+
+Reverted the latest TB-500-specific library headings, inventory-match warnings, and per-publication badges to their pre-audit wording and placement. Existing related-thymosin explanations remain as before. Other library improvements and earlier product-specification changes are unchanged. Local only; no publication authorized.
+
+## Owner correction: GLP-3 naming restored locally
+
+Owner reversed only the scientific-name restoration. Public research titles, descriptions and displayed search terms again use GLP-3, with explicit adapted-title disclosure; original source records and PubMed search URLs remain intact internally. Keep the other library improvements: upfront limitations, citation-only records and TB-500 related-literature labels. No push or deployment authorized.
+
+
+## 2026-10-20: Authorized local research-library revision
+
+This supersedes the earlier deferral of publication naming and the earlier abstract-reader descriptions. Preserve scientific source names and original titles; GLP-3 remains the catalog label and route. Keep the 124 detailed explanations, with model and limitation beside the finding. Other publication routes remain as citation records, with direct PubMed links instead of short excerpts. Label TB-500 literature as related research with inventory molecule identity unverified; do not imply equivalence. All bibliography entries and correction/retraction notices remain. Local review only; no push or deployment authorized.
+
+
+## 2026-10-20: Local research-only copy cleanup (not published)
+
+Owner authorized audit items 1–5, 9, 10, 12, 14, and 17. Explicitly deferred 6, 7, 8, 11, 13, 15, and 16. The sole certificate exception is routing BPC-157, GLP-3, TB-500, and MOTS-c to the existing Lumira/Peptaura reports instead of Aurum. The owner states supplier COAs cover sold inventory; broad certificate wording, quality claims, and the recorded GLP-3 lot discrepancy remain deferred. Do not push or deploy without explicit approval.
+
+Customer testimonials and ratings are removed from the application; the 200-record source is preserved unchanged in docs/archive/customer-reviews-data.json. Original eight products now use neutral identity/form descriptions, no outcome lists, promotional mechanism descriptions, or unused safety/steroid claims. FAQ steroid/legality assurances and product benefit summaries are removed. Research-library content, scientific-review panels, and GLP-3 publication naming remain unchanged.
+
+TB-500's unsupported full-length equivalence and associated formula/mass/CAS fields are withheld pending an inventory-specific identity specification. KLOW/Wolverine composition still requires owner confirmation; Aurum's current KLOW page contradicts itself (opening lists GHK-Cu/KPV/TB-500/BPC-157, other sections list larazotide/orexin-A). Do not guess a formula.
+
+Purchase-adjacent notices, cart/footer/home and entry gate now explicitly prohibit personal use or administration to humans/animals. Entry acceptance key is v2 so the revised statement is reconfirmed once. Checkout verification logic is unchanged. Fixed-size photographs are replaced in the UI with the existing size-neutral CSS vial illustration; original artwork remains preserved. No pricing, size availability, payment behavior, storage/reconstitution, quality, shipping or policy changes were authorized.
+
+
 ## 2026-10-12: Company repository homebase
 
 The owner designated `https://github.com/SaltNPepLabs/SaltNPepWebsite` as the new homebase. Preserve the existing Git history and completed local work, use `main` with the company repository as `origin`, and retain the previous personal repository locally as `legacy`. Keep the existing Windows workspace path so local setup remains usable. Hosting reconnection is separate from this source migration; preserve the static export and separate checkout API deployment contracts.
@@ -135,3 +178,56 @@ Use one shared screening module and a versioned inclusion/exclusion policy for b
 The owner requested clicking any study to reach a conclusion or summary. Export a `/science/[slug]/[pmid]` reader for every relevance-selected entry, using the full existing explanation when one is available. Other readers provide a short exact abstract quotation and direct full-source link, rather than inferred medical conclusions. Cap quotes at 25 words, identify the source section and sentence position, and mark truncated sentences. Only explicit conclusion/interpretation headings qualify for the conclusion label. Missing abstracts and excerpts requiring source review remain transparent; withdrawal and retraction status must be prominent.
 
 Generate quotations reproducibly from the privately cached sources during bibliography refresh, preserving the source-check date and full-abstract fingerprint. Source-reviewed passage exceptions must still match the original text or refresh fails. Keep browse state in the URL so search, filters, page, reading view, and expanded PMID/PMCID notes survive the reader round trip. Full abstracts remain outside the public snapshot, and the reader never bypasses the compound relevance selection.
+
+## 2026-10-20: Restore original vial imagery
+
+Owner explicitly requires keeping every original peptide photograph, including isolated homepage/collection vials and product photos on rocks. Restored all 16 original files to public/images and restored the original ProductVial component and styles byte-for-byte. Restored original illustrative-photo captions. This supersedes the earlier size-neutral illustration change; do not replace or edit vial artwork without a new explicit request. Approved text, testimonial removal, research notices, and four Lumira/Peptaura COA overrides remain unchanged. Local only; no push or deployment.
+
+## 2026-10-20: Complete matching catalog artwork (local only)
+
+Owner requested matching isolated vials and unique rock settings for all 20 additions. Added 47 imagegen PNGs in public/images/catalog: 20 transparent default-size vials, 20 distinct default-size rock scenes, and seven alternate-size rock images. All labels use catalog names/amounts, including water in mL. Product-image mapping now covers all 28 collection defaults and all 43 detail-page sizes. Original eight product artworks and previous size corrections are preserved. No pricing, stock, copy, checkout, Git publication or deployment changes. Full prompts and asset paths: CATALOG_IMAGE_PROMPTS.json.
+
+
+## October 20 — 11 a.m. delivery cutoff and policy preparation
+Owner specifies Mountain Time cutoff: before 11 a.m., Utah County delivery next day; at/after 11 a.m., two days later. Free shipping elsewhere; nonlocal dispatch wording ambiguous (same-day before cutoff versus next-day), clarification requested. Weekend/holiday service, refund/cancellation/damage rules, guarantee remedy and legal entity/address also requested and unanswered. Do not activate guarantee or call policies final until resolved. Real timezone-aware countdown replaces the resetting sample timer, shows next cutoff after 11 and handles DST. No booked delivery date is shown while service days remain pending. Policy page expanded with confirmed terms and explicit remaining gaps. Checkout expressly deferred. Owner confirms TB-500 identity, blend compositions and business/product details are accurate; do not repeatedly characterize them as unconfirmed, and do not invent missing specifications. No push/deployment.
+
+
+### Confirmed follow-up — seven-day schedule and delegated policy choices
+Owner confirmed all seven days, holidays may vary, and nonlocal dispatch NEXT DAY before 11 a.m. or TWO DAYS LATER at/after cutoff (not same-day). Carrier transit additional. Owner delegated simple customer-convenient policy choices: free cancellation pre-dispatch; no change-of-mind returns post-dispatch; replacement/refund for confirmed damaged/incorrect/missing items, preferably reported within seven days (not a rights cutoff); seller-paid return if needed for seller error; refunds initiated within five business days. Local missed-date remedy is 10% affected-item refund or full refund for canceled undelivered order. Timing begins once paid/research-approved, date confirmed at acceptance. Incorrect customer address/access excluded; holidays disclosed before ordering. Checkout unchanged/deferred. Tailored policies on /policies; privacy provider/retention particulars and legal business mailing details still needed before actual service launch. Live Mountain Time countdown with 11:00 exact boundary/DST/year rollover tests. No publishing. Supersedes the immediately preceding pending-schedule notes.
+
+
+Owner rejects the Local Previews strip above page content. Do not restore a global demo navigation bar. Retain feature-specific demo disclosures.
+
+
+## Chroma-inspired inner-page refinement
+Owner wants clean feel of chromacoatingsutah.com with homepage unchanged. Visually inspected Chroma home/About: restrained typography, generous spacing, rounded cards and muted accents. Applied centered service-page introductions, calmer typography, softer borders/corners, more spacing, refined catalog cards, product controls and COA panels in existing ivory/charcoal palette. No Chroma copy/assets imported. Home page, home CSS and carousel hashes unchanged; global refinements scoped to non-home routes. Images, prices, policy terms and service functionality unchanged. Lint/build passed; desktop Contact and mobile product page visually checked, COA page has no horizontal overflow at 390px. Local only; no commit/push/deploy.
+
+
+## Luxury revision after owner feedback
+Owner found the first clean pass insufficiently luxurious. Inner pages now use charcoal/olive-black surfaces, warm ivory type, restrained brass accents and finer, squarer borders. Contact rebuilt as stone-vial photography beside a service desk with prominent email and simple link rows, plus a serif accent. Existing GHK-Cu photograph reused unchanged; no invented service claims. Global palette explicitly excludes homepage; home source and carousel preserved. Pricing/checkout/policies unchanged. Local only. Lint/build passed and desktop Contact visually verified.
+
+
+## 2026-10-20 — Hero-led homepage expansion
+The existing hero composition, assets, carousel code and animation timing are protected. New homepage content lives in HomeStory with scoped styling; the collection retains isolated vial imagery while homepage showcases use existing rock photos. Homepage documentation means COAs, not the retired research-publication library. Delivery continues to use the confirmed 11 a.m. Mountain cutoff.
+
+## 2026-10-20 — Simple storefront supersedes editorial homepage
+Owner rejected long editorial sections and decorative copy. Homepage order is protected hero, short shipping/documentation strip, one isolated-vial product section, concise why-choose-us, newsletter/footer. No rock photography below the homepage hero. Preserve original images elsewhere.
+
+## 2026-10-20 — Salt-and-pepper brand palette
+Owner requested a sitewide salt-and-pepper feel. Neutralized olive, beige and champagne UI colors to salt-white, charcoal and stone gray across homepage sections/footer, collection, service pages, product controls, cart, checkout and shared navigation. Preserved hero/carousel/vial component files and all image assets; no layout, product or fulfillment changes. Build and lint passed; protected file hashes verified and homepage/collection previews reviewed. Local only.
+
+## 2026-10-20 — Hero image relighting approved
+Owner approved relighting the vial artwork for the homepage hero after previous CSS lighting was too faint. Use public/images/hero-vials only in the hero; preserve original product/shop artwork. Side vials must remain opaque (blur handles depth) so background grains do not show through labels. Remove added foreground grains that overlap vials. Background and overall hero composition remain unchanged. This supersedes earlier requests to keep all hero vial pixels unchanged and to place particles in front of them.
+
+- Hero airborne animation uses individual photographic sprites over cleaned background plates, replacing regional displacement. No particles overlay the vials; floor grains remain still. Original photographs remain fallback assets.
+
+- Latest hero refinement permits only a handful of tiny near-plane grains away from labels (five desktop/three mobile), superseding the absolute no-foreground rule. Preserve existing background plates and vial assets; use faint shared airflow with individual depth variation rather than obvious independent bobbing. The floor and liquid remain stationary.
+
+- Owner now requests ALL salt/pepper grains moving, including former wave/floor scatter. Use hero-clean desktop/mobile plates with no baked particles; animate scattering independently. This supersedes keeping floor grains static. Preserve original source assets for reversibility. Prompts and sources: HERO_FULLY_CLEAN_ASSETS.json.
+
+## 2026-10-21 — Product certificate presentation
+Owner requested a simpler report section inspired by Aurum. Use compact factual report summary and expandable metadata; avoid blanket claims that all supplier reports are examples or inventory is unverified, given owner's stated batch coverage. Do not extrapolate a tested size to other sizes or hide the recorded GLP-3 lot mismatch. Underlying source mapping remains unchanged.
+
+
+## October 21 — owner sizes and Lumira document refresh (local only)
+Confirmed GLP-3 30mg only, BPC-157/TB-500 10mg only. Filter storefront variants while preserving supplier snapshot; inherited existing size-specific prices. Removed sizes remain invalid for cart/checkout. Updated BPC10 and GLP3/30 supplier reports to August 10 BTLabs documents; preserve registry vs PDF lot distinctions and measured content (9.1mg; 25.2mg respectively). Do not claim inventory matching. Added MOTS40 supplier report as additional documentation; MOTS selling size remains 10/40 pending owner's uncertain 20mg statement. TB10/Pinealon10/Epitalon10 links retained as current size-specific reports found. GLP3 hero/gallery asset copied as glp-3-30mg.png; built-in imagegen prompt: change ONLY 10 MG to 30 MG, preserve vial, alpha, lighting, composition. Original preserved. No push/deployment.

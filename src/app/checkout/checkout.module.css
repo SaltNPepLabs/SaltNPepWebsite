@@ -18,7 +18,7 @@
 .wide { grid-column: 1 / -1; }
 .fields input,
 .fields select,
-.fields textarea { width: 100%; min-width: 0; min-height: 48px; padding: 13px 12px; border: 1px solid var(--border); background: #faf8f4; border-radius: 0; color: var(--foreground); font: inherit; font-size: 16px; }
+.fields textarea { width: 100%; min-width: 0; min-height: 48px; padding: 13px 12px; border: 1px solid var(--border); background: #f8f8f8; border-radius: 0; color: var(--foreground); font: inherit; font-size: 16px; }
 .fields textarea { min-height: 110px; resize: vertical; }
 .methods { display: flex; flex-wrap: wrap; gap: 12px; }
 .methods label { flex: 1 1 180px; min-width: 0; border: 1px solid var(--border); padding: 18px; font-size: 14px; cursor: pointer; }
@@ -36,7 +36,7 @@
 .summary li > :last-child,
 .row > :last-child { flex-shrink: 0; white-space: nowrap; }
 .note { font-size: 12px; color: var(--muted); line-height: 1.7; margin: 18px 0; }
-.error { background: #f3e4df; border: 1px solid #ae7666; color: #6b3024; padding: 16px; font-size: 14px; line-height: 1.6; margin: 18px 0; }
+.error { background: #e7e7e7; border: 1px solid #818181; color: #3c3c3c; padding: 16px; font-size: 14px; line-height: 1.6; margin: 18px 0; }
 .action { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 16px 24px; width: 100%; background: var(--primary); color: var(--background); font-size: 12px; font-weight: 700; letter-spacing: .07em; border: 0; text-align: center; }
 .action:disabled { opacity: .55; cursor: wait; }
 .result { max-width: 620px; }
@@ -60,3 +60,7 @@ details.secondary { display: block; margin-top: 20px; padding-block: 0; text-dec
 @media (max-width: 600px) {
   .fields { grid-template-columns: 1fr; }
 }
+
+/* Keep entered text legible on the existing light form fields. */
+.fields input,.fields select,.fields textarea{background:#f3efe7;color:#282622;border-color:#9c9487;}
+.fields input::placeholder,.fields textarea::placeholder{color:#70695f;}

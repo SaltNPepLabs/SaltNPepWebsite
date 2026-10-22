@@ -105,6 +105,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
                       <span>{item.quantity}</span>
                       <button
                         aria-label={`Increase ${item.product.shortName} ${formatDosage(item.variant.dosage)} quantity`}
+                        disabled={item.quantity >= 100}
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       >
                         +
@@ -137,6 +138,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
             >
               Continue to Checkout
             </Link>
+            <button onClick={onClose} className={styles.continueShopping}>Continue shopping</button>
             <button
               onClick={clearCart}
               className={styles.clear}
@@ -144,7 +146,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
               Clear Cart
             </button>
             <p>
-              By placing an order, you confirm these products are for research use only.
+              For laboratory research only. Not for personal use or administration to humans or animals.
             </p>
           </div>
         )}

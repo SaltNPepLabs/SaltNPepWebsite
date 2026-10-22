@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { pageview, track } from "@/lib/analytics";
 import { catalogSlug, catalogText } from "@/lib/catalog-naming";
+import { researchUseNotice } from "@/lib/research-use";
+import { useProductSelection } from "@/components/product-selection";
 import { useCart } from "@/lib/cart-context";
 import { formatPrice, type Product } from "@/lib/products";
 import { formatDosage, getDefaultProductVariant, getProductVariant, getStorefrontProductVariants } from "@/lib/product-variants";
@@ -11,14 +13,15 @@ import styles from "./add-to-cart.module.css";
 export function AddToCartButton({ product }: { product: Product }) {
   const { addItem } = useCart();
   const variants = getStorefrontProductVariants(product);
-  const [selectedSize, setSelectedSize] = useState(getDefaultProductVariant(product).id);
+  const selection = useProductSelection();
+  if (!selection || selection.slug !== product.slug) throw new Error("Product size selection provider is required");
+  const selectedSize = selection.variantId;
+  const setSelectedSize = selection.selectVariant;
   const variant = getProductVariant(product, selectedSize)!;
-  const tiers = [...variant.bulkPricing].sort((a, b) => a.qty - b.qty);
-  const defaultTier = tiers.find((tier) => tier.qty === 1) ?? tiers[0];
-  const [selectedQty, setSelectedQty] = useState(defaultTier?.qty ?? 1);
+  const [selectedQty, setSelectedQty] = useState(1);
   const [added, setAdded] = useState(false);
   const feedbackVersion = useRef(0);
-  const selectedTier = tiers.find((tier) => tier.qty === selectedQty) ?? defaultTier;
+  const selectedTier = variant.price === null ? undefined : { qty: selectedQty, price: variant.price };
   const soldOut = !variant.inStock;
   const pending = variant.inStock && variant.price === null;
   const viewedProduct = useRef("");
@@ -61,26 +64,15 @@ export function AddToCartButton({ product }: { product: Product }) {
         {soldOut && <><strong>Sold out</strong><p>This size is currently unavailable.</p></>}
         {pending && <><strong>Pricing pending</strong><p>Price for this size is coming soon. Ordering will open once pricing is confirmed.</p></>}
       </div>
-      {!soldOut && !pending && <><h2 className={styles.quantityHeading}>Quantity</h2>
-      <div className={styles.quantityGrid}>
-        {tiers.map((tier) => {
-          const isSelected = tier.qty === selectedQty;
-          return (
-            <button
-              key={tier.qty}
-              type="button"
-              aria-pressed={isSelected}
-              aria-label={`Select ${tier.qty} ${tier.qty === 1 ? "vial" : "vials"} for ${formatPrice(tier.price * tier.qty)}, ${formatPrice(tier.price)} per vial`}
-              onClick={() => { setSelectedQty(tier.qty); resetFeedback(); }}
-              className={`min-w-0 min-h-[104px] p-3 border text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${isSelected ? "border-primary bg-primary/10 ring-1 ring-primary" : "border-border bg-background hover:border-primary/60"}`}
-            >
-              <span className="block text-[10px] sm:text-xs font-bold uppercase tracking-[0.1em] text-muted">{tier.qty} {tier.qty === 1 ? "Vial" : "Vials"}</span>
-              <span className="block mt-2 text-lg sm:text-xl font-black leading-none">{formatPrice(tier.price * tier.qty)}</span>
-              <span className="block mt-2 text-[10px] sm:text-xs text-muted">{formatPrice(tier.price)} / vial</span>
-            </button>
-          );
-        })}
-      </div></>}
+      {!soldOut && !pending && <div className={styles.orderLine}>
+        <div><h2 className={styles.quantityHeading}>Quantity</h2><div className={styles.stepper}>
+          <button type="button" aria-label="Remove one vial" disabled={selectedQty <= 1} onClick={() => { setSelectedQty(q => q - 1); resetFeedback(); }}>−</button>
+          <span aria-live="polite">{selectedQty}</span>
+          <button type="button" aria-label="Add one vial" disabled={selectedQty >= 100} onClick={() => { setSelectedQty(q => q + 1); resetFeedback(); }}>+</button>
+        </div></div>
+        <div className={styles.orderPrice}><strong>{formatPrice(variant.price! * selectedQty)}</strong><span>{formatPrice(variant.price!)} per vial</span></div>
+      </div>}
+      <p className="mt-4 text-sm leading-relaxed">{researchUseNotice}</p>
       <button
         type="button"
         disabled={soldOut || pending || !selectedTier}

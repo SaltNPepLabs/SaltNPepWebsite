@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "desktop",
+    "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-744eb13a-5830-45c1-bc9c-470421c4bbbc.png",
+    "prompt": "Clean this exact background photograph for animation. REMOVE EVERY salt crystal, peppercorn, pepper flake, white or dark grain, particle, bead and speck EVERYWHERE: in the sky, on/in BOTH metallic waves, on the entire reflective floor, in bottom corners and foreground. Remove their tiny shadows/reflections too. Inpaint only those objects with the corresponding smooth reflective metallic surface. Preserve exactly the framing, wave shapes, horizon, warm champagne-gray palette, lighting, camera and flowing metallic reflections. The black wave must be pure glossy dark metal without any dots; the ivory wave pure glossy ivory metal without any dots; the floor pure clean flowing metallic reflections without any particles. No grain/noise texture, new objects, text, cropping or composition changes. Output same aspect ratio and dimensions as input.",
+    "saved": "public/images/hero-clean-desktop.webp"
+  },
+  {
+    "kind": "mobile",
+    "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-b0d414e5-5869-4e67-923e-f7c349e53282.png",
+    "prompt": "Clean this exact background photograph for animation. REMOVE EVERY salt crystal, peppercorn, pepper flake, white or dark grain, particle, bead and speck EVERYWHERE: in the sky, on/in BOTH metallic waves, on the entire reflective floor, in bottom corners and foreground. Remove their tiny shadows/reflections too. Inpaint only those objects with the corresponding smooth reflective metallic surface. Preserve exactly the framing, wave shapes, horizon, warm champagne-gray palette, lighting, camera and flowing metallic reflections. The black wave must be pure glossy dark metal without any dots; the ivory wave pure glossy ivory metal without any dots; the floor pure clean flowing metallic reflections without any particles. No grain/noise texture, new objects, text, cropping or composition changes. Output same aspect ratio and dimensions as input.",
+    "saved": "public/images/hero-clean-mobile.webp"
+  }
+]

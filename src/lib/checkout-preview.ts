@@ -9,7 +9,7 @@ export function isCheckoutPreview() {
 }
 type SavedPreview = { order: OrderView; token: string; key: string };
 const storageKey = "snp-demo-orders";
-const config: CheckoutConfig = { enabled: true, methods: ["card", "venmo"], shippingCents: 500, states: ["UT", "CO", "CA", "NY", "TX", "FL"], supportEmail: "" };
+const config: CheckoutConfig = { enabled: true, methods: ["card", "venmo"], shippingCents: 0, states: ["UT", "CO", "CA", "NY", "TX", "FL"], supportEmail: "" };
 
 export async function previewRequest<T>(path: string, init: RequestInit): Promise<T> {
   if (!isCheckoutPreview()) throw new Error("Demo checkout is available on localhost in development only.");

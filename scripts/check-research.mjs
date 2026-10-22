@@ -1,3 +1,4 @@
+import { studyAnchor } from "../src/lib/research-catalog-format.ts";
 import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
@@ -96,16 +97,10 @@ for (const slug of researchSlugs) {
     if (reader.entry) {
       for (const field of ['finding', 'limitation', 'model']) assert.ok(readerPage.includes(escape(reader.entry[field])), `${slug}/${publication.id}: reader ${field}`);
       for (const field of ['design', 'measures', 'context']) assert.ok(readerPage.includes(escape(reader.reading[field])), `${slug}/${publication.id}: reader ${field}`);
-    } else if (reader.excerpt) {
-      assert.ok(readerPage.includes(escape(reader.excerpt.text)), `${slug}/${publication.id}: attributed reader excerpt`);
-      if (reader.excerpt.truncated) assert.ok(readerPage.includes(reader.excerpt.adapted ? 'shortened excerpt' : 'shortened quotation'), `${slug}/${publication.id}: shortened excerpt clearly labeled`);
-      if (reader.excerpt.adapted) {
-        assert.ok(readerPage.includes('Compound naming is adapted to GLP-3'), `${slug}/${publication.id}: adapted wording disclosed`);
-        assert.ok(!readerPage.includes('<blockquote'), `${slug}/${publication.id}: adapted wording is not presented as an exact quotation`);
-      }
-      assert.ok(readerPage.includes('brief excerpt cannot capture'), `${slug}/${publication.id}: excerpt scope`);
     } else {
-      assert.ok(readerPage.includes('does not provide enough information to summarize'), `${slug}/${publication.id}: missing source is not invented`);
+      assert.ok(readerPage.includes('This is a bibliography entry, not a study explanation'), `${slug}/${publication.id}: citation-only record`);
+      assert.ok(!readerPage.includes('<blockquote'), `${slug}/${publication.id}: no excerpt presented as an explanation`);
+      if (reader.excerpt) assert.ok(!readerPage.includes(escape(reader.excerpt.text)), `${slug}/${publication.id}: excerpt removed`);
     }
     if (publication.types.includes('Retraction Notice') || publication.types.includes('Retracted Publication')) {
       assert.equal(publication.category, 'other', `${slug}/${publication.id}: separate retractions`);
@@ -153,4 +148,15 @@ assert.equal(readers, indexedPublicationCount, 'Every selected publication has a
 assert.equal(studyRecord('bpc-157', '42757290'), null, 'Excluded publications do not gain reader pages');
 assert.equal(studyRecord('unknown-compound', '37366315'), null, 'Unknown collections have no reader');
 assert.equal(studyRecord('pinealon', '37366315'), null, 'Wrong-collection PMID has no reader');
-console.log(`Verified ${readers} individual reading pages and ${Object.keys(sourceExcerpts).length} attributed short excerpts${rawRecords ? ', compared with cached source abstracts' : ''}.`);
+console.log(`Verified ${readers} publication pages and ${Object.keys(sourceExcerpts).length} archived source excerpts${rawRecords ? ', compared with cached source abstracts' : ''}.`);
+
+const originalCatalog = JSON.parse(readFileSync('src/lib/research-catalog-data.json', 'utf8'));
+for (const [slug, catalog] of Object.entries(originalCatalog.catalogs)) {
+  const displayed = researchCatalogs[slug === 'retatrutide' ? 'glp-3' : slug];
+  for (const paper of catalog.papers) assert.equal(displayed.papers.find(item => item.id === paper.id).title, paper.title.replace(/retatrutide/gi, "GLP-3"), `Catalog title naming: ${paper.id}`);
+}
+for (const entry of researchEntries) {
+  const html = readFileSync(`out/science/${entry.slug}.html`, 'utf8');
+  const summary = html.split(`id="${studyAnchor(entry.sourceId)}"`)[1]?.split('</summary>')[0];
+  assert.ok(summary?.includes(escape(entry.limitation)), `${entry.sourceId}: limitation visible before expanding`);
+}

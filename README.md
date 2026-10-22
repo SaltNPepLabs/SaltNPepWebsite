@@ -1,6 +1,6 @@
 # SALT N’ PEP
 
-Next.js storefront-style site for a research peptide catalog. The site presents product cards, product detail pages, science/FAQ content, and a client-side cart drawer.
+Next.js storefront-style site for a research peptide catalog. The site presents product cards, product detail pages, COA documentation and FAQ content, and a client-side cart drawer.
 
 ## Repository
 

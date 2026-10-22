@@ -11,3 +11,5 @@
 .vialLabel strong { font-size: 4.1cqw; line-height: 1.15; font-weight: 600; overflow-wrap: anywhere; }
 .research { font-size: 1.8cqw; line-height: 1.3; text-transform: uppercase; letter-spacing: .08em; }
 .caption { position: absolute; bottom: 5%; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: #555347; }
+
+.amount { font-size: 2.8cqw; line-height: 1.2; letter-spacing: .12em; }

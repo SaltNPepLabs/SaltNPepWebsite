@@ -1,6 +1,6 @@
+import { catalogWording } from "./catalog-naming";
 import type { ResearchEntry } from "./research";
 import { additionalReadingDetails } from "./research-reading-additions";
-import { catalogWording } from "./catalog-naming";
 
 type EvidenceContext = Pick<ResearchEntry, "evidence" | "humanObservation" | "studyType">;
 

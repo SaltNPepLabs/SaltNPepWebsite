@@ -1,0 +1,53 @@
+{
+  "method": "Built-in image_gen; lossless-size WebP delivery conversion with alpha retained",
+  "records": [
+    {
+      "slug": "bpc-157",
+      "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-100527d2-9504-45f0-b399-7be9ebea9d7a.png",
+      "output": "public/images/hero-vials/bpc-157.webp",
+      "prompt": "Use case: lighting-weather. Edit target image 1: the transparent BPC-157 vial. Image 2 is ONLY an environment lighting reference; do not include it in output. Produce a single relit vial on genuine transparent background, square canvas, same centered frontal position and same relative dimensions as image 1. Preserve exact vial geometry, black cap, silver metal collar, and ALL label artwork and lettering unchanged: BPC-157, 10 MG, FOR RESEARCH USE ONLY. Relight glass/cap to naturally belong in image 2's warm champagne-gray cinematic environment: replace stark white studio strips with softer champagne reflections, deeper charcoal left reflection, restrained ivory right reflection, realistic warm environmental bounce in glass base and shoulder. Clearly noticeable professional relighting, not a generic sepia filter. Label remains neutral ivory and crisp with original typography and design. Preserve transparent cutout and no exterior halo. No particles, floor, cast shadow, background, pedestal, additional objects, text or crop. Actual alpha transparency required, no checkerboard printed into image."
+    },
+    {
+      "slug": "glp-3",
+      "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-fbe4999a-d6bf-4f96-8b0b-c72669679731.png",
+      "output": "public/images/hero-vials/glp-3.webp",
+      "prompt": "Use case: lighting-weather. Image 1 is edit target: original transparent GLP-3 vial. Image 2 is lighting environment reference ONLY. Image 3 is the approved relit BPC-157 example for consistent glass/cap lighting ONLY. Output one GLP-3 vial on genuine transparent background, same square canvas framing and same centered frontal vial geometry and dimensions as image 1. Preserve all original label artwork and exact text: GLP-3, 10 MG, FOR RESEARCH USE ONLY. Match image 3's champagne environmental reflections on metal collar, black cap, glass shoulders and base. Replace stark studio white reflections with warm ivory/champagne reflections and charcoal reflected environment. Match the environment in image 2 without drawing any of that environment. Label stays clear neutral ivory and original design, no typography changes. No shadows, floor, particles, glow, background or pedestal. Same silhouette, no perspective change, no stretching, no enlarged vial. Actual transparent alpha, not black or checkerboard backdrop."
+    },
+    {
+      "slug": "tb-500",
+      "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-33e91460-3caa-4e72-99e7-c7a51f75ec39.png",
+      "output": "public/images/hero-vials/tb-500.webp",
+      "prompt": "Use case: lighting-weather. Image 1 is edit target: original transparent TB-500 vial. Image 2 is lighting environment reference ONLY. Image 3 is the approved relit BPC-157 example for consistent glass/cap lighting ONLY. Output one TB-500 vial on genuine transparent background, same square canvas framing and same centered frontal vial geometry and dimensions as image 1. Preserve all original label artwork and exact text: TB-500, 10 MG, FOR RESEARCH USE ONLY. Match image 3's champagne environmental reflections on metal collar, black cap, glass shoulders and base. Replace stark studio white reflections with warm ivory/champagne reflections and charcoal reflected environment. Match the environment in image 2 without drawing any of that environment. Label stays clear neutral ivory and original design, no typography changes. No shadows, floor, particles, glow, background or pedestal. Same silhouette, no perspective change, no stretching, no enlarged vial. Actual transparent alpha, not black or checkerboard backdrop."
+    },
+    {
+      "slug": "mt-2",
+      "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-3b209eed-63e2-42a2-9261-2bd9a3d3878b.png",
+      "output": "public/images/hero-vials/mt-2.webp",
+      "prompt": "Use case: lighting-weather. Image 1 is edit target: original transparent MT-2 vial. Image 2 is lighting environment reference ONLY. Image 3 is the approved relit BPC-157 example for consistent glass/cap lighting ONLY. Output one MT-2 vial on genuine transparent background, same square canvas framing and same centered frontal vial geometry and dimensions as image 1. Preserve all original label artwork and exact text: MT-2, 10 MG, FOR RESEARCH USE ONLY. Match image 3's champagne environmental reflections on metal collar, black cap, glass shoulders and base. Replace stark studio white reflections with warm ivory/champagne reflections and charcoal reflected environment. Match the environment in image 2 without drawing any of that environment. Label stays clear neutral ivory and original design, no typography changes. No shadows, floor, particles, glow, background or pedestal. Same silhouette, no perspective change, no stretching, no enlarged vial. Actual transparent alpha, not black or checkerboard backdrop."
+    },
+    {
+      "slug": "mots-c",
+      "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-f5dfee3c-a632-4432-a608-f7da3d98bb95.png",
+      "output": "public/images/hero-vials/mots-c.webp",
+      "prompt": "Use case: lighting-weather. Image 1 is edit target: original transparent MOTS-c vial. Image 2 is lighting environment reference ONLY. Image 3 is the approved relit BPC-157 example for consistent glass/cap lighting ONLY. Output one MOTS-c vial on genuine transparent background, same square canvas framing and same centered frontal vial geometry and dimensions as image 1. Preserve all original label artwork and exact text: MOTS-c, 10 MG, FOR RESEARCH USE ONLY. Match image 3's champagne environmental reflections on metal collar, black cap, glass shoulders and base. Replace stark studio white reflections with warm ivory/champagne reflections and charcoal reflected environment. Match the environment in image 2 without drawing any of that environment. Label stays clear neutral ivory and original design, no typography changes. No shadows, floor, particles, glow, background or pedestal. Same silhouette, no perspective change, no stretching, no enlarged vial. Actual transparent alpha, not black or checkerboard backdrop."
+    },
+    {
+      "slug": "pinealon",
+      "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-b8606c6c-2f85-4df2-b4a4-1f120fc5ecb0.png",
+      "output": "public/images/hero-vials/pinealon.webp",
+      "prompt": "Use case: lighting-weather. Image 1 is edit target: original transparent Pinealon vial. Image 2 is lighting environment reference ONLY. Image 3 is the approved relit BPC-157 example for consistent glass/cap lighting ONLY. Output one Pinealon vial on genuine transparent background, same square canvas framing and same centered frontal vial geometry and dimensions as image 1. Preserve all original label artwork and exact text: Pinealon, 10 MG, FOR RESEARCH USE ONLY. Match image 3's champagne environmental reflections on metal collar, black cap, glass shoulders and base. Replace stark studio white reflections with warm ivory/champagne reflections and charcoal reflected environment. Match the environment in image 2 without drawing any of that environment. Label stays clear neutral ivory and original design, no typography changes. No shadows, floor, particles, glow, background or pedestal. Same silhouette, no perspective change, no stretching, no enlarged vial. Actual transparent alpha, not black or checkerboard backdrop."
+    },
+    {
+      "slug": "epitalon",
+      "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-51b9a70d-9b5a-4015-a488-ee50d409873c.png",
+      "output": "public/images/hero-vials/epitalon.webp",
+      "prompt": "Use case: lighting-weather. Image 1 is edit target: original transparent Epitalon vial. Image 2 is lighting environment reference ONLY. Image 3 is the approved relit BPC-157 example for consistent glass/cap lighting ONLY. Output one Epitalon vial on genuine transparent background, same square canvas framing and same centered frontal vial geometry and dimensions as image 1. Preserve all original label artwork and exact text: Epitalon, 10 MG, FOR RESEARCH USE ONLY. Match image 3's champagne environmental reflections on metal collar, black cap, glass shoulders and base. Replace stark studio white reflections with warm ivory/champagne reflections and charcoal reflected environment. Match the environment in image 2 without drawing any of that environment. Label stays clear neutral ivory and original design, no typography changes. No shadows, floor, particles, glow, background or pedestal. Same silhouette, no perspective change, no stretching, no enlarged vial. Actual transparent alpha, not black or checkerboard backdrop."
+    },
+    {
+      "slug": "ghk-cu",
+      "source": "/Users/jonahsparks/.codex/generated_images/01a15ac5-1eb1-7642-a52f-a1f38e4e5f1f/exec-03242ca1-3c57-4cea-aa07-ee5db0a9900b.png",
+      "output": "public/images/hero-vials/ghk-cu.webp",
+      "prompt": "Use case: lighting-weather. Image 1 is edit target: original transparent GHK-Cu vial. Image 2 is lighting environment reference ONLY. Image 3 is the approved relit BPC-157 example for consistent glass/cap lighting ONLY. Output one GHK-Cu vial on genuine transparent background, same square canvas framing and same centered frontal vial geometry and dimensions as image 1. Preserve all original label artwork and exact text: GHK-Cu, 50 MG, FOR RESEARCH USE ONLY. Match image 3's champagne environmental reflections on metal collar, black cap, glass shoulders and base. Replace stark studio white reflections with warm ivory/champagne reflections and charcoal reflected environment. Match the environment in image 2 without drawing any of that environment. Label stays clear neutral ivory and original design, no typography changes. No shadows, floor, particles, glow, background or pedestal. Same silhouette, no perspective change, no stretching, no enlarged vial. Actual transparent alpha, not black or checkerboard backdrop."
+    }
+  ]
+}

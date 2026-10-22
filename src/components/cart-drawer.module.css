@@ -7,7 +7,7 @@
 .backdrop {
   position: absolute;
   inset: 0;
-  background: #000b;
+  background: #000000bb;
   backdrop-filter: blur(4px);
 }
 
@@ -23,7 +23,7 @@
   overscroll-behavior: contain;
   border-left: 1px solid var(--border);
   background: var(--card);
-  box-shadow: 0 20px 50px #0003;
+  box-shadow: 0 20px 50px #00000033;
 }
 
 .header {
@@ -87,7 +87,7 @@
   gap: 12px;
   padding: 12px;
   border: 1px solid var(--border);
-  background: #e8e2d8;
+  background: #e3e3e3;
 }
 
 .dosage {
@@ -119,7 +119,7 @@
   border-radius: 4px;
 }
 
-.quantity button:hover { background: #d8d0c2; }
+.quantity button:hover { background: #d1d1d1; }
 .quantity span { min-width: 28px; text-align: center; }
 .quantity .remove { margin-left: auto; padding-inline: 8px; border-color: transparent; color: var(--muted); font-size: 12px; }
 
@@ -131,7 +131,7 @@
 
 .subtotal { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 16px; font-size: 14px; }
 .subtotal span { color: var(--muted); }
-.checkout { display: flex; min-height: 48px; align-items: center; justify-content: center; padding: 12px 16px; background: var(--primary); color: #fffdf7; text-align: center; font-size: 13px; font-weight: 600; }
+.checkout { display: flex; min-height: 48px; align-items: center; justify-content: center; padding: 12px 16px; background: var(--primary); color: #fdfdfd; text-align: center; font-size: 13px; font-weight: 600; }
 .checkout:hover { background: var(--primary-dark); }
 .clear { width: 100%; min-height: 44px; margin-top: 8px; color: var(--muted); font-size: 13px; }
 .footer p { margin: 8px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; text-align: center; }
@@ -145,3 +145,27 @@
   .header { position: sticky; top: 0; z-index: 1; }
   .items { overflow-y: visible; }
 }
+
+/* Explicit cart palette keeps contrast stable on both light and dark pages. */
+.drawer {--card:#242423;--border:#ffffff24;--muted:#c5bfb4;--primary:#eee7da;--primary-dark:#fff8ec;background:#242423;color:#f4eee4;width:min(100%,460px);}
+.header {padding:22px 24px 18px;}
+.header h2 {font-size:23px;font-weight:400;}
+.items {padding:20px 24px;}
+.items ul {gap:16px;}
+.item {background:#30302e;color:#f4eee4;border-color:#ffffff1f;border-radius:8px;padding:17px 14px;gap:12px;}
+.dosage {background:#3b3a36;color:#eee7da;border-color:#ffffff20;border-radius:5px;}
+.name h3 {color:#f4eee4;font-size:15px;}
+.name p {color:#c5bfb4;}
+.price {color:#f4eee4;font-size:14px;}
+.quantity button {color:#eee7da;background:transparent;border-color:#ffffff30;}
+.quantity button:hover {background:#ffffff10;}
+.quantity button:disabled {opacity:.4;cursor:not-allowed;}
+.footer {padding:20px 24px calc(18px + env(safe-area-inset-bottom));}
+.subtotal {font-size:16px;align-items:center;}
+.subtotal strong {font-size:22px;font-weight:500;}
+.checkout {background:#eee7da;color:#242423;border-radius:5px;min-height:52px;font-size:14px;}
+.checkout:hover {background:#fff8ec;}
+.continueShopping {display:block;width:100%;min-height:44px;margin-top:8px;color:#e0d9cd;font-size:13px;}
+.clear {margin-top:0;font-size:11px;min-height:32px;}
+.drawer button:focus-visible,.drawer a:focus-visible {outline:2px solid #e0c9a4;outline-offset:3px;}
+@media(max-width:480px){.drawer{width:100%}.header{padding: max(16px,env(safe-area-inset-top)) 20px 14px}.items{padding:16px}.footer{padding:16px 20px calc(14px + env(safe-area-inset-bottom))}}

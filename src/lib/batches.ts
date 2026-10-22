@@ -9,20 +9,23 @@ export interface BatchReport {
   issued: string;
   pdf: string;
   note?: string;
+  contentNotice?: string;
 }
 
 const pdf = (hash: string) => `https://www.peptaura.com/coas/${hash}.pdf`;
 export const batchReports: Record<string, BatchReport> = {
   "bpc-157": {
-    supplier: "Lumira", batch: "PPA-WL-BC10-P00704", dosage: "10mg", purity: "99.8%",
-    lab: "Pacific Coast Biologics", issued: "July 19, 2026",
-    pdf: pdf("c2d11a94e819c788346535249c34c47b4f725a0b1d6594978c2d4996a4b73edb"),
+    supplier: "Lumira", batch: "WL-BC10-000299", reportLot: "JBF6N3D", dosage: "10mg", purity: "99.6%",
+    lab: "BTLabs", issued: "August 10, 2026",
+    pdf: pdf("ec3fe9be9f7fb37d67508b453b24825952386602c4a1b26493c1572fdad1913d"),
+    note: "Peptaura batch: WL-BC10-000299. Laboratory sample lot: JBF6N3D. Measured content: 9.1mg. Match the report to the lot on your vial.",
   },
   retatrutide: {
-    supplier: "Lumira", batch: "PPA-WL-RT5-P00701", reportLot: "PPA-WL-RT5-P000701", dosage: "5mg", purity: "99.8%",
-    lab: "Pacific Coast Biologics", issued: "July 21, 2026",
-    pdf: pdf("29bad9600233900d2d7931f8f197f38d35756fd6d68e71fb59ecf3bccb5242be"),
-    note: "The directory and PDF use different lot numbers. Supplier confirmation is needed before matching this report to inventory.",
+    supplier: "Lumira", batch: "WL-RT30-P00521", reportLot: "CW7KA2N", dosage: "30mg", purity: "99.9%",
+    lab: "BTLabs", issued: "August 10, 2026",
+    pdf: pdf("f191fd70f1fd8edf4807af1a0ed2047cbb57d938e7f2df02011e010c183d58c6"),
+    contentNotice: "Measured content: 25.2mg · Labeled amount: 30mg",
+    note: "Peptaura batch: WL-RT30-P00521. Laboratory sample lot: CW7KA2N. Match the report to the lot on your vial.",
   },
   "tb-500": {
     supplier: "Lumira", batch: "PPA-WL-TB10-P00714", dosage: "10mg", purity: "99.6%",
@@ -55,4 +58,15 @@ export const batchReports: Record<string, BatchReport> = {
     lab: "Pacific Coast Biologics", issued: "July 30, 2026",
     pdf: pdf("541e0af68fe283b710a5f38dc2dde1e496e1a753281ecbb1375f9554bb44bdc1"),
   },
+};
+
+// Owner-requested supplier overrides; other certificate presentation is unchanged.
+export function usesLumiraCertificate(slug: string): boolean {
+  return ["bpc-157", "retatrutide", "glp-3", "tb-500", "mots-c"].includes(slug);
+}
+
+
+// Additional supplier report; MOTS-C remains available to purchase in 10mg only.
+export const additionalBatchReports: Record<string, {label: string; url: string}[]> = {
+  "mots-c": [{label: "40mg · Additional supplier report", url: pdf("f70c35017b1af5cae212704b896e1c58703b834adefa74e350290b2546e506de")}],
 };

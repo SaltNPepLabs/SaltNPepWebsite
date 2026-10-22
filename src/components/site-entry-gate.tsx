@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type
 import styles from "./site-entry-gate.module.css";
 import { acceptAnalyticsGate, track } from "@/lib/analytics";
 
-const confirmationKey = "snp-entry-confirmation-v1";
+const confirmationKey = "snp-entry-confirmation-v2";
 const confirmationEvent = "snp-entry-confirmed";
 let confirmedInMemory = false;
 
@@ -34,12 +34,16 @@ function readConfirmation() {
     || readStoredConfirmation("sessionStorage");
 }
 
-function rememberConfirmation() {
+function rememberConfirmation(rememberDevice: boolean) {
   confirmedInMemory = true;
-  try {
-    localStorage.setItem(confirmationKey, "confirmed");
-    return;
-  } catch { /* Fall back to the current tab when persistent storage is unavailable. */ }
+  if (rememberDevice) {
+    try {
+      localStorage.setItem(confirmationKey, "confirmed");
+      return;
+    } catch { /* Fall back to this tab if persistent storage is unavailable. */ }
+  } else {
+    try { localStorage.removeItem(confirmationKey); } catch { /* Storage may be unavailable. */ }
+  }
   try {
     sessionStorage.setItem(confirmationKey, "confirmed");
   } catch { /* Keep this visit usable when all browser storage is unavailable. */ }
@@ -51,6 +55,7 @@ function unconfirmedOnServer() {
 
 export function SiteEntryGate({ children }: { children: ReactNode }) {
   const confirmed = useSyncExternalStore(subscribe, readConfirmation, unconfirmedOnServer);
+  const [rememberDevice, setRememberDevice] = useState(true);
   const [over21, setOver21] = useState(false);
   const [understandsResearch, setUnderstandsResearch] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -63,11 +68,7 @@ export function SiteEntryGate({ children }: { children: ReactNode }) {
   }, [confirmed]);
 
   useEffect(() => {
-    if (confirmed) {
-      // Carry existing tab-session confirmations into persistent storage.
-      rememberConfirmation();
-      return;
-    }
+    if (confirmed) return;
     const dialog = dialogRef.current;
     if (!dialog) return;
     const previousOverflow = document.body.style.overflow;
@@ -87,7 +88,7 @@ export function SiteEntryGate({ children }: { children: ReactNode }) {
     if (!over21 || !understandsResearch) return;
     track("age_gate_accepted");
     acceptAnalyticsGate();
-    rememberConfirmation();
+    rememberConfirmation(rememberDevice);
     window.dispatchEvent(new Event(confirmationEvent));
     requestAnimationFrame(() => document.getElementById("main-content")?.focus());
   }
@@ -116,9 +117,13 @@ export function SiteEntryGate({ children }: { children: ReactNode }) {
               </label>
               <label className={styles.statement}>
                 <input type="checkbox" required checked={understandsResearch} onChange={(event) => setUnderstandsResearch(event.target.checked)} />
-                <span>I understand that these are research compounds</span>
+                <span>I understand these products are for laboratory research only, not for personal use or administration to humans or animals</span>
               </label>
             </div>
+            <label className={styles.remember}>
+              <input type="checkbox" checked={rememberDevice} onChange={(event) => setRememberDevice(event.target.checked)} aria-describedby="remember-device-note" />
+              <span>Remember this device<small id="remember-device-note">Skip this step next time on this browser.</small></span>
+            </label>
             <button type="submit" className={styles.enter} disabled={!over21 || !understandsResearch}>Enter site</button>
           </form>
         </dialog>

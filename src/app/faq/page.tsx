@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "FAQ | SALT N’ PEP",
-  description: "Frequently asked questions about ordering research peptides, shipping, storage, and more.",
+  description: "Frequently asked questions about ordering research compounds, shipping, and more.",
 };
 
 const faqs = [
@@ -11,20 +11,12 @@ const faqs = [
     category: "General",
     questions: [
       {
-        q: "What are research peptides?",
-        a: "Research peptides are short chains of amino acids (typically 2-50 amino acids) synthesized for use in laboratory and scientific research. They are used to study biological signaling pathways, receptor interactions, and cellular mechanisms. All products sold by SALT N’ PEP are for research use only.",
-      },
-      {
-        q: "Are peptides the same as steroids?",
-        a: "No. Peptides and anabolic steroids are fundamentally different. Peptides are amino acid chains that act as signaling molecules \u2014 they activate natural biological receptors and pathways. Steroids are synthetic derivatives of testosterone that directly override the endocrine system. Peptides have no androgenic or estrogenic activity and do not suppress natural hormone production. See our Science & Research page for a detailed comparison.",
-      },
-      {
-        q: "Are these products legal to purchase?",
-        a: "Yes. Research peptides are legal to purchase in the United States for laboratory and research purposes. They are not controlled substances. However, they are not approved by the FDA for human use, and we sell them strictly for research purposes only.",
+        q: "What are research compounds?",
+        a: "Research compounds are materials supplied for laboratory and scientific research. Review each product’s specifications and available documentation for its composition and format. All products sold by SALT N’ PEP are for research use only.",
       },
       {
         q: "Are these products for human consumption?",
-        a: "No. All products sold by SALT N’ PEP are intended for laboratory and research use only. They are not for human consumption, and they are not intended to diagnose, treat, cure, or prevent any disease. By purchasing, you agree to use them solely for legitimate research purposes.",
+        a: "No. All products sold by SALT N’ PEP are intended for laboratory and research use only. They are not for personal use or administration to humans or animals, and they are not intended to diagnose, treat, cure, or prevent any disease. By purchasing, you agree to use them solely for legitimate research purposes.",
       },
     ],
   },
@@ -32,24 +24,20 @@ const faqs = [
     category: "Products & Quality",
     questions: [
       {
-        q: "What purity are your peptides?",
-        a: "All of our peptides are tested to 98%+ purity minimum. Most batches test at 99%+. Purity is verified via High-Performance Liquid Chromatography (HPLC) and confirmed with mass spectrometry. The exact purity percentage for each product is listed on its product page.",
+        q: "What purity are your compounds?",
+        a: "All of our compounds are tested to 98%+ purity minimum. Most batches test at 99%+. Purity is verified via High-Performance Liquid Chromatography (HPLC) and confirmed with mass spectrometry. The exact purity percentage for each product is listed on its product page.",
       },
       {
         q: "Do you provide Certificates of Analysis (COA)?",
         a: "Yes. Every batch of every product is independently tested. A Certificate of Analysis showing HPLC purity results and mass spectrometry data is included with every order. COAs are also available for download on each product page.",
       },
       {
-        q: "What form do the peptides come in?",
-        a: "All peptides are supplied as lyophilized (freeze-dried) powder in sealed, sterile glass vials. Lyophilized peptides are more stable for long-term storage than reconstituted solutions.",
+        q: "What form do the compounds come in?",
+        a: "All compounds are supplied as lyophilized (freeze-dried) powder in sealed, sterile glass vials.",
       },
       {
-        q: "How should I store my peptides?",
-        a: "Lyophilized (unreconstituted) peptides should be stored at -20\u00B0C for long-term storage or 2-8\u00B0C for short-term storage. Once reconstituted with bacteriostatic water, store at 2-8\u00B0C and use within 30 days. Keep away from direct light, especially MT-2 which is photosensitive.",
-      },
-      {
-        q: "What is the shelf life?",
-        a: "Lyophilized peptides stored at -20\u00B0C typically remain stable for 24+ months. Reconstituted peptides stored at 2-8\u00B0C should be used within 30 days. Always check the expiration date on your Certificate of Analysis.",
+        q: "Do you provide mixing or administration instructions?",
+        a: "We do not provide personal-use mixing, dosing, injection, or administration instructions. Preparation conditions for laboratory work must be established for the specific assay. Products are not for personal use or administration to humans or animals.",
       },
     ],
   },
@@ -58,15 +46,15 @@ const faqs = [
     questions: [
       {
         q: "Do you offer bulk discounts?",
-        a: "Yes. All products have tiered pricing for orders of 3, 5, and 10+ vials. Bulk pricing is displayed on each product page. Discounts are automatically applied in your cart.",
+        a: "No. Each vial has the same unit price regardless of quantity. Your total updates as you select the number of vials.",
       },
       {
         q: "How are orders shipped?",
-        a: "All orders ship via insulated packaging to maintain product integrity during transit. Orders placed before 2pm CST on business days are shipped the same day. Standard shipping typically arrives within 2-5 business days.",
+        a: "Shipping is free within our supported US delivery area. The Utah County cutoff is 11 a.m. Mountain Time: before the cutoff, delivery is the next day; at or after it, delivery is two days later. Service runs seven days a week; holiday schedules may vary. Outside Utah County, the same cutoff determines when the parcel ships, with carrier transit time additional. See the Delivery page for current information.",
       },
       {
         q: "Do you ship internationally?",
-        a: "Currently we ship within the United States only. Regulations regarding research peptides vary by country, and we want to ensure full compliance. We are evaluating international shipping and will announce availability when ready.",
+        a: "Currently we ship within the United States only. Regulations regarding research compounds vary by country, and we want to ensure full compliance. We are evaluating international shipping and will announce availability when ready.",
       },
       {
         q: "What payment methods do you accept?",
@@ -79,19 +67,19 @@ const faqs = [
     questions: [
       {
         q: "What is BPC-157?",
-        a: "BPC-157 (Body Protection Compound-157) is a synthetic pentadecapeptide \u2014 15 amino acids long \u2014 derived from a protein naturally found in human gastric juice. It is one of the most studied peptides in preclinical research, with hundreds of animal studies examining its role in tissue repair, gastrointestinal protection, and nitric oxide modulation.",
+        a: "BPC-157 is a synthetic compound consisting of 15 amino acids. Supplied as lyophilized powder for laboratory research only.",
       },
       {
         q: "What is GLP-3?",
-        a: "GLP-3 is our catalog label for LY-3437943, a peptide studied for GLP-1, GIP, and glucagon receptor signaling. The research library provides study summaries, findings, limitations, and links to the original publications.",
+        a: "GLP-3 is our catalog label for LY-3437943. Supplied as lyophilized powder for laboratory research only.",
       },
       {
         q: "What is TB-500?",
-        a: "TB-500 is a synthetic version of Thymosin Beta-4, a 43-amino-acid peptide found naturally in virtually all human and animal cells. It plays key roles in cell migration, angiogenesis (blood vessel formation), and tissue repair. Published research in Nature (2004) demonstrated its ability to promote cardiac cell survival and migration.",
+        a: "TB-500 is supplied as lyophilized powder for laboratory research only. The catalog name alone does not establish a particular amino-acid sequence or equivalence to full-length thymosin beta-4. Request the batch-specific identity specification before selecting this material for an assay.",
       },
       {
         q: "What is MT-2 (Melanotan II)?",
-        a: "Melanotan II is a synthetic cyclic peptide analog of alpha-melanocyte-stimulating hormone (alpha-MSH), originally developed at the University of Arizona. It binds to melanocortin receptors (MC1R-MC5R) and has been studied for its roles in melanogenesis, appetite regulation, and sexual function. It has Phase I human trial data published in peer-reviewed journals.",
+        a: "Melanotan II (MT-2) is a synthetic cyclic compound. Supplied as lyophilized powder for laboratory research only.",
       },
     ],
   },
@@ -103,7 +91,7 @@ export default function FAQPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl sm:text-4xl lg:text-6xl font-normal tracking-tight">Good to know.</h1>
         <p className="mt-4 text-muted text-lg">
-          Everything you need to know about ordering research peptides from SALT N’ PEP.
+          Everything you need to know about ordering research compounds from SALT N’ PEP.
         </p>
 
         {faqs.map((section) => (
@@ -136,18 +124,18 @@ export default function FAQPage() {
         {/* Related links */}
         <div className="mt-8 flex flex-col sm:flex-row gap-4">
           <Link
-            href="/science"
+            href="/coas"
             className="flex-1 p-4 dark-panel rounded-sm hover:border-primary/50 transition-colors text-center"
           >
-            <p className="font-semibold text-sm">Science & Research</p>
-            <p className="text-xs text-muted mt-1">Explore studies, evidence types & research context</p>
+            <p className="font-semibold text-sm">Certificates of Analysis</p>
+            <p className="text-xs text-muted mt-1">Find laboratory reports and sample details</p>
           </Link>
           <Link
             href="/products"
             className="flex-1 p-4 dark-panel rounded-sm hover:border-primary/50 transition-colors text-center"
           >
             <p className="font-semibold text-sm">Browse Products</p>
-            <p className="text-xs text-muted mt-1">View all peptides with pricing & specs</p>
+            <p className="text-xs text-muted mt-1">View all compounds with pricing & specs</p>
           </Link>
         </div>
       </div>
