@@ -905,3 +905,6 @@ Adding a product now opens cart automatically through existing addition counter;
 
 ## 2026-10-22 — Mobile arrow and copy cleanup
 Replaced storefront text arrows with consistent SVG icons, removed newsletter fine print (privacy policy retained), and removed the product Laboratory Handling panel at owner request. Publish requested.
+
+## 2026-10-22 — Compact multi-size documentation
+Replaced stacked COA reports with size-selection buttons and one active report. Purity, lab details and view/download links change together; additional-report scope and content notices retained. Lint/build passed; verified Tesamorelin 5mg to 20mg updates correct purity and document links. Local preview only.

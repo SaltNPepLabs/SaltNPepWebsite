@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import { LinkArrow } from "./link-arrow";
 import { batchReports, additionalBatchReports, usesLumiraCertificate } from "@/lib/batches";
 import { aurumCertificateDirectory, getAurumProduct } from "@/lib/aurum-catalog";
@@ -16,20 +18,23 @@ function ReportActions({ url, name }: { url: string; name: string }) {
 }
 
 export function ProductTesting({ slug, name }: { slug: string; name: string }) {
+  const [selected, setSelected] = useState(0);
   const source = usesLumiraCertificate(slug) ? undefined : getAurumProduct(slug);
   const report = source ? undefined : batchReports[slug];
   if (!source && !report) return null;
   const reports = source ? source.certificates : [{ label: report!.dosage, url: report!.pdf }, ...(additionalBatchReports[slug] ?? [])];
-  const primaryPurity = report?.purity ?? (purityResults as Record<string, string>)[reports[0]?.url];
+  const activeIndex = selected < reports.length ? selected : 0;
+  const primaryPurity = activeIndex === 0 && report ? report.purity : (purityResults as Record<string, string>)[reports[activeIndex]?.url];
   return <section id="batch-report" className={styles.banner} aria-labelledby="testing-title">
     <div className={styles.header}><p className={styles.eyebrow}>{name} · Documentation</p><span className={styles.badge}>{reports.length ? "COA available" : "Report pending"}</span></div>
     <div className={styles.body}>
       <div className={styles.intro}>
         <h2 id="testing-title">Certificate<br />of Analysis</h2>
-        {primaryPurity ? <div className={styles.result}><span className={styles.purity}>{primaryPurity}</span><span className={styles.label}>Reported HPLC purity · {reports[0]?.label}</span></div> : <p className={styles.label}>Laboratory reports.<br />Batch details. Direct access.</p>}
+        {primaryPurity ? <div className={styles.result}><span className={styles.purity}>{primaryPurity}</span><span className={styles.label}>Reported HPLC purity · {reports[activeIndex]?.label.replace(" · Additional supplier report", "")}</span></div> : <p className={styles.label}>Laboratory reports.<br />Batch details. Direct access.</p>}
       </div>
       <div className={styles.reports}>
-        {reports.map((item, index) => <div className={styles.report} key={item.url}>
+        {reports.length > 1 && <div className={styles.selector} role="group" aria-label="Choose report size">{reports.map((item, index) => <button key={item.url} type="button" aria-pressed={activeIndex === index} onClick={() => setSelected(index)}>{item.label.replace(" · Additional supplier report", "")}{report && index > 0 ? " · Additional report" : ""}</button>)}</div>}
+        {reports.map((item, index) => activeIndex === index && <div className={styles.report} key={item.url}>
           <div className={styles.reportTitle}><span>{report && index > 0 ? "Additional report" : "Lab report"}</span><strong>{item.label.replace(" · Additional supplier report", "")}</strong></div>
           {(() => {
             const facts = report && index === 0
@@ -41,7 +46,7 @@ export function ProductTesting({ slug, name }: { slug: string; name: string }) {
               <div><dt>Report lot</dt><dd>{facts.batch}</dd></div>
             </dl>;
           })()}
-          {source && index > 0 && (purityResults as Record<string, string>)[item.url] && <p className={styles.reportPurity}>{(purityResults as Record<string, string>)[item.url]} <span>reported purity</span></p>}
+
           <ReportActions url={item.url} name={`${name}-${item.label}`} />
           {report?.contentNotice && index === 0 && <p className={styles.contentNote}>{report.contentNotice}</p>}
           {report && index > 0 && <p className={styles.scope}>For the size listed in this report; not the 10mg vial.</p>}
