@@ -136,13 +136,13 @@
 .whyEditorial h2 {text-align:center;font-size:clamp(28px,2.7vw,38px);font-weight:400;letter-spacing:-.035em;margin:0 0 38px;}
 .whyEditorial h2 span {font-family:Georgia,serif;font-style:italic;font-weight:400;color:#e1d4bd;}
 .benefitList {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));max-width:1320px;margin:auto;}
-.benefit {display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 18px 10px;text-align:center;min-width:0;}
+.benefit {display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 12px 10px;text-align:center;min-width:0;}
 .benefit+.benefit {border-left:1px solid #dacbb526;}
 .benefit h3 {font-size:clamp(14px,1.25vw,18px);font-weight:400;line-height:1.45;letter-spacing:-.015em;margin:0;}
-.story .benefitDescription {color:#c9c0b2;font-size:12px;line-height:1.7;max-width:190px;text-decoration:underline;text-decoration-color:#c9c0b240;text-underline-offset:4px;transition:color .2s ease,text-decoration-color .2s ease;}
+.story .benefitDescription {color:#c9c0b2;font-size:12px;line-height:1.7;max-width:190px;text-decoration:none;transition:color .2s ease;}
 .benefitDescription span {display:inline-block;font-size:11px;}
 .whyEditorial .benefitDescription:focus-visible {outline:1px solid #d4c3a6;outline-offset:5px;}
-@media(hover:hover){.story .benefitDescription:hover{color:#fff8ec;text-decoration-color:#e1d4bd;}}
+@media(hover:hover){.story .benefitDescription:hover{color:#fff8ec;}}
 @media(max-width:760px){
  .whyEditorial{padding:31px 20px 30px;}
  .whyEditorial::before,.whyEditorial::after{content:"";position:absolute;inset:0 auto 0 0;width:50%;z-index:-1;pointer-events:none;background:url('/images/why-salt-pep-organic-lighter.webp') left center/auto 100% no-repeat;opacity:1;mask-image:linear-gradient(to right,#000 35%,transparent 100%);}

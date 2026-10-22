@@ -20,11 +20,11 @@ export function HomeStory() {
    <h2 id="home-why">Why <span>Salt N’ Pep?</span></h2>
    <div className={s.benefitList}>
     {[
-     {title:"Utah County Delivery",description:"Order before 11 a.m. for next-day delivery.",href:"/delivery"},
-     {title:"Straightforward Pricing",description:"Clear prices. No minimum quantity.",href:"/products"},
-     {title:"COA Library",description:"View batch testing reports.",href:"/coas"},
-     {title:"Free U.S. Shipping",description:"See shipping details.",href:"/delivery"},
-     {title:"Direct Support",description:"Get help with your order.",href:"/contact"},
+     {title:"Local Delivery",description:"Next-day in Utah County.",href:"/delivery"},
+     {title:"Transparent Pricing",description:"No minimum orders.",href:"/products"},
+     {title:"Third-Party Tested",description:"Batch reports available.",href:"/coas"},
+     {title:"Free U.S. Shipping",description:"Nationwide delivery.",href:"/delivery"},
+     {title:"Direct Support",description:"We're here to help.",href:"/contact"},
     ].map(item=><div className={s.benefit} key={item.title}>
      <h3>{item.title}</h3>
      <Link className={s.benefitDescription} href={item.href}>{item.description}</Link>

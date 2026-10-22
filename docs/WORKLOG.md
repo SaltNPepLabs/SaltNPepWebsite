@@ -917,3 +917,6 @@ Set explicit Open Graph and Twitter metadata to the existing black-and-white log
 
 ## 2026-10-22 — Compact charcoal share artwork
 Added separate landscape logo image for link previews, charcoal exterior and black vial interiors. Updated social metadata dimensions; existing on-site logo unchanged. Owner requested publication.
+
+## 2026-10-22 — Why Salt N’ Pep copy refinement
+Applied owner-provided five benefit titles/descriptions, removed description underlines, retained links and background, slightly reduced desktop column padding for shorter single-line copy. Local preview update.
