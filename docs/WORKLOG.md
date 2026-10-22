@@ -908,3 +908,6 @@ Replaced storefront text arrows with consistent SVG icons, removed newsletter fi
 
 ## 2026-10-22 — Compact multi-size documentation
 Replaced stacked COA reports with size-selection buttons and one active report. Purity, lab details and view/download links change together; additional-report scope and content notices retained. Lint/build passed; verified Tesamorelin 5mg to 20mg updates correct purity and document links. Local preview only.
+
+## 2026-10-22 — Recommendation copy
+Removed the explanatory sentence under More from the collection at owner request; heading and product links retained. Local only.
