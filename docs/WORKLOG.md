@@ -920,3 +920,6 @@ Added separate landscape logo image for link previews, charcoal exterior and bla
 
 ## 2026-10-22 — Why Salt N’ Pep copy refinement
 Applied owner-provided five benefit titles/descriptions, removed description underlines, retained links and background, slightly reduced desktop column padding for shorter single-line copy. Local preview update.
+
+## 2026-10-22 — Mobile benefits balance
+Changed benefits to two mobile columns with centered fifth item, removed dividers, tightened heading/description gap and removed heading minimum height. Wording, background and desktop five-column layout preserved. Owner requested publish.
