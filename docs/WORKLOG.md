@@ -911,3 +911,6 @@ Replaced stacked COA reports with size-selection buttons and one active report. 
 
 ## 2026-10-22 — Recommendation copy
 Removed the explanatory sentence under More from the collection at owner request; heading and product links retained. Local only.
+
+## 2026-10-22 — Link preview branding
+Set explicit Open Graph and Twitter metadata to the existing black-and-white logo and SALT N’ PEP | Research Compounds title. Visible homepage headline unchanged.

@@ -11,7 +11,21 @@ import { AnalyticsNavigation } from "@/components/analytics-navigation";
 
 
 export const metadata: Metadata = {
-  title: "SALT N’ PEP | Small compounds. Big curiosity.",
+  metadataBase: new URL("https://www.saltnpeplabs.com"),
+  title: "SALT N’ PEP | Research Compounds",
+  openGraph: {
+    title: "SALT N’ PEP | Research Compounds",
+    description: "Research compounds. For laboratory research only.",
+    siteName: "SALT N’ PEP",
+    type: "website",
+    images: [{ url: "/images/salt-n-pep-contact-logo.png", width: 1086, height: 1448, alt: "Salt N’ Pep black-and-white vial logo" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "SALT N’ PEP | Research Compounds",
+    description: "Research compounds. For laboratory research only.",
+    images: ["/images/salt-n-pep-contact-logo.png"],
+  },
   description:
     "A considered collection of research compounds. Explore compound details and laboratory documentation with SALT N’ PEP. For laboratory research only.",
 };
