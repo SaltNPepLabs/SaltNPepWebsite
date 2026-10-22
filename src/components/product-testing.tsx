@@ -9,7 +9,7 @@ import styles from "./product-testing.module.css";
 function ReportActions({ url, name }: { url: string; name: string }) {
   const download = (downloads as Record<string, string>)[url];
   return <div className={styles.actions}>
-    <a className={styles.view} href={download ? download.replace(/\.pdf$/, ".html") : url} target="_blank" rel="noopener noreferrer" aria-label={`View ${name} COA`}>View report <ArrowIcon /></a>
+    <a className={styles.view} href={download ? download.replace(/\.pdf$/, "") : url} target="_blank" rel="noopener noreferrer" aria-label={`View ${name} COA`}>View report <ArrowIcon /></a>
     {download && <a className={styles.download} href={download} download={`${name.replace(/[^a-zA-Z0-9-]+/g, "-")}-COA.pdf`} aria-label={`Download ${name} COA`}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M4 15v5h16v-5" /></svg>Download</a>}
   </div>;
 }
