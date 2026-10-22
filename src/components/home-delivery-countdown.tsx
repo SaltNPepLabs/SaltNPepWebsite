@@ -1,4 +1,5 @@
 "use client";
+import { LinkArrow } from "./link-arrow";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -27,6 +28,6 @@ export function HomeDeliveryCountdown() {
       </div>)}
     </div>
     <p className={s.promise}>{passed ? <>Today’s cutoff has passed.<br/>Order now for delivery or dispatch in two days.</> : <>Next-day delivery in Utah County.<br/>Next-day shipping everywhere else in the U.S.</>}</p>
-    <p className={s.fine}>Carrier transit is additional. Holidays may vary. <Link href="/delivery">Details ↗</Link></p>
+    <p className={s.fine}>Carrier transit is additional. Holidays may vary. <Link href="/delivery">Details <LinkArrow diagonal /></Link></p>
   </div>;
 }

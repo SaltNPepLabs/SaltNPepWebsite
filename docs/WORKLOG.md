@@ -902,3 +902,6 @@ Entry gate now includes optional Remember this device (selected by default, pres
 
 ## October 22 — seamless add-to-cart and readable drawer
 Adding a product now opens cart automatically through existing addition counter; closing remembers latest addition and later adds reopen it. Restoring saved cart does not force drawer open. Explicit charcoal/ivory cart palette fixes pale text on pale item panels, with clear subtotal, checkout action and continue-shopping option. Quantity upper-limit disables at 100. Existing checkout field text contrast corrected; payments/configuration remain deferred. Local only.
+
+## 2026-10-22 — Mobile arrow and copy cleanup
+Replaced storefront text arrows with consistent SVG icons, removed newsletter fine print (privacy policy retained), and removed the product Laboratory Handling panel at owner request. Publish requested.

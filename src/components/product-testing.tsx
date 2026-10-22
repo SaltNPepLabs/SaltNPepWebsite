@@ -1,3 +1,4 @@
+import { LinkArrow } from "./link-arrow";
 import { batchReports, additionalBatchReports, usesLumiraCertificate } from "@/lib/batches";
 import { aurumCertificateDirectory, getAurumProduct } from "@/lib/aurum-catalog";
 import reportMetadata from "@/lib/coa-metadata.json";
@@ -50,9 +51,9 @@ export function ProductTesting({ slug, name }: { slug: string; name: string }) {
     </div>
     <details className={styles.details}><summary>Report details & scope</summary><div className={styles.detailContent}>
       <p>Report source: {report ? "Lumira / Peptaura" : "Aurum Peptide Labs"}</p>
-      {report && <p>Supplier batch record: <a href={`https://www.peptaura.com/verify?batch=${encodeURIComponent(report.batch)}`} target="_blank" rel="noopener noreferrer">{report.batch} ↗</a></p>}
+      {report && <p>Supplier batch record: <a href={`https://www.peptaura.com/verify?batch=${encodeURIComponent(report.batch)}`} target="_blank" rel="noopener noreferrer">{report.batch} <LinkArrow diagonal /></a></p>}
       {report?.note && <p>{report.note}</p>}
-      {source && <a href={aurumCertificateDirectory} target="_blank" rel="noopener noreferrer">Aurum certificate directory ↗</a>}
+      {source && <a href={aurumCertificateDirectory} target="_blank" rel="noopener noreferrer">Aurum certificate directory <LinkArrow diagonal /></a>}
       <p>Results apply to the tested batch and size. For laboratory research only. Purity does not establish sterility or suitability for human use.</p>
     </div></details>
   </section>;

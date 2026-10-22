@@ -110,20 +110,7 @@ export default async function ProductPage({ params }: Props) {
             <p className="text-xs sm:text-sm text-muted leading-relaxed">{product.mechanism}</p>
           </div>}
 
-          {/* Storage */}
-          {(product.storage || product.reconstitution) && <div className="dark-panel rounded-sm p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
-            <h2 className="text-base sm:text-lg font-black uppercase tracking-[0.08em] mb-3 sm:mb-4">Laboratory Handling</h2>
-            <div className="space-y-3 sm:space-y-4">
-              {product.storage && <div>
-                <h3 className="text-xs sm:text-sm font-semibold">Storage</h3>
-                <p className="text-xs sm:text-sm text-muted mt-1">{product.storage}</p>
-              </div>}
-              <div>
-                <h3 className="text-xs sm:text-sm font-semibold">Laboratory preparation</h3>
-                <p className="text-xs sm:text-sm text-muted mt-1">{product.reconstitution}</p>
-              </div>
-            </div>
-          </div>}
+
         </div>
 
 
